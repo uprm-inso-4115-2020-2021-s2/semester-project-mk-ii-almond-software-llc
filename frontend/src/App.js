@@ -1,26 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import Signup from './signup/signup';
+import Login from './login/login';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          TEST TEMPLATE FOR PISTACH.IO
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route path="/login" exact>
+            <Login />
+          </Route> 
+          {/* <Route path="/home" exact>
+            <Main />
+          </Route>  */}
+          <Route path="/signup" exact>
+            <Signup />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
