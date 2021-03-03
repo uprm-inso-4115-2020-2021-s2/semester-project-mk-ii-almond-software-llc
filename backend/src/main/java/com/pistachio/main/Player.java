@@ -190,6 +190,11 @@ public class Player {
 	}
 	
 	/**
+	 * Clears completed tasks. Should be done once new tasks are available.
+	 */
+	public void clearCompletedTasks() {CompletedTasks.clear();		}
+	
+	/**
 	 * Adds given battle B to the list of battles this player is in
 	 * @param B
 	 */
