@@ -151,7 +151,7 @@ public class Player {
 	public void RemoveFriend(Player P) {
 		if(!ConfirmedFriends.contains(P)) {throw new IllegalArgumentException("Player " + P.getUsername() + " is not friends with this player");}
 		ConfirmedFriends.remove(P);
-		P.ConfirmedFriends.remove(P);
+		P.ConfirmedFriends.remove(this);
 	}
 	
 	/**
