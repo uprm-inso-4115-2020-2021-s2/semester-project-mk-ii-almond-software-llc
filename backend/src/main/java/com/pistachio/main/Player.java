@@ -103,7 +103,7 @@ public class Player {
 	 * @return True if and only if the password matches the one held in this player
 	 */
 	public boolean checkPassword(String Password) {
-		if(Password==null) {throw new IllegalStateException("This user isn't meant for authentication purposes");}
+		if(this.Password==null) {throw new IllegalStateException("This user isn't meant for authentication purposes");}
 		return Password.contentEquals(this.Password);
 	}
 	
