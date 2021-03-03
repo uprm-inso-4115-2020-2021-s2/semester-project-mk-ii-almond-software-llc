@@ -68,7 +68,7 @@ public class Player {
 	public List<Player> getConfirmedFriends(){return ConfirmedFriends;}
 	public List<Player> getFriendRequests(){return FriendRequests;}
 
-	
+	public String setPassword() {return Password;}
 	public void setConfirmedFriends(List<Player> confirmedFriends) {ConfirmedFriends = confirmedFriends;}
 	public void setFriendRequests(List<Player> friendRequests) {FriendRequests = friendRequests;}
 	public void setStatus(PlayerStatus status) {Status = status;}
@@ -77,10 +77,16 @@ public class Player {
 	public void setBattles(List<Object> battles) {Battles = battles;}
 	public void setPistachios(int pistachios) {Pistachios = pistachios;}
 	
-	//-[Constructor]--------------------------------------------------------------------------------------------------------
-	
+	//-[Constructors]--------------------------------------------------------------------------------------------------------
+
 	/**
 	 * Creates a player with default values on everything
+	 * @param Username
+	 */	
+	public Player(String Username) {this.Username=Username;}
+	
+	/**
+	 * Creates a player with password for authentication. <b>THIS USER MUST ONLY BE USED FOR AUTHENTICATION</b>
 	 * @param Username
 	 * @param Password
 	 */
@@ -96,20 +102,28 @@ public class Player {
 	 * @param Password Password to check
 	 * @return True if and only if the password matches the one held in this player
 	 */
-	public boolean checkPassword(String Password) {return Password.contentEquals(this.Password);}
-	
+	public boolean checkPassword(String Password) {
+		if(Password==null) {throw new IllegalStateException("This user isn't meant for authentication purposes");}
+		return Password.contentEquals(this.Password);
+	}
 	
 	/**
-	 * Adds given player P to the pending friends list of this player. Player P <b>must not</b> already be a friend.
+	 * Clears the password of this user in memory. <b>MUST BE USED BEFORE SENDING PLAYER THROUGH NETWORK</b>
+	 */
+	public void ClearPassword() {Password=null;}
+	
+	/**
+	 * Adds given player P to the pending friends list of this player. Player P <b>must not</b> already be a friend OR have sent a request.
 	 * @param P Player who is requesting friendship
 	 */
 	public void requestFriendhip(Player P) {
 		if(ConfirmedFriends.contains(P)) {throw new IllegalArgumentException("Player " + P.getUsername() + " is already friends with this player!");}
+		if(FriendRequests.contains(P)) {throw new IllegalArgumentException("Player " + P.getUsername() + " has already requested frienship.");}
 		FriendRequests.add(P);
 	}
 
 	/**
-	 * Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list. Adds this player to Player P's confirmed friends list
+	 * Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list). Adds this player to Player P's confirmed friends list
 	 * @param P
 	 */
 	public void acceptFriendship(Player P) {
@@ -118,6 +132,16 @@ public class Player {
 		FriendRequests.remove(P);
 		ConfirmedFriends.add(P);
 		P.ConfirmedFriends.add(this);
+	}
+
+	/**
+	 * Declines friendship request from the given player P (Who <b>must</b> be in the pending friends list).
+	 * @param P
+	 */
+	public void declineFriendship(Player P) {
+		if(!FriendRequests.contains(P)) {throw new IllegalArgumentException("Player " + P.getUsername() + " is not in the pending friends list");}
+		
+		FriendRequests.remove(P);
 	}
 	
 	/**
