@@ -75,7 +75,7 @@ class PlayerTest {
 	@Order(4)
 	void ClearPasswordTest() {
 		//Let's clear Juan's password, then try to authenticate.
-		Juan.ClearPassword();
+		Juan.clearPassword();
 		assertThrows(IllegalStateException.class, () -> {Juan.checkPassword("This should fail");},"Illegal State Exception did not occur when trying to authenticate a non-authenticatable user.");
 	}
 	
@@ -89,7 +89,7 @@ class PlayerTest {
 		//Ladies and gentlemen, it is story time.
 		
 		//let's say Jack wants to become friends with Jill because he is a simp.
-		Jill.requestFriendhip(Jack); //Jack adds himself to Jill's friend requests.
+		Jill.requestFriendship(Jack); //Jack adds himself to Jill's friend requests.
 		
 		assertTrue(Jill.getFriendRequests().contains(Jack),"Jack was not added to the list of pending friends. Jack takes this as a sign from God and ceases his ways"); //Let's make sure she received it.
 		
@@ -97,11 +97,11 @@ class PlayerTest {
 		Jill.declineFriendship(Jack);
 
 		//Jack decides to try again because he is a nice guy and he deserves this.
-		Jill.requestFriendhip(Jack);
+		Jill.requestFriendship(Jack);
 		
 		//Jack gets so insistent that he does it twice, causing an exception
 		assertThrows(IllegalArgumentException.class, () -> {
-			Jill.requestFriendhip(Jack);			
+			Jill.requestFriendship(Jack);			
 		},"Jack was able to add himself to the list even if he is already in the list. He has duplicated himself. The world is now over.");
 		
 		//Jack waits patiently. This time, Jill decides to add him and get it over with.
@@ -112,7 +112,7 @@ class PlayerTest {
 		assertTrue(Jack.getConfirmedFriends().contains(Jill));
 		
 		//Jill immediately regrets this decision and decides to remove Jack.
-		Jill.RemoveFriend(Jack);
+		Jill.removeFriend(Jack);
 		
 		//let's ensure they're no longer friends.
 		assertFalse(Jill.getConfirmedFriends().contains(Jack));
@@ -120,7 +120,7 @@ class PlayerTest {
 		
 		//Jill panics and hits the remove friend button twice, causing an exception
 		assertThrows(IllegalArgumentException.class, () -> {
-			Jill.RemoveFriend(Jack);;			
+			Jill.removeFriend(Jack);;			
 		},"Jill was able to delete Jack twice. This has deleted him in real life. Jill is now responsible for murder.");
 		
 		//Jack, who knows how to hack into Pistachio (do not ask how), has decided he will "accept" a non existent request he has from Jill, causing another exception.
