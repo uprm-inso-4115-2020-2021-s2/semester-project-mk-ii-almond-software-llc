@@ -1,45 +1,145 @@
-import React, { Component } from 'react';
-import { Form, Button, Container } from "react-bootstrap";
-import "./login.css";
+import React, { useState, useEffect } from "react";
+import Pistachio from "./pistachio.png";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import Container from "@material-ui/core/Container";
+//import axios from "axios";
+// Cookies from "js-cookie";
 
-export class Login extends Component {
-    constructor(props) {
-        super(props);
-    
-        this.state = {
-             
-        }
-    }
-    
-    render() {
-        return (
-          <div>
-            <Container className="login-container">
-              <h1 className="login-h1">Login Here!</h1>
-              <Form className="login-form">
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label className="login-email">Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  image: {
+    width: 60,
+    height: 60,
+    backgroundColor: "green",
+    borderRadius: "50%",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "green",
+    "&:hover": {
+      backgroundColor: "darkgreen",
+    },
+  },
+  loginButton: {
+    textDecoration: "none",
+    color: "white",
+    fontFamily: "Roboto",
+    "&:hover": {
+      color: "white",
+      textDecoration: "none",
+    },
+  },
+}));
 
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label className="login-password">
-                    Password
-                  </Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="login-submitbtn"
-                >
-                  Submit
-                </Button>
-              </Form>
-            </Container>
-          </div>
-        );
-    }
+export default function Login() {
+  const classes = useStyles();
+
+  let history = useHistory();
+
+  let [email, setEmail] = useState(null);
+
+  let [password, setPassword] = useState(null);
+
+  // const verifyLogin = async () => {
+  //   await axios
+  //     .get(
+  //       "https://almond-macademia-back-end.herokuapp.com/login?" +
+  //         "email=" +
+  //         user +
+  //         "&password=" +
+  //         password
+  //     )
+  //     .then((res) => {
+  //       if (res.data) {
+  //         Cookies.set("user", user);
+  //         history.push("/home");
+  //       }
+  //     });
+  // };
+
+  // function fetchData() {
+  //   if (Cookies.get("user") !== undefined) {
+  //     if (Cookies.get("user") !== "") {
+  //       history.push("/home");
+  //     }
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <img src={Pistachio}className={classes.image} />
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <TextField
+          variant="outlined"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          // onClick={() => {
+          //   verifyLogin();
+          // }}
+        >
+          <Typography>Login</Typography>
+        </Button>
+        <Grid container>
+          <Grid item xs></Grid>
+          <Grid item>
+            <Link href="/register">{"Don't have an account? Register"}</Link>
+          </Grid>
+        </Grid>
+      </div>
+    </Container>
+  );
 }
-
-export default Login;

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import "bootstrap/dist/css/bootstrap.min.css";
 import Signup from './signup/signup';
 import Login from './login/login';
 
