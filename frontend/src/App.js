@@ -5,6 +5,7 @@ import Main from './main/main';
 import Signup from './userAuth/signup';
 import Login from './userAuth/login';
 import BattleSystem from './battleSystem/battleSystem'
+import Social from './social/socialPage'
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/battleSystem" exact>
             <BattleSystem />
+          </Route>
+          <Route path="/social" exact>
+            <Social />
           </Route>
         </Switch>
       </Router>
