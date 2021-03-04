@@ -2,8 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
+<<<<<<< HEAD:frontend/src/App.js
 import Signup from './signup/signup';
 import Login from './login/login';
+=======
+import Signup from './userAuth/signup';
+import Login from './userAuth/login';
+>>>>>>> 1aa694d... login and signup finally done:frontend/src/main/App.js
 
 function App() {
   return (
