@@ -49,7 +49,7 @@ public class Player {
 	/**
 	 * List of batles this player is currently in.
 	 */
-	private List<Object> battles = new ArrayList<Object>(); //TODO: Switch this to the Battle object when complete
+	private List<Battle> battles = new ArrayList<Battle>(); //TODO: Switch this to the Battle object when complete
 	
 	/**
 	 * Amount of pistachios the user has
@@ -63,7 +63,7 @@ public class Player {
 	public PlayerStatus getStatus() {return status;}
 	public List<Object> getCollections() {return collections;}
 	public List<String> getCompletedTasks() {return completedTasks;}
-	public List<Object> getBattles() {return battles;}
+	public List<Battle> getBattles() {return battles;}
 	public int getPistachios() {return pistachios;}
 	public List<Player> getConfirmedFriends(){return confirmedFriends;}
 	public List<Player> getFriendRequests(){return friendRequests;}
@@ -74,7 +74,7 @@ public class Player {
 	public void setStatus(PlayerStatus status) {this.status = status;}
 	public void setCollections(List<Object> collections) {this.collections = collections;}
 	public void setCompletedTasks(List<String> completedTasks) {this.completedTasks = completedTasks;}
-	public void setBattles(List<Object> battles) {this.battles = battles;}
+	public void setBattles(List<Battle> battles) {this.battles = battles;}
 	public void setPistachios(int pistachios) {this.pistachios = pistachios;}
 	
 	//-[Constructors]--------------------------------------------------------------------------------------------------------
@@ -198,13 +198,13 @@ public class Player {
 	 * Adds given battle B to the list of battles this player is in
 	 * @param b
 	 */
-	public void addBattle(Object b) {battles.add(b);}
+	public void addBattle(Battle b) {battles.add(b);}
 	
 	/**
 	 * Removes given battle B from the list of battles this player is in
 	 * @param b
 	 */
-	public void removeBattle(Object b) {battles.remove(b);}
+	public void removeBattle(Battle b) {battles.remove(b);}
 	
 	/**
 	 * Compares this player with another object. Returns true if and only if the other object is a player, and their username is the same as this one's
