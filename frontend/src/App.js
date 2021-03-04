@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import Signup from './signup/signup';
 import Login from './login/login';
+import SocialPage from './Social Page/Social-page'
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           </Route>  */}
           <Route path="/signup" exact>
             <Signup />
+          </Route>
+          <Route path="/social" exact>
+            <SocialPage />
           </Route>
         </Switch>
       </Router>
