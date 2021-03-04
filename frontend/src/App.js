@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import Signup from './signup/signup';
 import Login from './login/login';
-import SocialPage from './Social Page/Social-page'
+import BattleSystemPage from './Battle System Page/Battle-system-page'
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
           <Route path="/signup" exact>
             <Signup />
           </Route>
-          <Route path="/social" exact>
-            <SocialPage />
+          <Route path="/battle-system" exact>
+            <BattleSystemPage />
           </Route>
         </Switch>
       </Router>
