@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid } from "@material-ui/core";
 
-export default function BattlePage(){
+export default function Social(){
 
     return(
         <Grid 
@@ -10,7 +10,7 @@ export default function BattlePage(){
             justify="center"
             direction="row">
              <Typography variant="h1" component="h1">
-                Hello, I am Battle Page.
+                Hello, I am Social Page.
             </Typography>
         </Grid>
     );

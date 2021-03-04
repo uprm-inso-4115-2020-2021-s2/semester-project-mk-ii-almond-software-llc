@@ -3,7 +3,7 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
-import Battle from './battle/battlePage'
+import Battle from './battle/battle'
 import Main from './main/main';
 import Signup from './userAuth/signup';
 import Login from './userAuth/login';
