@@ -8,8 +8,6 @@ import Login from './userAuth/login';
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Signup />
-    <Login/>
   </React.StrictMode>,
   document.getElementById('root')
 );
