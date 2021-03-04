@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid } from "@material-ui/core";
 
-export default function BattleSystemPage(){
+export default function BattleSystem(){
 
     return(
         <Grid 
