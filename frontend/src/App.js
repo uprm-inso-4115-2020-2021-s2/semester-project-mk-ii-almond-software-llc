@@ -1,9 +1,8 @@
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
-import Signup from '../signup/signup';
-import Login from '../login/login';
+import Signup from './userAuth/signup';
+import Login from './userAuth/login';
 
 function App() {
   return (
