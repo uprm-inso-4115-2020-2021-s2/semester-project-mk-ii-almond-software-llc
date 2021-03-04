@@ -6,7 +6,8 @@ import { Switch, Route } from "react-router-dom";
 import Signup from './signup/signup';
 import Login from './login/login';
 import BattlePage from './battle/Battle-page'
-
+import BattleSystemPage from './Battle System Page/Battle-system-page'
+import Social from './social/socialPage'
 function App() {
   return (
     <div className="App">
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/battle" exact>
             <BattlePage />
+          </Route>
+          <Route path="/social" exact>
+            <Social />
           </Route>
         </Switch>
       </Router>
