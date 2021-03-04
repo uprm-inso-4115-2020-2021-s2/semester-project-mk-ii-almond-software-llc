@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Typography, Grid } from "@material-ui/core";
 
-export default function BattleSystem(){
+export default function Main(){
     return(
         <Grid 
             container
@@ -9,8 +9,8 @@ export default function BattleSystem(){
             justify="center"
             direction="row">
              <Typography variant="h1" component="h1">
-                Hello, I am Battle System Page.
+                Hello, I am Main Page.
             </Typography>
         </Grid>
-    );
+    )
 }

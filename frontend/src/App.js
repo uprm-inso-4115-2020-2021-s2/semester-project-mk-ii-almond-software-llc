@@ -1,10 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
-import Signup from './signup/signup';
-import Login from './login/login';
-import BattleSystemPage from './Battle System Page/Battle-system-page'
+import Main from './main/main';
+import Signup from './userAuth/signup';
+import Login from './userAuth/login';
+import BattleSystem from './battleSystem/battleSystem'
 import Social from './social/socialPage'
+
 function App() {
   return (
     <div className="App">
@@ -12,15 +14,15 @@ function App() {
         <Switch>
           <Route path="/login" exact>
             <Login />
-          </Route> 
-          {/* <Route path="/home" exact>
+          </Route>
+          <Route path="/" exact>
             <Main />
-          </Route>  */}
+          </Route>
           <Route path="/signup" exact>
             <Signup />
           </Route>
-          <Route path="/battle-system" exact>
-            <BattleSystemPage />
+          <Route path="/battleSystem" exact>
+            <BattleSystem />
           </Route>
           <Route path="/social" exact>
             <Social />
