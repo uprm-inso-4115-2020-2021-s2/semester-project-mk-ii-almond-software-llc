@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import Signup from './signup/signup';
 import Login from './login/login';
-import BattlePage from './Battle Page/Battle-page'
+import BattlePage from './battle/Battle-page'
 
 function App() {
   return (
