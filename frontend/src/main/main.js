@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import './main.css';
+import { Typography, Grid } from "@material-ui/core";
 
-function Main(){
+export default function Main(){
     return(
-        <div>
-            MAIN PAGE - UNDER CONSTRUCTION
-        </div>
+        <Grid 
+            container
+            alignItems="center"
+            justify="center"
+            direction="row">
+             <Typography variant="h1" component="h1">
+                Hello, I am Main Page.
+            </Typography>
+        </Grid>
     )
 }
-
-export default Main
