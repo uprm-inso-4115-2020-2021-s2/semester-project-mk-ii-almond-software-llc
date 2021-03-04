@@ -2,26 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-<<<<<<< HEAD:frontend/src/index.js
 import reportWebVitals from './reportWebVitals';
-<<<<<<< HEAD
-import "bootstrap/dist/css/bootstrap.min.css";
-import Signup from './signup/signup';
-import Login from './login/login';
-=======
-import Signup from './signup/signup';
-import Login from './login/login';
-=======
-import Signup from './userAuth/signup';
-import Login from './userAuth/login';
->>>>>>> 1aa694d... login and signup finally done:frontend/src/main/index.js
->>>>>>> signup
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Signup />
-    <Login/>
   </React.StrictMode>,
   document.getElementById('root')
 );
