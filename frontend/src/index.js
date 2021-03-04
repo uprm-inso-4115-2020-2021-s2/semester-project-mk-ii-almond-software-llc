@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import SocialPage from './Social Page/Social-page';
 import reportWebVitals from './reportWebVitals';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Signup from './signup/signup';
+import Login from './login/login';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SocialPage />
-    {/* <App /> */}
+    <App />
+    <Signup />
+    <Login/>
   </React.StrictMode>,
   document.getElementById('root')
 );
