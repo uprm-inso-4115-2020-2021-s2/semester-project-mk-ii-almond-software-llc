@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import Signup from './signup/signup';
 import Login from './login/login';
+import BattlePage from './Battle Page/Battle-page'
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           </Route>  */}
           <Route path="/signup" exact>
             <Signup />
+          </Route>
+          <Route path="/battle" exact>
+            <BattlePage />
           </Route>
         </Switch>
       </Router>
