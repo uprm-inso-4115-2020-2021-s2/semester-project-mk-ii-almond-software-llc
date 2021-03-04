@@ -1,41 +1,57 @@
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Switch, Route } from "react-router-dom";
-import Battle from './components/battle/battle'
+import React, { Component, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import TabPanel from './components/tabs/tabPanel';
+import a11yProps from './components/tabs/a11yProps';
+import Social from './components/social/social';
 import Main from './components/main/main';
-import Signup from './components/userAuth/signup';
-import Login from './components/userAuth/login';
-import BattleSystem from './components/battleSystem/battleSystem'
-import Social from './components/social/social'
+import Battle from './components/battle/battle';
 
-function App() {
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+  },
+});
+
+export default function App() {
+
+  const classes = useStyles();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/" exact>
-            <Main />
-          </Route>
-          <Route path="/signup" exact>
-            <Signup />
-          </Route>
-          <Route path="/battleSystem" exact>
-            <BattleSystem />
-          </Route>
-          <Route path="/battle" exact>
-            <Battle />
-          </Route>
-          <Route path="/social" exact>
-            <Social />
-          </Route>
-        </Switch>
-      </Router>
+      <Paper className={classes.root}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="Social" {...a11yProps(0)} />
+          <Tab label="Main" {...a11yProps(1)} />
+          <Tab label="Battle" {...a11yProps(2)} />
+        </Tabs>
+      </Paper>
+
+      <TabPanel value={value} index={0}>
+        <Social />
+      </TabPanel>
+
+      <TabPanel value={value} index={1}>
+        <Main />
+      </TabPanel>
+
+      <TabPanel value={value} index={2}>
+        <Battle />
+      </TabPanel>
     </div>
   );
 }
-
-export default App;

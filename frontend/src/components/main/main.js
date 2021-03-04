@@ -1,16 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Typography, Grid } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 
-export default function Main(){
-    return(
-        <Grid 
-            container
-            alignItems="center"
-            justify="center"
-            direction="row">
-             <Typography variant="h1" component="h1">
-                Hello, I am Main Page.
+const useStyles = makeStyles({
+    root: {
+        flexGrow: 1,
+    },
+});
+
+export default function Main() {
+    return (
+        <div>
+            <Grid
+                container
+                alignItems="center"
+                justify="center"
+                direction="row">
+                <Typography variant="h1" component="h1">
+                    Hello, I am Main Page.
             </Typography>
-        </Grid>
+            </Grid>
+        </div>
     )
 }
