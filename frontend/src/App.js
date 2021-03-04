@@ -1,14 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
-import Battle from './battle/battle'
-import Main from './main/main';
-import Signup from './userAuth/signup';
-import Login from './userAuth/login';
-import BattleSystem from './battleSystem/battleSystem'
-import Social from './social/socialPage'
+import Battle from './components/battle/battle'
+import Main from './components/main/main';
+import Signup from './components/userAuth/signup';
+import Login from './components/userAuth/login';
+import BattleSystem from './components/battleSystem/battleSystem'
+import Social from './components/social/social'
 
 function App() {
   return (
