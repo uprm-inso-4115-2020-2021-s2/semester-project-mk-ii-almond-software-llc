@@ -2,12 +2,15 @@ package com.pistachio.main.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
+import com.pistachio.main.Battle;
 import com.pistachio.main.Player;
 
 /***
@@ -185,7 +188,15 @@ class PlayerTest {
 	@Order(9)
 	void BattleTest() {
 		
-		//TODO: Test this
+		Battle B1 = new Battle("123", "Juan", new ArrayList<Object>(), "pepito", new ArrayList<Object>());
+		
+		//Let's go ahead and add the battle, then remove it.
+		Juan.addBattle(B1);
+		assertTrue(Juan.getBattles().contains(B1));
+		
+		//Now let's remove it.
+		Juan.removeBattle(B1);
+		assertFalse(Juan.getBattles().contains(B1));
 		
 	}
 	
