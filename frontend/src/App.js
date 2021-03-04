@@ -1,6 +1,9 @@
+import logo from './logo.svg';
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
+import Battle from './battle/battlePage'
 import Main from './main/main';
 import Signup from './userAuth/signup';
 import Login from './userAuth/login';
@@ -23,6 +26,9 @@ function App() {
           </Route>
           <Route path="/battleSystem" exact>
             <BattleSystem />
+          </Route>
+          <Route path="/battle" exact>
+            <Battle />
           </Route>
           <Route path="/social" exact>
             <Social />
