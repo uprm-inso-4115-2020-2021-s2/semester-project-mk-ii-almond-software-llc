@@ -103,7 +103,7 @@ public class Task
 		if (this == obj) {return true;}
 		if (!(obj instanceof Task)) {return false;}
 		Task other = (Task) obj;
-		return Name.contentEquals(other.Name);
+		return _ID.contentEquals(other._ID);
 	}
     
     @Override
