@@ -12,6 +12,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import com.pistachio.main.Battle;
 import com.pistachio.main.Player;
+import com.pistachio.main.Task;
 
 /***
  * Tests the functions of the Player class
@@ -163,10 +164,24 @@ class PlayerTest {
 	@Order(7)
 	void TaskTest() {
 		
-		//TODO: add a task as complete
-		//TODO: Check the task is complete.
-		//TODO: Clear tasks
-		//TODO: Check the task is no longer complete.
+		Task t = new Task("Chop", "Chop a block", 10, "");
+		t.set_ID("500"); //maybe this should've been in the constructor but its ok.
+		
+		//add a task as complete
+		Juan.markTaskComplete(t);
+		
+		assertThrows(IllegalArgumentException.class, ()->{
+			Juan.markTaskComplete(t);
+		},"Juan managed to complete a task twice!");
+		
+		//Check the task is complete.
+		assertTrue(Juan.hasTaskCompleted(t));
+		
+		//Clear tasks
+		Juan.clearCompletedTasks();
+		
+		//Check the task is no longer complete.
+		assertFalse(Juan.hasTaskCompleted(t));		
 		
 	}
 	
@@ -176,9 +191,7 @@ class PlayerTest {
 	@Test
 	@Order(8)
 	void MonsterTest() {
-		
 		//TODO: Test this
-		
 	}
 	
 	/***
