@@ -64,7 +64,7 @@ public class Monster {
      * @param moves
      * @param stats
      */
-    public Monster(String baseID, String monsterName, String nickname, List<Object> moves, List<Object> stats) {this(baseID,baseID,monsterName,monsterName,moves,stats);}
+    public Monster(String baseID, String monsterName, List<Object> moves, List<Object> stats) {this(baseID,baseID,monsterName,monsterName,moves,stats);}
     
     /**
      * Constructor for a personal monster (from the monster specific information table)
