@@ -167,6 +167,9 @@ class PlayerTest {
 		Task t = new Task("Chop", "Chop a block", 10, "");
 		t.set_ID("500"); //maybe this should've been in the constructor but its ok.
 		
+		Task t2= new Task("Break", "Break a block", 10, "");
+		t.set_ID("501");
+		
 		//add a task as complete
 		Juan.markTaskComplete(t);
 		
@@ -177,11 +180,21 @@ class PlayerTest {
 		//Check the task is complete.
 		assertTrue(Juan.hasTaskCompleted(t));
 		
+		//Assert that a task that hasn't been added is not complete
+		assertFalse(Juan.hasTaskCompleted(t2));
+		
+		//make sure that we can still add some
+		Juan.markTaskComplete(t2);
+		
+		//Make sure its also still in
+		assertTrue(Juan.hasTaskCompleted(t2));
+		
 		//Clear tasks
 		Juan.clearCompletedTasks();
 		
 		//Check the task is no longer complete.
-		assertFalse(Juan.hasTaskCompleted(t));		
+		assertFalse(Juan.hasTaskCompleted(t));
+		assertFalse(Juan.hasTaskCompleted(t2));
 		
 	}
 	
