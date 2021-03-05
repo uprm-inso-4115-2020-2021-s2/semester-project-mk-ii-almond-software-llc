@@ -49,7 +49,7 @@ public class Player {
 	/**
 	 * List of batles this player is currently in.
 	 */
-	private List<Battle> battles = new ArrayList<Battle>(); //TODO: Switch this to the Battle object when complete
+	private List<Battle> battles = new ArrayList<Battle>();
 	
 	/**
 	 * Amount of pistachios the user has
@@ -164,7 +164,7 @@ public class Player {
 	 * Adds monster M to the default collection of this player
 	 * @param m
 	 */
-	public void addMonster(Object m) {
+	public void addMonster(Monster m) {
 		//TODO: actually code this.
 	}
 	
@@ -172,27 +172,21 @@ public class Player {
 	 * Marks provided task t as complete.
 	 * @param t
 	 */
-	public void markTaskComplete(Object t) {
-		
-		//TODO: Uncomment the following line:
-		//CompletedTasks.add(t.ID);
+	public void markTaskComplete(Task t) {
+		if(completedTasks.contains(t.get_ID())) {throw new IllegalArgumentException("Player has already completed task " + t.getName());}
+		completedTasks.add(t.get_ID());
 	}
 	
 	/**
 	 * Checks if task T is in the list of completed tasks. 
-	 * @param r
+	 * @param t
 	 */
-	public boolean hasTaskCompleted(Object t) {
-		
-		//TODO: Uncomment the following line and remove the line after that.
-		//return CompletedTasks.contains(t.ID)
-		return false;
-	}
+	public boolean hasTaskCompleted(Task t) {return completedTasks.contains(t.get_ID());}
 	
 	/**
 	 * Clears completed tasks. Should be done once new tasks are available.
 	 */
-	public void clearCompletedTasks() {completedTasks.clear();		}
+	public void clearCompletedTasks() {completedTasks.clear();}
 	
 	/**
 	 * Adds given battle B to the list of battles this player is in
