@@ -22,6 +22,7 @@ public class Task
 
     public Task(String name, String description, int amount, String CompletionCriteria)
     {
+    	_ID = "";
         Name = name;
         Description = description;
         Reward = amount;
