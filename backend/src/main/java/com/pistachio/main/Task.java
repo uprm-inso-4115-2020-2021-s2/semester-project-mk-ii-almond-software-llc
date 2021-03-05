@@ -20,12 +20,12 @@ public class Task
         CompletionCriteria = "";
     }
 
-    public Task(String name, String description, int ammount, String CompletionCriteria)
+    public Task(String name, String description, int amount, String CompletionCriteria)
     {
-        Name = "";
-        Description = "";
-        Reward = 0;
-        CompletionCriteria = "";
+        Name = name;
+        Description = description;
+        Reward = amount;
+        this.CompletionCriteria = CompletionCriteria;
     }
 
     /**
