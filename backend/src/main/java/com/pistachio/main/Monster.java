@@ -87,22 +87,24 @@ public class Monster {
     //-[Methods]---------------------------------------------------------------
 
     /**
-     * Add move to movelist. This monster must know less than 4 moves in order for this method to work.
+     * Add move to movelist. This monster must know less than 4 moves in order for this method to work. Monster must not alreayd have move M
      * @param m Move to add
      */
     public void AddMove(Object m) {
     	if(moves.size()>=4) {throw new IllegalStateException("Monster has all 4 moves set. You must replace a move instead.");}
+    	if(moves.contains(m)) {throw new IllegalArgumentException("Monster already has this move. Add another one.");}
     	moves.add(m);
     }
 
     /**
-     * Replace move in movelist
+     * Replace move in movelist. Monster must not already have move M
      * @param m
      * @param Index
      */
     public void ReplaceMove(Object m, int i) {
     	//check that there is a move at index i
     	if(i>=moves.size()) {throw new IllegalArgumentException("No move to replace at index " + i);}
+    	if(moves.contains(m)) {throw new IllegalArgumentException("Monster already has this move. Add another one.");}
     	moves.set(i, m);
     }
 
