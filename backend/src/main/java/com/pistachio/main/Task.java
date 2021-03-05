@@ -20,12 +20,13 @@ public class Task
         CompletionCriteria = "";
     }
 
-    public Task(String name, String description, int ammount, String CompletionCriteria)
+    public Task(String name, String description, int amount, String CompletionCriteria)
     {
-        Name = "";
-        Description = "";
-        Reward = 0;
-        CompletionCriteria = "";
+    	_ID = "";
+        Name = name;
+        Description = description;
+        Reward = amount;
+        this.CompletionCriteria = CompletionCriteria;
     }
 
     /**
@@ -103,7 +104,7 @@ public class Task
 		if (this == obj) {return true;}
 		if (!(obj instanceof Task)) {return false;}
 		Task other = (Task) obj;
-		return Name.contentEquals(other.Name);
+		return _ID.contentEquals(other._ID);
 	}
     
     @Override
