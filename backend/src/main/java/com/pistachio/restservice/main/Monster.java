@@ -1,5 +1,7 @@
-package com.pistachio.main;
+package com.pistachio.restservice.main;
+
 import java.util.List;
+import org.springframework.data.annotation.Id;
 
 /**
  * Class that stores an instance of a monster along with their respect moveset and stats.
@@ -18,6 +20,7 @@ public class Monster {
     /**
      * Monster's base ID.
      */
+    @Id
     private String baseID;
 
     /**

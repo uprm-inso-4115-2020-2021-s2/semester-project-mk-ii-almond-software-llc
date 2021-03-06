@@ -1,4 +1,4 @@
-package com.pistachio.main;
+package com.pistachio.restservice.main;
 
 /**
  * An enum of all possible statuses for a player
