@@ -60,15 +60,15 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @GetMapping(value = "/player/requestFriend/{Origin}-{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void AddFriend(String Origin, String Destination) {
+    public void requestFriend(String Origin, String Destination) {
     
     	//Get the destination player
     	Player D=getOne(Destination); 
     	
     	//Execute the request
-    	//D.requestFriendship(Origin); //TODO: uncomment this
+    	D.requestFriendship(Origin); 
     	
     	//save the destination player
     	update(Destination, D);
@@ -79,9 +79,9 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @GetMapping(value = "/player/acceptFriend/{Origin}-{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void AcceptFriend(String Origin, String Destination) {
+    public void acceptFriend(String Origin, String Destination) {
     	//Get the origin and destination player
     	Player D=getOne(Destination);
     	Player O=getOne(Origin);
@@ -102,9 +102,9 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @GetMapping(value = "/player/rejectFriend/{Origin}-{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void RejectFriend(String Origin, String Destination) {
+    public void rejectFriend(String Origin, String Destination) {
     	//get the destination player
     	Player D=getOne(Destination);
     	
@@ -120,9 +120,9 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @GetMapping(value = "/player/removeFriend/{Origin}-{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void RemoveFriend(String Origin, String Destination) {
+    public void removeFriend(String Origin, String Destination) {
     	//Get the origin and destination player
     	Player D=getOne(Destination);
     	Player O=getOne(Origin);
