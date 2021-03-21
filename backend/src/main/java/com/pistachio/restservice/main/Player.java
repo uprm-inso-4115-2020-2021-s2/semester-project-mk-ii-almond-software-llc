@@ -102,6 +102,35 @@ public class Player {
 		this.password=password;
 	}
 
+	/**
+	 * Creates a player with all the fields mira que lindo
+	 * @param _ID
+	 * @param username
+	 * @param password
+	 * @param status
+	 * @param collections
+	 * @param confirmedFriends
+	 * @param friendRequests
+	 * @param completedTasks
+	 * @param battles
+	 * @param pistachios
+	 */
+	public Player(String _ID, String username, String password, PlayerStatus status, List<Object> collections,
+			List<Player> confirmedFriends, List<Player> friendRequests, List<String> completedTasks,
+			List<Battle> battles, int pistachios) {
+		super();
+		this._ID = _ID;
+		this.username = username;
+		this.password = password;
+		this.status = status;
+		this.collections = collections;
+		this.confirmedFriends = confirmedFriends;
+		this.friendRequests = friendRequests;
+		this.completedTasks = completedTasks;
+		this.battles = battles;
+		this.pistachios = pistachios;
+	}
+	
 	//-[Methods]--------------------------------------------------------------------------------------------------------
 	
 	/**
