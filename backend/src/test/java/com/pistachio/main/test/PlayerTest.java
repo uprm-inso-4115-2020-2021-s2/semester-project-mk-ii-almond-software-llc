@@ -35,9 +35,16 @@ class PlayerTest {
 		
 		//First things first lets create a few players
 		Juan=new Player("JuanTheMan", "1234");
+		Juan.set_ID("1");
+		
 		Pepito=new Player("xXx_BigGamer_xXx");
+		Pepito.set_ID("2");
+		
 		Jack=new Player("JackieJackson", "1234");
+		Jack.set_ID("3");
+		
 		Jill=new Player("GamerGrill(tm)", "1234");
+		Jill.set_ID("4");
 		
 	} 
 	
@@ -93,43 +100,45 @@ class PlayerTest {
 		//Ladies and gentlemen, it is story time.
 		
 		//let's say Jack wants to become friends with Jill because he is a simp.
-		Jill.requestFriendship(Jack); //Jack adds himself to Jill's friend requests.
+		Jill.requestFriendship(Jack.get_ID()); //Jack adds himself to Jill's friend requests.
 		
-		assertTrue(Jill.getFriendRequests().contains(Jack),"Jack was not added to the list of pending friends. Jack takes this as a sign from God and ceases his ways"); //Let's make sure she received it.
+		assertTrue(Jill.getFriendRequests().contains(Jack.get_ID()),"Jack was not added to the list of pending friends. Jack takes this as a sign from God and ceases his ways"); //Let's make sure she received it.
 		
 		//Jill knows Jack is a simp and decides to reject his friendship.
-		Jill.declineFriendship(Jack);
+		Jill.declineFriendship(Jack.get_ID());
 
 		//Jack decides to try again because he is a nice guy and he deserves this.
-		Jill.requestFriendship(Jack);
+		Jill.requestFriendship(Jack.get_ID());
 		
 		//Jack gets so insistent that he does it twice, causing an exception
 		assertThrows(IllegalArgumentException.class, () -> {
-			Jill.requestFriendship(Jack);			
+			Jill.requestFriendship(Jack.get_ID());			
 		},"Jack was able to add himself to the list even if he is already in the list. He has duplicated himself. The world is now over.");
 		
 		//Jack waits patiently. This time, Jill decides to add him and get it over with.
-		Jill.acceptFriendship(Jack);
+		Jill.acceptFriendship(Jack.get_ID());
+		Jack.addFriend(Jill.get_ID());
 		
 		//Let's ensure they both have the friendship now.
-		assertTrue(Jill.getConfirmedFriends().contains(Jack));
-		assertTrue(Jack.getConfirmedFriends().contains(Jill));
+		assertTrue(Jill.getConfirmedFriends().contains(Jack.get_ID()));
+		assertTrue(Jack.getConfirmedFriends().contains(Jill.get_ID()));
 		
 		//Jill immediately regrets this decision and decides to remove Jack.
-		Jill.removeFriend(Jack);
+		Jill.removeFriend(Jack.get_ID());
+		Jack.removeFriend(Jill.get_ID());
 		
 		//let's ensure they're no longer friends.
-		assertFalse(Jill.getConfirmedFriends().contains(Jack));
-		assertFalse(Jack.getConfirmedFriends().contains(Jill));
+		assertFalse(Jill.getConfirmedFriends().contains(Jack.get_ID()));
+		assertFalse(Jack.getConfirmedFriends().contains(Jill.get_ID()));
 		
 		//Jill panics and hits the remove friend button twice, causing an exception
 		assertThrows(IllegalArgumentException.class, () -> {
-			Jill.removeFriend(Jack);;			
+			Jill.removeFriend(Jack.get_ID());;			
 		},"Jill was able to delete Jack twice. This has deleted him in real life. Jill is now responsible for murder.");
 		
 		//Jack, who knows how to hack into Pistachio (do not ask how), has decided he will "accept" a non existent request he has from Jill, causing another exception.
 		assertThrows(IllegalArgumentException.class, () -> {
-			Jack.acceptFriendship(Jill);;;			
+			Jack.acceptFriendship(Jill.get_ID());;; //why are there triple ; here?			
 		},"Jack has thwarted our defenses. Pisachio is shut down by the internet authorities of security. The game is over");
 		
 		//Jack has been thwarted and seeks counseling for his ways. He eventually meets another woman who actually likes him. He lives happily ever after.
