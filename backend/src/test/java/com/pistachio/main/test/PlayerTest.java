@@ -216,6 +216,24 @@ class PlayerTest {
 		
 		Battle B1 = new Battle("123", "Juan", new ArrayList<Object>(), "pepito", new ArrayList<Object>());
 		
+		//Lets ensure Juan is not in battle.
+		assertFalse(Juan.inBattle());
+		
+		//now lets put him in battle
+		Juan.setBattle(B1);
+		
+		//Let's ensure the battle ID matches:
+		assertEquals(B1.getBattleID(), Juan.getBattleID());
+		
+		//And let's ensure he's in battle
+		assertTrue(Juan.inBattle());
+		
+		//Now then, let's go ahead and say he's no longer in battle
+		Juan.clearBattle();
+		
+		//Let's ensure he's no longer in battle
+		assertFalse(Juan.inBattle());
+		
 		//Let's go ahead and add the battle, then remove it.
 		Juan.addBattle(B1);
 		assertTrue(Juan.getBattles().contains(B1));
