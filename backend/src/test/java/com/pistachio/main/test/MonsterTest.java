@@ -10,7 +10,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.core.annotation.Order;
 
-import com.pistachio.main.Monster;
+import com.pistachio.restservice.main.Monster;
 
 /**
  * Test of the Monster object
