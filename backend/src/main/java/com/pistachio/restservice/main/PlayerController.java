@@ -87,10 +87,10 @@ public class PlayerController
     	Player O=getOne(Origin);
     			
     	//Execute the accpet
-    	//D.acceptFriendship(Origin); //TODO: Uncomment this
+    	D.acceptFriendship(Origin);
     	
     	//Forceadd the destination to the origin's list of friends
-    	//O.addFriend(Destination) //TODO: Uncomment this
+    	O.addFriend(Destination);
     	
 		//Save both players
     	update(Destination, D);
@@ -109,7 +109,7 @@ public class PlayerController
     	Player D=getOne(Destination);
     	
     	//Execute the reject
-    	//D.declineFriendship(Origin); //TODO: Uncomment this
+    	D.declineFriendship(Origin);
     	
     	//Save the destination player
     	update(Destination, D);
@@ -128,10 +128,10 @@ public class PlayerController
     	Player O=getOne(Origin);
     	
     	//remove the origin player from the destination player's friend list
-    	//D.removeFriend(Origin); //TODO: Uncomment this
+    	D.removeFriend(Origin);
     	
     	//remove the destination player from the origin player's friend list
-    	//O.removeFriend(Destination); //TODO: Uncomment this
+    	O.removeFriend(Destination);
     	
     	//Save both players
     	update(Destination, D);
