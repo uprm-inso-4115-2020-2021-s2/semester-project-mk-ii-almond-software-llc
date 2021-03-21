@@ -60,11 +60,18 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
+    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void AddFriend(String Origin, String Destination) {
+    
     	//Get the destination player
-    	//Verify that the origin player is not already in either friend list.
-    	//Add the origin player to the pending friends list
+    	Player D=getOne(Destination); 
+    	
+    	//Execute the request
+    	//D.requestFriendship(Origin); //TODO: uncomment this
+    	
     	//save the destination player
+    	update(Destination, D);
     }
     
     /**
@@ -72,13 +79,22 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
+    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void AcceptFriend(String Origin, String Destination) {
     	//Get the origin and destination player
-    	//Verify that the destination player has a request from the origin player
-    	//remove the origin player from the destination player's pending friends list
-    	//Add the origin player to the destination player's friends list.
-    	//Add the destination player to the origin player's friends list.
+    	Player D=getOne(Destination);
+    	Player O=getOne(Origin);
+    			
+    	//Execute the accpet
+    	//D.acceptFriendship(Origin); //TODO: Uncomment this
+    	
+    	//Forceadd the destination to the origin's list of friends
+    	//O.addFriend(Destination) //TODO: Uncomment this
+    	
 		//Save both players
+    	update(Destination, D);
+    	update(Origin,O);
     }
     
     /**
@@ -86,11 +102,17 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
+    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void RejectFriend(String Origin, String Destination) {
     	//get the destination player
-    	//Verify that the destination player has a request from the origin player
-    	//remove the origin player from the destination player's pending friends list 
+    	Player D=getOne(Destination);
+    	
+    	//Execute the reject
+    	//D.declineFriendship(Origin); //TODO: Uncomment this
+    	
     	//Save the destination player
+    	update(Destination, D);
     }
     
     /**
@@ -98,12 +120,23 @@ public class PlayerController
      * @param Origin
      * @param Destination
      */
+    @GetMapping(value = "/player/{Origin}-{Destination}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void RemoveFriend(String Origin, String Destination) {
     	//Get the origin and destination player
-    	//verify that both players *are* confirmed friends.
+    	Player D=getOne(Destination);
+    	Player O=getOne(Origin);
+    	
     	//remove the origin player from the destination player's friend list
+    	//D.removeFriend(Origin); //TODO: Uncomment this
+    	
     	//remove the destination player from the origin player's friend list
+    	//O.removeFriend(Destination); //TODO: Uncomment this
+    	
     	//Save both players
+    	update(Destination, D);
+    	update(Origin,O);
+    	
     }
     
 }
