@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import com.pistachio.main.Battle;
+import com.pistachio.restservice.main.Battle;
 
 /**
  * Tests the battle class

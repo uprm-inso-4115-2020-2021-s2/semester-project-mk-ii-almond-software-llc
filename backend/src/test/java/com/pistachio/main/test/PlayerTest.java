@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
-import com.pistachio.main.Battle;
-import com.pistachio.main.Player;
-import com.pistachio.main.Task;
+import com.pistachio.restservice.main.Battle;
+import com.pistachio.restservice.main.Player;
+import com.pistachio.restservice.main.Task;
 
 /***
  * Tests the functions of the Player class

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.pistachio.main.Task;
+import com.pistachio.restservice.main.Task;
 
 /**
  * Tests task
