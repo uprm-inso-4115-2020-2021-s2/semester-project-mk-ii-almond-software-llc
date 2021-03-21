@@ -1,4 +1,4 @@
-package com.pistachio.main;
+package com.pistachio.restservice.main;
 
 import org.springframework.data.annotation.Id;
 

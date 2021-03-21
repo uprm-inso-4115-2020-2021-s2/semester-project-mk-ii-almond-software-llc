@@ -1,7 +1,8 @@
-package com.pistachio.main;
+package com.pistachio.restservice.main;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.annotation.Id;
 
 /**
  * Class that holds all data for a player in the Pistachio game
@@ -11,6 +12,12 @@ public class Player {
 	
 	//-[Fields]--------------------------------------------------------------------------------------------------------
 	
+	/**
+	 * The ID for theDB
+	 */
+	@Id
+	private String _ID;
+
 	/**
 	 * The username of this player
 	 */
@@ -68,7 +75,7 @@ public class Player {
 	public List<Player> getConfirmedFriends(){return confirmedFriends;}
 	public List<Player> getFriendRequests(){return friendRequests;}
 
-	public String setPassword() {return password;}
+	public void setPassword(String Pass) {this.password = Pass;}
 	public void setConfirmedFriends(List<Player> confirmedFriends) {this.confirmedFriends = confirmedFriends;}
 	public void setFriendRequests(List<Player> friendRequests) {this.friendRequests = friendRequests;}
 	public void setStatus(PlayerStatus status) {this.status = status;}
@@ -216,5 +223,19 @@ public class Player {
 	 */
 	@Override
 	public String toString() {return "Player [Username=" + username + "]";}
+
+	/**
+     * @return the _ID
+     */
+    public String get_ID() {
+        return _ID;
+    }
+
+    /**
+     * @param _ID the _ID to set
+     */
+    public void set_ID(String _ID) {
+        this._ID = _ID;
+    }
 	
 }

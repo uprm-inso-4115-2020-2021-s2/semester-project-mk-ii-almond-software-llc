@@ -1,7 +1,8 @@
-package com.pistachio.main;
+package com.pistachio.restservice.main;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.annotation.Id;
 
 /**
  * Class that stores an instance of a battle and a relation between the two players involved.
@@ -15,6 +16,7 @@ public class Battle {
     /**
      * Unique battle ID
      */
+    @Id
     private String battleID;
 
     /**
@@ -93,7 +95,19 @@ public class Battle {
 		return "Battle [battleID=" + battleID + "]";
 	}
 
-    
+    /**
+     * @return the _ID
+     */
+    public String getId() {
+        return battleID;
+    }
+
+    /**
+     * @param _ID the _ID to set
+     */
+    public void set_ID(String Id) {
+        this.battleID = Id;
+    }
     
     
 }
