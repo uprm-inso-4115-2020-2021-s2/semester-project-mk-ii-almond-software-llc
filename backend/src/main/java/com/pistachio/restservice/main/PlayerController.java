@@ -54,4 +54,56 @@ public class PlayerController
                 .orElseThrow(() -> new ResourceNotFoundException());
         playerRepo.delete(player);
     }
+    
+    /**
+     * Adds the origin player to the destination player's friend list
+     * @param Origin
+     * @param Destination
+     */
+    public void AddFriend(String Origin, String Destination) {
+    	//Get the destination player
+    	//Verify that the origin player is not already in either friend list.
+    	//Add the origin player to the pending friends list
+    	//save the destination player
+    }
+    
+    /**
+     * Makes the destination player accepts a request from the origin player
+     * @param Origin
+     * @param Destination
+     */
+    public void AcceptFriend(String Origin, String Destination) {
+    	//Get the origin and destination player
+    	//Verify that the destination player has a request from the origin player
+    	//remove the origin player from the destination player's pending friends list
+    	//Add the origin player to the destination player's friends list.
+    	//Add the destination player to the origin player's friends list.
+		//Save both players
+    }
+    
+    /**
+     * Makes the destination player reject a request from the origin player
+     * @param Origin
+     * @param Destination
+     */
+    public void RejectFriend(String Origin, String Destination) {
+    	//get the destination player
+    	//Verify that the destination player has a request from the origin player
+    	//remove the origin player from the destination player's pending friends list 
+    	//Save the destination player
+    }
+    
+    /**
+     * Make both players (it doesn't matter the order) stop being friends
+     * @param Origin
+     * @param Destination
+     */
+    public void RemoveFriend(String Origin, String Destination) {
+    	//Get the origin and destination player
+    	//verify that both players *are* confirmed friends.
+    	//remove the origin player from the destination player's friend list
+    	//remove the destination player from the origin player's friend list
+    	//Save both players
+    }
+    
 }
