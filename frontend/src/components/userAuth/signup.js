@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
-//import axios from "axios";
+import axios from "axios";
 //import { Hidden } from "@material-ui/core";
 //import Cookies from "js-cookie";
 
@@ -56,6 +56,27 @@ export default function SignUp() {
   const classes = useStyles();
 
   let history = useHistory();
+  let [user, setUser] = useState("");
+  let [userExists, setUserExists] = useState(false);
+  let [password, setPassword] = useState();
+  let [passwordConfirmation, setPasswordConfirmation] = useState();
+
+  const verifyRegister = async () => {
+    await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/userExists?user=" + user).then((res) => {
+      setUserExists(res.data !== "")
+      if (res.data === "") {
+        axios({
+          method: "post",
+          url: "https://almond-pistachio-back-end.herokuapp.com/api/player/add",
+          data: {
+            user: user,
+            pass: password
+          },
+        });
+        history.push("/login")
+      }
+    })
+  };
 
   // async function fetchData() {
   //   if (Cookies.get("user") !== "") {
@@ -66,40 +87,6 @@ export default function SignUp() {
   // useEffect(() => {
   //   fetchData();
   // }, []);
-
-  // const verifyRegister = async () => {
-  //   if (password === passwordConfirmation) {
-  //     await axios
-  //       .get(
-  //         "https://almond-macademia-back-end.herokuapp.com/userExists?user=" +
-  //           user
-  //       )
-  //       .then((res) => {
-  //         if (!res.data) {
-  //           axios.post(
-  //             "https://almond-macademia-back-end.herokuapp.com/register?" +
-  //               "user=" +
-  //               user +
-  //               "&password=" +
-  //               password +
-  //               "&fullName=" +
-  //               fullName +
-  //               "&departmentCode=" +
-  //               departmentCode +
-  //               "&studentNumber=" +
-  //               studentNumber
-  //           );
-  //           history.push("/");
-  //         }
-  //       });
-  //   }
-  // };
-
-  let [email, setEmail] = useState();
-  let [password, setPassword] = useState();
-  let [passwordConfirmation, setPasswordConfirmation] = useState();
-
-  //const handleSubmit = (e)
 
   return (
     <Container component="main" maxWidth="xs">
@@ -116,12 +103,14 @@ export default function SignUp() {
               variant="outlined"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="user"
+              label="Username"
+              name="user"
+              autoComplete="user"
+              error={userExists}
+              helperText={userExists ? "Username already exists" : ""}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setUser(e.target.value);
               }}
             />
           </Grid>
@@ -148,7 +137,7 @@ export default function SignUp() {
               variant="outlined"
               required
               fullWidth
-              label="Password confirmation"
+              label="Password Confirmation"
               type="password"
               error={password !== passwordConfirmation}
               helperText={
@@ -169,14 +158,16 @@ export default function SignUp() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          // onClick={() => verifyRegister()}
+          onClick={() => {
+            verifyRegister();
+          }}
         >
           <Typography>Register</Typography>
         </Button>
 
         <Grid container justify="flex-end">
           <Grid item>
-            <Link href="/">{"Already have an account? Login"}</Link>
+            <Link href="/login">{"Already have an account? Login"}</Link>
           </Grid>
         </Grid>
       </div>

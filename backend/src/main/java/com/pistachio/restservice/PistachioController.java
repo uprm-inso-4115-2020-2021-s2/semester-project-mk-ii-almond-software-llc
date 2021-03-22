@@ -16,4 +16,10 @@ public class PistachioController {
 	public Pistachio pistachio(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return new Pistachio(counter.incrementAndGet(), String.format(template, name));
 	}
+
+	@GetMapping("/test")
+	public String test() {
+		return "BUENAS TARDES FUOKBUOI";
+	}
+
 }

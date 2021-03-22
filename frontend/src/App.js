@@ -12,7 +12,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
 import PeopleIcon from '@material-ui/icons/People';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -22,8 +21,9 @@ import a11yProps from './components/tabs/a11yProps';
 import Social from './components/social/social';
 import Main from './components/main/main';
 import Battle from './components/battle/battle';
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid } from '@material-ui/core';
 import useWindowDimensions from './components/windowDimensions/useWindowDimensions'
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,18 +41,21 @@ const useStyles = makeStyles((theme) => ({
   logoutButton: {
     marginLeft: theme.spacing(2),
   },
-
 }));
 
 export default function App() {
-
   const classes = useStyles();
   const { height, width } = useWindowDimensions();
   const [value, setValue] = useState(0);
+  let history = useHistory();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const logoutUser = () => {
+    history.push("/login");
+  }
 
   return (
     <div className="App">
@@ -68,7 +71,12 @@ export default function App() {
               <Tab icon={<SportsKabaddiIcon fontSize="small" />} label="Battle" {...a11yProps(2)} />
             </Tabs>
             <IconButton edge="end" className={classes.logoutButton} color="inherit" aria-label="menu">
-              <ExitToAppIcon fontSize="small" />
+              <ExitToAppIcon
+                fontSize="small"
+                onClick={() => {
+                  logoutUser();
+                }}
+              />
             </IconButton>
           </Toolbar>
         </AppBar>

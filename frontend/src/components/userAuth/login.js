@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
-//import axios from "axios";
+import axios from "axios";
 //import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,29 +53,27 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-
   let history = useHistory();
-
-  let [email, setEmail] = useState(null);
-
+  let [user, setUser] = useState(null);
   let [password, setPassword] = useState(null);
+  let [validLogin, setValidLogin] = useState(true);
+  let [errorMessage, setErrorMessage] = useState("");
 
-  // const verifyLogin = async () => {
-  //   await axios
-  //     .get(
-  //       "https://almond-macademia-back-end.herokuapp.com/login?" +
-  //         "user=" +
-  //         user +
-  //         "&password=" +
-  //         password
-  //     )
-  //     .then((res) => {
-  //       if (res.data) {
-  //         Cookies.set("user", user);
-  //         history.push("/home");
-  //       }
-  //     });
-  // };
+  const verifyLogin = async () => {
+    await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/userExists?user=" + user).then((res) => {
+      setValidLogin(res.data !== "");
+      if (res.data !== "") {
+        setValidLogin(res.data.pass === password)
+        if (res.data.pass === password) {
+          history.push("/main");
+        } else {
+          setErrorMessage("Password is invalid");
+        }
+      } else {
+        setErrorMessage("Username not found");
+      }
+    });
+  };
 
   // function fetchData() {
   //   if (Cookies.get("user") !== undefined) {
@@ -101,11 +99,11 @@ export default function Login() {
           variant="outlined"
           required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          onChange={(e) => setEmail(e.target.value)}
+          id="user"
+          label="Username"
+          name="user"
+          autoComplete="user"
+          onChange={(e) => setUser(e.target.value)}
         />
         <TextField
           variant="outlined"
@@ -117,6 +115,8 @@ export default function Login() {
           type="password"
           id="password"
           autoComplete="current-password"
+          error={!validLogin}
+          helperText={validLogin ? "" : errorMessage}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button
@@ -125,9 +125,9 @@ export default function Login() {
           variant="contained"
           color="primary"
           className={classes.submit}
-          // onClick={() => {
-          //   verifyLogin();
-          // }}
+          onClick={() => {
+            verifyLogin();
+          }}
         >
           <Typography>Login</Typography>
         </Button>
@@ -135,7 +135,7 @@ export default function Login() {
           <Grid item xs>
           </Grid>
           <Grid item>
-            <Link href="/register">{"Don't have an account? Register"}</Link>
+            <Link href="/signup">{"Don't have an account? Click here!"}</Link>
           </Grid>
         </Grid>
       </div>
