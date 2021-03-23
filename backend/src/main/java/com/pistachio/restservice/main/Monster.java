@@ -1,6 +1,7 @@
 package com.pistachio.restservice.main;
 
-import java.util.List;
+import java.util.ArrayList;
+
 import org.springframework.data.annotation.Id;
 
 /**
@@ -9,124 +10,85 @@ import org.springframework.data.annotation.Id;
  */
 
 public class Monster {
-    
-    //-[Fields]----------------------------------------------------------
-    
-    /**
-     * Unique monster ID
-     */
-    private String monsterID;
-
-    /**
-     * Monster's base ID.
-     */
     @Id
-    private String baseID;
+    private String _ID;
+
+    private String name;
+
+    private Stats stats;
+
+    private ArrayList<Move> moves;
+
+    public Monster() 
+    {
+        this.name = "";
+        this.stats = new Stats();
+        this.moves = new ArrayList<Move>(3) ;
+    }
+
+    public Monster(String Name, Stats Stats, ArrayList<Move> Moves) 
+    {
+        this.name = Name;
+        this.stats = Stats;
+        this.moves = Moves;
+    }
 
     /**
-     * Monster's name.
+     * @return the _ID
      */
-    private String monsterName; 
- /**
-     * Monster's name assigned by the player.
-     */
-    private String nickname;
+    public String getID() {
+        return _ID;
+    }
 
     /**
-     * List of monsters stats
+     * @param _ID the _ID to set
      */
-    private List<Object> stats; //TODO: Switch to Stats object upon creation
+    public void setID(String _ID) {
+        this._ID = _ID;
+    }
 
     /**
-     * List of monsters available moves.
+     * @return the name
      */
-    private List<Object> moves; //TODO: Switch to Moves object upon creation
-    
-    //-[Getters/Setters]--------------------------------------------------
-    public String getMonsterID()   {return monsterID;}
-    public String getBaseID()  {return baseID;}
-    public String getMonsterName()    {return monsterName;}
-    public String getNickname()    {return nickname;}
-    public List<Object> getMoves()   {return moves;}
-    public List<Object> getStats()   {return stats;}
-    
-    public void setMonsterID(String monsdterID)  {this.monsterID = monsdterID;}
-    public void setBaseID(String baseID) {this.baseID = baseID;}
-    public void setMonsterName(String monsterName)   {this.monsterName = monsterName;}
-    public void setNickname(String nickname) {this.nickname = nickname;}
-    public void setMoves(List<Object> moves) {this.moves = moves;}
-    public void setStats(List<Object> stats) {this.stats = stats;}
-    
-    //-[Constructors]----------------------------------------------------------
+    public String getName() {
+        return name;
+    }
 
     /**
-     * Constructor for a standard monster (From the monster base information table)
-     * @param baseID
-     * @param monsterName
-     * @param nickname
-     * @param moves
-     * @param stats
+     * @param name the name to set
      */
-    public Monster(String baseID, String monsterName, List<Object> moves, List<Object> stats) {this(baseID,baseID,monsterName,monsterName,moves,stats);}
-    
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
-     * Constructor for a personal monster (from the monster specific information table)
-     * @param monsterID
-     * @param baseID
-     * @param monsterName
-     * @param nickname
-     * @param moves
-     * @param stats
+     * @return the stats
      */
-    public Monster(String monsterID, String baseID, String monsterName, String nickname, List<Object> moves, List<Object> stats){
-        this.monsterID = monsterID;
-        this.baseID = baseID;
-        this.monsterName = monsterName;
-        this.nickname = nickname;
-        this.moves = moves;
+    public Stats getStats() {
+        return stats;
+    }
+
+    /**
+     * @param stats the stats to set
+     */
+    public void setStats(Stats stats) {
         this.stats = stats;
     }
 
-    //-[Methods]---------------------------------------------------------------
-
     /**
-     * Add move to movelist. This monster must know less than 4 moves in order for this method to work. Monster must not alreayd have move M
-     * @param m Move to add
+     * @return the moves
      */
-    public void AddMove(Object m) {
-    	if(moves.size()>=4) {throw new IllegalStateException("Monster has all 4 moves set. You must replace a move instead.");}
-    	if(moves.contains(m)) {throw new IllegalArgumentException("Monster already has this move. Add another one.");}
-    	moves.add(m);
+    public ArrayList<Move> getMoves() {
+        return moves;
     }
 
     /**
-     * Replace move in movelist. Monster must not already have move M
-     * @param m
-     * @param Index
+     * @param moves the moves to set
      */
-    public void ReplaceMove(Object m, int i) {
-    	//check that there is a move at index i
-    	if(i>=moves.size()) {throw new IllegalArgumentException("No move to replace at index " + i);}
-    	if(moves.contains(m)) {throw new IllegalArgumentException("Monster already has this move. Add another one.");}
-    	moves.set(i, m);
+    public void setMoves(ArrayList<Move> moves) {
+        this.moves = moves;
     }
 
-   //Change stats 
-    //This can be done with set, at least until we flesh out stats and potentially make another object.
     
-
-   /**
-     * Compares selected monster with another. Returns true if and only if the other object is a monster and their monster IDis the same as this one's
-     */
-   @Override
-   public boolean equals(Object obj) {
-       if (this == obj) {return true;}
-       if (!(obj instanceof Monster)) {return false;}
-       Monster other = (Monster) obj;
-       return monsterID.equals(other.monsterID);
-   }
-   
-    @Override
-	public String toString() {return "Monster [monsterName=" + monsterName + "]";}
-
+    
 }

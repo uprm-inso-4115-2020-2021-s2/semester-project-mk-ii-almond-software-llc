@@ -35,10 +35,8 @@ public class MonsterController
     public Monster update(@PathVariable String id, @RequestBody Monster updatedmonster) {
         Monster monster = monsterRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException());
-        monster.setMonsterID(updatedmonster.getMonsterID());
-        monster.setBaseID(updatedmonster.getBaseID());
-        monster.setMonsterName(updatedmonster.getMonsterName());
-        monster.setNickname(updatedmonster.getNickname());
+        monster.setID(updatedmonster.getID());
+        monster.setName(updatedmonster.getName());
         monster.setMoves(updatedmonster.getMoves());
         monster.setStats(updatedmonster.getStats());
 
