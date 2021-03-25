@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
-//import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,6 +65,8 @@ export default function Login() {
       if (res.data !== "") {
         setValidLogin(res.data.pass === password)
         if (res.data.pass === password) {
+          Cookies.set("user", res.data.user)
+          Cookies.remove("loggedIn")
           history.push("/main");
         } else {
           setErrorMessage("Password is invalid");
@@ -75,17 +77,17 @@ export default function Login() {
     });
   };
 
-  // function fetchData() {
-  //   if (Cookies.get("user") !== undefined) {
-  //     if (Cookies.get("user") !== "") {
-  //       history.push("/home");
-  //     }
-  //   }
-  // }
+  function fetchData() {
+    if (Cookies.get("user") !== undefined) {
+      if (Cookies.get("user") !== "") {
+        history.push("/main");
+      }
+    }
+  }
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">

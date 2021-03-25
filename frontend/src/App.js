@@ -24,6 +24,7 @@ import Battle from './components/battle/battle';
 import { Typography, Grid } from '@material-ui/core';
 import useWindowDimensions from './components/windowDimensions/useWindowDimensions'
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +55,7 @@ export default function App() {
   };
 
   const logoutUser = () => {
+    Cookies.set("user", "")
     history.push("/login");
   }
 
