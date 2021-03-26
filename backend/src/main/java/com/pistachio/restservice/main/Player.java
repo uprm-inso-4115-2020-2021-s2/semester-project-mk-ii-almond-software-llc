@@ -39,14 +39,14 @@ public class Player {
 	private List<Object> collections = new ArrayList<Object>(); //TODO: Switch this to the collections object when complete
 	
 	/**
-	 * List of players who are friends with this player
+	 * List of player IDs who are friends with this player
 	 */
-	private List<Player> confirmedFriends = new ArrayList<Player>();
+	private List<String> confirmedFriends = new ArrayList<String>();
 	
 	/**
-	 * List of players who have requested this player's friendship.
+	 * List of player IDs who have requested this player's friendship.
 	 */
-	private List<Player> friendRequests = new ArrayList<Player>();
+	private List<String> friendRequests = new ArrayList<String>();
 	
 	/**
 	 * List of IDs of tasks that this player has completed. Should be cleared when new tasks are made available
@@ -77,13 +77,14 @@ public class Player {
 	public List<String> getCompletedTasks() {return completedTasks;}
 	public List<Battle> getBattles() {return battles;}
 	public int getPistachios() {return pistachios;}
-	public List<Player> getConfirmedFriends(){return confirmedFriends;}
-	public List<Player> getFriendRequests(){return friendRequests;}
+
+	public List<String> getConfirmedFriends(){return confirmedFriends;}
+	public List<String> getFriendRequests(){return friendRequests;}
 	public String getBattleID() {return battleID;}
 
 	public void setPassword(String Pass) {this.password = Pass;}
-	public void setConfirmedFriends(List<Player> confirmedFriends) {this.confirmedFriends = confirmedFriends;}
-	public void setFriendRequests(List<Player> friendRequests) {this.friendRequests = friendRequests;}
+	public void setConfirmedFriends(List<String> confirmedFriends) {this.confirmedFriends = confirmedFriends;}
+	public void setFriendRequests(List<String> friendRequests) {this.friendRequests = friendRequests;}
 	public void setStatus(PlayerStatus status) {this.status = status;}
 	public void setCollections(List<Object> collections) {this.collections = collections;}
 	public void setCompletedTasks(List<String> completedTasks) {this.completedTasks = completedTasks;}
@@ -142,31 +143,38 @@ public class Player {
 	 * Adds given player P to the pending friends list of this player. Player P <b>must not</b> already be a friend OR have sent a request.
 	 * @param p Player who is requesting friendship
 	 */
-	public void requestFriendship(Player p) {
-		if(confirmedFriends.contains(p)) {throw new IllegalArgumentException("Player " + p.getUsername() + " is already friends with this player!");}
-		if(friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p.getUsername() + " has already requested frienship.");}
+	public void requestFriendship(String p) {
+		if(confirmedFriends.contains(p)) {throw new IllegalArgumentException("Player " + p + " is already friends with this player!");}
+		if(friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p + " has already requested frienship.");}
 		friendRequests.add(p);
 	}
 
 	/**
-	 * Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list). Adds this player to Player P's confirmed friends list
+	 * Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list).
 	 * @param p
 	 */
-	public void acceptFriendship(Player p) {
-		if(!friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p.getUsername() + " is not in the pending friends list");}
+	public void acceptFriendship(String p) {
+		if(!friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p + " is not in the pending friends list");}
 		
 		friendRequests.remove(p);
 		confirmedFriends.add(p);
-		p.confirmedFriends.add(this);
+	}
+	
+	/**
+	 * Force add a player to this player's confirmed friends
+	 * @param P 
+	 */
+	public void addFriend(String P) {
+		if(confirmedFriends.contains(P)) {throw new IllegalArgumentException("Player " + P + " is already friends with this player!");}
+		confirmedFriends.add(P);
 	}
 
 	/**
 	 * Declines friendship request from the given player P (Who <b>must</b> be in the pending friends list).
 	 * @param p
 	 */
-	public void declineFriendship(Player p) {
-		if(!friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p.getUsername() + " is not in the pending friends list");}
-		
+	public void declineFriendship(String p) {
+		if(!friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p + " is not in the pending friends list");}
 		friendRequests.remove(p);
 	}
 	
@@ -174,10 +182,9 @@ public class Player {
 	 * Removes player P from this player's friend list. Player P <b>must</b> be in the confirmed friends list.
 	 * @param p
 	 */
-	public void removeFriend(Player p) {
-		if(!confirmedFriends.contains(p)) {throw new IllegalArgumentException("Player " + p.getUsername() + " is not friends with this player");}
+	public void removeFriend(String p) {
+		if(!confirmedFriends.contains(p)) {throw new IllegalArgumentException("Player " + p + " is not friends with this player");}
 		confirmedFriends.remove(p);
-		p.confirmedFriends.remove(this);
 	}
 	
 	/**
