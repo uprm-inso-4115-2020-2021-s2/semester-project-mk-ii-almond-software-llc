@@ -63,6 +63,11 @@ public class Player {
 	 */
 	private int pistachios=0;
 	
+	/**
+	 * ID of the battle this player is in. If the ID is blank, null, or empty, then this player isn't in battle
+	 */
+	private String battleID="";
+	
 	//-[Getters/Setters]--------------------------------------------------------------------------------------------------------
 
 	public String getUsername() {return username;}
@@ -72,8 +77,10 @@ public class Player {
 	public List<String> getCompletedTasks() {return completedTasks;}
 	public List<Battle> getBattles() {return battles;}
 	public int getPistachios() {return pistachios;}
+
 	public List<String> getConfirmedFriends(){return confirmedFriends;}
 	public List<String> getFriendRequests(){return friendRequests;}
+	public String getBattleID() {return battleID;}
 
 	public void setPassword(String Pass) {this.password = Pass;}
 	public void setConfirmedFriends(List<String> confirmedFriends) {this.confirmedFriends = confirmedFriends;}
@@ -83,6 +90,8 @@ public class Player {
 	public void setCompletedTasks(List<String> completedTasks) {this.completedTasks = completedTasks;}
 	public void setBattles(List<Battle> battles) {this.battles = battles;}
 	public void setPistachios(int pistachios) {this.pistachios = pistachios;}
+	public void setBattleID(String battle) {this.battleID=battle;}
+	public void setBattle(Battle b) {this.battleID=b.getId();}
 	
 	//-[Constructors]--------------------------------------------------------------------------------------------------------
 
@@ -103,6 +112,17 @@ public class Player {
 	}
 
 	//-[Methods]--------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Check if the player is in a battle
+	 * @return battleID!=""
+	 */
+	public boolean inBattle() {return battleID!="";}
+	
+	/**
+	 * Clears the battleID. Essentially, makes this player no longer in battle.
+	 */
+	public void clearBattle() {battleID="";}
 	
 	/**
 	 * Checks that the provided password is the same as this user's password
