@@ -70,7 +70,7 @@ export default function SignUp() {
           url: "https://almond-pistachio-back-end.herokuapp.com/api/player/add",
           data: {
             user: user,
-            pass: password
+            pass: password,
           },
         });
         history.push("/login")

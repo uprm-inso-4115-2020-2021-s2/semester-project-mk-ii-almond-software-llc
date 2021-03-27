@@ -37,7 +37,7 @@ public class Player {
 	/**
 	 * Collections of monsters this player has
 	 */
-	private List<Object> collections = new ArrayList<Object>(); //TODO: Switch this to the collections object when complete
+	private List<Monster> collections = new ArrayList<Monster>(); //TODO: Switch this to the collections object when complete
 
 	/**
 	 * List of players who are friends with this player
@@ -81,7 +81,7 @@ public class Player {
 		return this.pass;
 	}
 	public PlayerStatus getStatus() {return status;}
-	public List<Object> getCollections() {return collections;}
+	public List<Monster> getCollections() {return collections;}
 	public List<String> getCompletedTasks() {return completedTasks;}
 	public List<Battle> getBattles() {return battles;}
 	public int getPistachios() {return pistachios;}
@@ -93,7 +93,7 @@ public class Player {
 	public void setConfirmedFriends(List<Player> confirmedFriends){this.confirmedFriends = confirmedFriends;}
 	public void setFriendRequests(List<Player> friendRequests){this.friendRequests = friendRequests;}
 	public void setStatus(PlayerStatus status) {this.status = status;}
-	public void setCollections(List<Object> collections) {this.collections = collections;}
+	public void setCollections(List<Monster> collections) {this.collections = collections;}
 	public void setCompletedTasks(List<String> completedTasks){this.completedTasks = completedTasks;}
 	public void setBattles(List<Battle> battles) {this.battles = battles;}
 	public void setPistachios(int pistachios) {this.pistachios = pistachios;}
