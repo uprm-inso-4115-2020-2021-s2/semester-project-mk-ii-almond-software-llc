@@ -42,7 +42,7 @@ public class Battle {
     /**
      * List of actions taken during the battle
      */
-    private List<String> actionLog; 
+    // private List<String> actionLog; 
 
     //-[Getters/Setters]--------------------------------------------------
 
@@ -51,14 +51,14 @@ public class Battle {
     public List<Object> getFirstPlayerTeam() {return firstPlayerTeam;}
     public String getSecondPlayerID() {return secondPlayerID;}
     public List<Object> getSecondPlayerTeam() {return secondPlayerTeam;}
-    public List<String> getActionLog() {return actionLog;}
+    // public List<String> getActionLog() {return actionLog;}
 
     public void setBattleID(String battleID) {this.battleID = battleID;}
     public void setFirstPlayerID(String firstPlayerID) {this.firstPlayerID = firstPlayerID;}
     public void setFirstPlayerTeam(List<Object> firstPlayerTeam) {this.firstPlayerTeam = firstPlayerTeam;}
     public void setSecondPlayerID(String secondPlayerID) {this.secondPlayerID = secondPlayerID;}
     public void setSecondPlayerTeam(List<Object> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
-    public void setActionLog(List<String> actionLog) {this.actionLog = actionLog;}
+    // public void setActionLog(List<String> actionLog) {this.actionLog = actionLog;}
 
     //-[Constructors]----------------------------------------------------------
 
@@ -68,7 +68,7 @@ public class Battle {
         this.firstPlayerTeam = firstPlayerTeam;
         this.secondPlayerID = secondPlayerID;
         this.secondPlayerTeam = secondPlayerTeam;
-        this.actionLog = new ArrayList<String>();
+        // this.actionLog = new ArrayList<String>();
     }
 
     //-[Methods]---------------------------------------------------------------
@@ -77,7 +77,7 @@ public class Battle {
      * Adds an action to the actionlog
      * @param action
      */
-    public void addAction(String action){this.actionLog.add(action);}
+    // public void addAction(String action){this.actionLog.add(action);}
 
     /**
      * Compares this battle to an object. Returns true if and only if The object is a battle and they share battle IDs

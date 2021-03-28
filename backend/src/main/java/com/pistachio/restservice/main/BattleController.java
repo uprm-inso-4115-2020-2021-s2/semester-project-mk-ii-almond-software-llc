@@ -36,12 +36,12 @@ public class BattleController
         Battle battle = battleRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException());
         battle.setBattleID(updatedBattle.getBattleID());
-        battle.setActionLog(updatedBattle.getActionLog());
+        // battle.setActionLog(updatedBattle.getActionLog());
         battle.setFirstPlayerID(updatedBattle.getFirstPlayerID());
         battle.setFirstPlayerTeam(updatedBattle.getFirstPlayerTeam());
         battle.setSecondPlayerID(updatedBattle.getSecondPlayerID());
         battle.setSecondPlayerTeam(updatedBattle.getSecondPlayerTeam());
-        battle.setActionLog(updatedBattle.getActionLog());
+        // battle.setActionLog(updatedBattle.getActionLog());
 
         return battleRepo.save(battle);
     }
