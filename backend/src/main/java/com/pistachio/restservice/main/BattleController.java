@@ -55,9 +55,8 @@ public class BattleController
     }
 
     @GetMapping("/battle/findBySecondPlayerID")
-    public Battle findBySecondPlayerID(@RequestParam(name = "player") String name) {
-        return battleRepo.findBySecondPlayerID(name)
-        .orElse(null);
+    public List<Battle> findBySecondPlayerID(@RequestParam(name = "player") String name) {
+        return battleRepo.findBySecondPlayerID(name);
     }
 
 }

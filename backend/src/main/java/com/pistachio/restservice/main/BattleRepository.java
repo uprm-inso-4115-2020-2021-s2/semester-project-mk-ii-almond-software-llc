@@ -1,6 +1,6 @@
 package com.pistachio.restservice.main;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BattleRepository extends MongoRepository<Battle, String>{
 
-    Optional<Battle> findBySecondPlayerID(String secondPlayerID);
+    List<Battle> findBySecondPlayerID(String secondPlayerID);
 }
