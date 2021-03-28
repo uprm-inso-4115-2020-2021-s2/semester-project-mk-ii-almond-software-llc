@@ -53,4 +53,11 @@ public class BattleController
                 .orElseThrow(() -> new ResourceNotFoundException());
         battleRepo.delete(battle);
     }
+
+    @GetMapping("/battle/findBySecondPlayerID")
+    public Battle findBySecondPlayerID(@RequestParam(name = "player") String name) {
+        return battleRepo.findBySecondPlayerID(name)
+        .orElse(null);
+    }
+
 }

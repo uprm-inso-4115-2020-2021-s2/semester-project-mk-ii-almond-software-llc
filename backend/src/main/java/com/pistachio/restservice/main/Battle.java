@@ -1,12 +1,11 @@
 package com.pistachio.restservice.main;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 
 /**
  * Class that stores an instance of a battle and a relation between the two players involved.
- * @author kevin purcell
+ * @author kevin purcell, Kevin B.
  */
 
 public class Battle {
@@ -108,6 +107,6 @@ public class Battle {
     public void set_ID(String Id) {
         this.battleID = Id;
     }
-    
-    
+
+
 }

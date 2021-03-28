@@ -170,7 +170,7 @@ public class Player {
 	*/
 	public void clearPass() {pass=null;}
   
-	 * Adds given player P to the pending friends list of this player. Player P <b>must not</b> already be a friend OR have sent a request.
+	 /* Adds given player P to the pending friends list of this player. Player P <b>must not</b> already be a friend OR have sent a request.
 	 * @param p Player who is requesting friendship
 	 */
 	public void requestFriendship(String p) {
@@ -179,7 +179,7 @@ public class Player {
 		friendRequests.add(p);
 	}
 
-	 * Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list).
+	 /* Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list).
 	 * @param p
 	 */
 	public void acceptFriendship(String p) {
@@ -197,7 +197,7 @@ public class Player {
 		confirmedFriends.add(P);
 	}
 
-	 * Declines friendship request from the given player P (Who <b>must</b> be in the pending friends list).
+	/* Declines friendship request from the given player P (Who <b>must</b> be in the pending friends list).
 	 * @param p
 	 */
 	public void declineFriendship(String p) {
@@ -205,7 +205,7 @@ public class Player {
 		friendRequests.remove(p);
 	}
 
-	 * Removes player P from this player's friend list. Player P <b>must</b> be in the confirmed friends list.
+	 /* Removes player P from this player's friend list. Player P <b>must</b> be in the confirmed friends list.
 	 * @param p
 	 */
 	public void removeFriend(String p) {
