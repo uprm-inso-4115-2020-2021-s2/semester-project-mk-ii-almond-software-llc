@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface BattleRepository extends MongoRepository<Battle, String>{
 
     List<Battle> findBySecondPlayerID(String secondPlayerID);
+
 }

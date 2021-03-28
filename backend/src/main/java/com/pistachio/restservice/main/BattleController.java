@@ -59,4 +59,40 @@ public class BattleController
         return battleRepo.findBySecondPlayerID(name);
     }
 
+    @PutMapping("/battle/queue")
+    public Battle matchmake(@RequestBody Player playerSearchingForBattle){
+
+        // Search for available battles
+        
+        List<Battle> battleList = this.findBySecondPlayerID("");
+
+        //If no battles are available
+        if(battleList.isEmpty())
+        {
+            //Create new battle
+            Battle battleToCreate = new Battle();
+
+            //Set player 1
+            battleToCreate.setFirstPlayerID(playerSearchingForBattle.getUser());
+
+            //Set player 1 team
+
+            return battleRepo.save(battleToCreate);
+
+        }
+        //If there are available battles
+        else
+        {
+            //Insert Player into available battle
+            Battle battleToInsert = battleList.get(0);
+
+            //Set player2
+            battleToInsert.setSecondPlayerID(playerSearchingForBattle.getUser());
+
+            //Set player 2 team
+
+            return battleRepo.save(battleToInsert);
+
+        }
+    }
 }

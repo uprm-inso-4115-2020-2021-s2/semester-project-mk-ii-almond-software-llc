@@ -14,14 +14,9 @@ public class Player {
 	// -[Fields]--------------------------------------------------------------------------------------------------------
 
 	/**
-	 * The ID for theDB
-	 */
-	@Id
-	private String _ID;
-
-	/**
 	 * The user of this player
 	 */
+	@Id
 	private String user;
 
 	/**
@@ -277,19 +272,5 @@ public class Player {
 	*/
 	@Override
 	public String toString() {return "Player [User=" + user + "]";}
-
-	/**
-	 * @return the _ID
-	 */
-	public String get_ID() {
-		return this._ID;
-	}
-
-	/**
-	 * @param _ID the _ID to set
-	 */
-	public void set_ID(String _ID) {
-		this._ID = _ID;
-	}
 
 }

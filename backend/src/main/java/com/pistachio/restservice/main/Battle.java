@@ -1,5 +1,6 @@
 package com.pistachio.restservice.main;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 
@@ -67,7 +68,13 @@ public class Battle {
         this.firstPlayerTeam = firstPlayerTeam;
         this.secondPlayerID = secondPlayerID;
         this.secondPlayerTeam = secondPlayerTeam;
-        // this.actionLog = new ArrayList<String>();
+    }
+
+    public Battle(){
+        this.firstPlayerID = "";
+        this.firstPlayerTeam = new ArrayList<Object>();
+        this.secondPlayerID = "";
+        this.secondPlayerTeam = new ArrayList<Object>();
     }
 
     //-[Methods]---------------------------------------------------------------
