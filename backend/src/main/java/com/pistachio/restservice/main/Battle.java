@@ -27,7 +27,7 @@ public class Battle {
     /**
      * First player's team
      */
-    private List<Object> firstPlayerTeam; //TODO: Switch to Monster/Team object upon creation
+    private List<Monster> firstPlayerTeam;
 
     /**
      * Second player's unique ID
@@ -37,26 +37,26 @@ public class Battle {
     /**
      * Second player's team
      */
-    private List<Object> secondPlayerTeam; //TODO: Switch to Monster/Team object upon creation
+    private List<Monster> secondPlayerTeam;
 
 
     //-[Getters/Setters]--------------------------------------------------
 
     public String getBattleID() {return battleID;}
     public String getFirstPlayerID() {return firstPlayerID;}
-    public List<Object> getFirstPlayerTeam() {return firstPlayerTeam;}
+    public List<Monster> getFirstPlayerTeam() {return firstPlayerTeam;}
     public String getSecondPlayerID() {return secondPlayerID;}
-    public List<Object> getSecondPlayerTeam() {return secondPlayerTeam;}
+    public List<Monster> getSecondPlayerTeam() {return secondPlayerTeam;}
 
     public void setBattleID(String battleID) {this.battleID = battleID;}
     public void setFirstPlayerID(String firstPlayerID) {this.firstPlayerID = firstPlayerID;}
-    public void setFirstPlayerTeam(List<Object> firstPlayerTeam) {this.firstPlayerTeam = firstPlayerTeam;}
+    public void setFirstPlayerTeam(List<Monster> firstPlayerTeam) {this.firstPlayerTeam = firstPlayerTeam;}
     public void setSecondPlayerID(String secondPlayerID) {this.secondPlayerID = secondPlayerID;}
-    public void setSecondPlayerTeam(List<Object> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
+    public void setSecondPlayerTeam(List<Monster> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
 
     //-[Constructors]----------------------------------------------------------
 
-    public Battle(String battleID, String firstPlayerID, List<Object> firstPlayerTeam, String secondPlayerID, List<Object> secondPlayerTeam){
+    public Battle(String battleID, String firstPlayerID, List<Monster> firstPlayerTeam, String secondPlayerID, List<Monster> secondPlayerTeam){
         this.battleID = battleID;
         this.firstPlayerID = firstPlayerID;
         this.firstPlayerTeam = firstPlayerTeam;
@@ -66,9 +66,9 @@ public class Battle {
 
     public Battle(){
         this.firstPlayerID = "";
-        this.firstPlayerTeam = new ArrayList<Object>();
+        this.firstPlayerTeam = new ArrayList<Monster>();
         this.secondPlayerID = "";
-        this.secondPlayerTeam = new ArrayList<Object>();
+        this.secondPlayerTeam = new ArrayList<Monster>();
     }
 
     //-[Methods]---------------------------------------------------------------
