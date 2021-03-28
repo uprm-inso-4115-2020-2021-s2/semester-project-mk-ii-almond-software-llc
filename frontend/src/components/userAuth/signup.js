@@ -71,7 +71,9 @@ export default function SignUp() {
           data: {
             user: user,
             pass: password,
-          },
+            // collections: [{ id: "6059075360d5c11c373f4930" }],
+            // team: [{ id: "6059075360d5c11c373f4930" }]
+          }
         });
         history.push("/login")
       }

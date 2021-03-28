@@ -37,7 +37,12 @@ public class Player {
 	/**
 	 * Collections of monsters this player has
 	 */
-	private List<Monster> collections = new ArrayList<Monster>(); //TODO: Switch this to the collections object when complete
+	private List<String> collections = new ArrayList<String>(); //TODO: Switch this to the collections object when complete
+
+	/**
+	 * Collections of monsters this player will battle with
+	 */
+	private List<String> team = new ArrayList<String>();
 
 	/**
 	 * List of players who are friends with this player
@@ -81,24 +86,26 @@ public class Player {
 		return this.pass;
 	}
 	public PlayerStatus getStatus() {return status;}
-	public List<Monster> getCollections() {return collections;}
+	public List<String> getCollections() {return collections;}
 	public List<String> getCompletedTasks() {return completedTasks;}
 	public List<Battle> getBattles() {return battles;}
 	public int getPistachios() {return pistachios;}
 	public List<Player> getConfirmedFriends(){return confirmedFriends;}
 	public List<Player> getFriendRequests(){return friendRequests;}
 	public String getBattleID() {return battleID;}
+	public List<String> getTeam() {return this.team;}
 	public void setUser(String user) {this.user = user;}
 	public void setPass(String pass) {this.pass = pass;}
 	public void setConfirmedFriends(List<Player> confirmedFriends){this.confirmedFriends = confirmedFriends;}
 	public void setFriendRequests(List<Player> friendRequests){this.friendRequests = friendRequests;}
 	public void setStatus(PlayerStatus status) {this.status = status;}
-	public void setCollections(List<Monster> collections) {this.collections = collections;}
+	public void setCollections(List<String> collections) {this.collections = collections;}
 	public void setCompletedTasks(List<String> completedTasks){this.completedTasks = completedTasks;}
 	public void setBattles(List<Battle> battles) {this.battles = battles;}
 	public void setPistachios(int pistachios) {this.pistachios = pistachios;}
 	public void setBattleID(String battle) {this.battleID=battle;}
 	public void setBattle(Battle b) {this.battleID=b.getId();}
+	public void setTeam(List<String> team) {this.team = team;}
 
 	// -[Constructors]--------------------------------------------------------------------------------------------------------
 
