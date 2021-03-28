@@ -28,8 +28,7 @@ public class Move {
      * Base critRate of the move.
      */
     double critRate;
-
-
+  
     public Move() {
         this.name = "";
         this.baseDamage = 0;
@@ -43,7 +42,6 @@ public class Move {
         this.accuracy = accuracy;
         this.critRate = critRate;
     }
-
     //-[Getters/Setters]--------------------------------------------------
 
     public String getName(){return this.name;}
