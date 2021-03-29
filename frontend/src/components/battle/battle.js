@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Battle() {
+export default function Battle(props) {
 
     const classes = useStyles();
 
@@ -32,7 +32,7 @@ export default function Battle() {
         <div>
             {matching ? <div>
                 <BattleSystem matching={matching} setMatching={setMatching} />
-            </div> : <div style={{backgroundColor: 'red', height: '500px'}}>
+            </div> : <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
                 <Grid
                     container
                     alignItems="center"
