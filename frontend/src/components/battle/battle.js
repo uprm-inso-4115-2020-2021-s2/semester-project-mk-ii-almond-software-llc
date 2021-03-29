@@ -32,7 +32,7 @@ export default function Battle(props) {
         <div>
             {matching ? <div>
                 <BattleSystem matching={matching} setMatching={setMatching} />
-            </div> : <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+            </div> : <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: props.appHeight}}>
                 <Grid
                     container
                     alignItems="center"

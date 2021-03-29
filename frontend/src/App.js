@@ -103,7 +103,7 @@ export default function App() {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <Battle appHeight={0.85 * appHeight} />
+          <Battle appHeight={(0.85 * appHeight) - (0.15 * appHeight)} />
         </TabPanel>
       </div>
 
