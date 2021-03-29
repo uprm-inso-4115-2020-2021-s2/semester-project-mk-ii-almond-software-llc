@@ -2,8 +2,10 @@ package com.pistachio.restservice.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -76,6 +78,21 @@ public class BattleController
             battleToCreate.setFirstPlayerID(playerSearchingForBattle.getUser());
 
             //Set player 1 team
+            System.out.println(playerSearchingForBattle);
+
+            List<Monster> team = new ArrayList<Monster>();
+
+
+            List<String> teamList = playerSearchingForBattle.getTeam();
+            
+            for (String monster : teamList)
+            {
+                Monster mon = new Monster();
+                team.add(mon);
+            }
+
+            battleToCreate.setFirstPlayerTeam(team);
+
 
             return battleRepo.save(battleToCreate);
 
