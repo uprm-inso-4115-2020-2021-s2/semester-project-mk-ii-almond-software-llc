@@ -2,7 +2,6 @@ package com.pistachio.restservice.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -84,10 +83,12 @@ public class BattleController
 
 
             List<String> teamList = playerSearchingForBattle.getTeam();
+
+            MonsterController monControllah = new MonsterController();
             
             for (String monster : teamList)
             {
-                Monster mon = new Monster();
+                Monster mon = monControllah.getOne(monster);
                 team.add(mon);
             }
 

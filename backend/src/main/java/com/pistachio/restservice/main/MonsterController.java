@@ -50,4 +50,7 @@ public class MonsterController
                 .orElseThrow(() -> new ResourceNotFoundException());
         monsterRepo.delete(monster);
     }
+
+    @Autowired
+    public MonsterController(){}
 }
