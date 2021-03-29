@@ -104,69 +104,69 @@ export default function Social() {
   };
 
   return (
-    <Fragment>
-      <Grid container alignItems="center" justify="center" direction="row">
-        <Container variant="h1" component="h1">
-          Friends
-        </Container>
-
-        <Autocomplete
-          className={classes.searchBox}
-          freeSolo
-          id="search-bar"
-          disableClearable
-          options={players.map((option) => option.playerName)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search"
-              margin="normal"
-              variant="outlined"
-              InputProps={{ ...params.InputProps, type: "search" }}
+    <div>
+      <Grid container>
+        <Grid container alignItems="center" justify="center" direction="column" style={{}}>
+          <Grid container alignItems="center" justify="center" direction="row">
+            <Autocomplete
+              className={classes.searchBox}
+              freeSolo
+              id="search-bar"
+              disableClearable
+              options={players.map((option) => option.playerName)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Search"
+                  margin="normal"
+                  variant="outlined"
+                  InputProps={{ ...params.InputProps, type: "search" }}
+                />
+              )}
             />
-          )}
-        />
-        <Button className={classes.addFriendButton}>Add</Button>
+            <Button className={classes.addFriendButton}>Add</Button>
+          </Grid>
+        </Grid>
+
+        <Container className={classes.gridLayout}>
+          <Container className={classes.friendsComponent}>
+            <List dense>
+              {[0, 1, 2, 3].map((value) => {
+                const labelId = `checkbox-list-secondary-label-${value}`;
+                return (
+                  <ListItem key={value} button className={classes.friendsList}>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={`Avatar n°${value + 1}`}
+                        src={`/static/images/avatar/${value + 1}.jpg`}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      id={labelId}
+                      primary={`Line item ${value + 1}`}
+                    />
+                    <ListItemSecondaryAction>
+                      <Checkbox
+                        edge="end"
+                        onChange={handleToggle(value)}
+                        checked={checked.indexOf(value) !== -1}
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Container>
+
+          <Container className={classes.buttonsContainer}>
+            <Button className={classes.buttonsArrangement}>Battle</Button>
+            <Button className={classes.buttonsArrangement}>Trade</Button>
+            <Button className={classes.buttonsArrangement}>View Team</Button>
+          </Container>
+        </Container>
       </Grid>
-
-      <Container className={classes.gridLayout}>
-        <Container className={classes.friendsComponent}>
-          <List dense>
-            {[0, 1, 2, 3].map((value) => {
-              const labelId = `checkbox-list-secondary-label-${value}`;
-              return (
-                <ListItem key={value} button className={classes.friendsList}>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={`Avatar n°${value + 1}`}
-                      src={`/static/images/avatar/${value + 1}.jpg`}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    id={labelId}
-                    primary={`Line item ${value + 1}`}
-                  />
-                  <ListItemSecondaryAction>
-                    <Checkbox
-                      edge="end"
-                      onChange={handleToggle(value)}
-                      checked={checked.indexOf(value) !== -1}
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
-                  </ListItemSecondaryAction>
-                </ListItem>
-              );
-            })}
-          </List>
-        </Container>
-
-        <Container className={classes.buttonsContainer}>
-          <Button className={classes.buttonsArrangement}>Battle</Button>
-          <Button className={classes.buttonsArrangement}>Trade</Button>
-          <Button className={classes.buttonsArrangement}>View Team</Button>
-        </Container>
-      </Container>
-    </Fragment>
+    </div>
   );
 }
 
