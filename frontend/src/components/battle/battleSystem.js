@@ -8,7 +8,7 @@ export default function BattleSystem(){
             alignItems="center"
             justify="center"
             direction="row">
-             <Typography variant="h1" component="h1">
+             <Typography variant="h2" component="h2">
                 Hello, I am Battle System Page.
             </Typography>
         </Grid>

@@ -62,7 +62,7 @@ export default function SignUp() {
   let [passwordConfirmation, setPasswordConfirmation] = useState();
 
   const verifyRegister = async () => {
-    await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/userExists?user=" + user).then((res) => {
+    await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/getUser?user=" + user).then((res) => {
       setUserExists(res.data !== "")
       if (res.data === "") {
         axios({
@@ -75,7 +75,7 @@ export default function SignUp() {
             // team: [{ id: "6059075360d5c11c373f4930" }]
           }
         });
-        history.push("/login")
+        history.push("/")
       }
     })
   };

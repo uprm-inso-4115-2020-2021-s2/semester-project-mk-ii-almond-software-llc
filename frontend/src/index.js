@@ -11,14 +11,14 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route path="/main" exact>
-          <App />
-        </Route>
-        <Route path="/login" exact>
+        <Route path="/" exact>
           <Login />
         </Route>
         <Route path="/signup" exact>
           <Signup />
+        </Route>
+        <Route path="/main" exact>
+          <App />
         </Route>
       </Switch>
     </Router>

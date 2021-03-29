@@ -60,7 +60,7 @@ export default function Login() {
   let [errorMessage, setErrorMessage] = useState("");
 
   const verifyLogin = async () => {
-    await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/userExists?user=" + user).then((res) => {
+    await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/getUser?user=" + user).then((res) => {
       setValidLogin(res.data !== "");
       if (res.data !== "") {
         setValidLogin(res.data.pass === password)

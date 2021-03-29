@@ -14,14 +14,9 @@ public class Player {
 	// -[Fields]--------------------------------------------------------------------------------------------------------
 
 	/**
-	 * The ID for theDB
-	 */
-	@Id
-	private String _ID;
-
-	/**
 	 * The user of this player
 	 */
+	@Id
 	private String user;
 
 	/**
@@ -37,7 +32,8 @@ public class Player {
 	/**
 	 * Collections of monsters this player has
 	 */
-	private List<String> collections = new ArrayList<String>(); //TODO: Switch this to the collections object when complete
+	private List<String> collections = new ArrayList<String>(); // TODO: Switch this to the collections object when
+																// complete
 
 	/**
 	 * Collections of monsters this player will battle with
@@ -45,14 +41,14 @@ public class Player {
 	private List<String> team = new ArrayList<String>();
 
 	/**
-	 * List of player IDs who are friends with this player
+	 * List of players who are friends with this player
 	 */
-	private List<String> confirmedFriends = new ArrayList<String>();
+	private List<Player> confirmedFriends = new ArrayList<Player>();
 
 	/**
-	 * List of player IDs who have requested this player's friendship.
+	 * List of players who have requested this player's friendship.
 	 */
-	private List<String> friendRequests = new ArrayList<String>();
+	private List<Player> friendRequests = new ArrayList<Player>();
 
 	/**
 	 * List of IDs of tasks that this player has completed. Should be cleared when
@@ -68,13 +64,13 @@ public class Player {
 	/**
 	 * Amount of pistachios the user has
 	 */
-	private int pistachios=0;
+	private int pistachios = 0;
 
 	/**
 	 * ID of the battle this player is in. If the ID is blank, null, or empty, then
 	 * this player isn't in battle
 	 */
-	private String battleID="";
+	private String battleID = "";
 
 	// -[Getters/Setters]--------------------------------------------------------------------------------------------------------
 
@@ -85,28 +81,90 @@ public class Player {
 	public String getPass() {
 		return this.pass;
 	}
-	public PlayerStatus getStatus() {return status;}
-	public List<String> getCollections() {return collections;}
-	public List<String> getCompletedTasks() {return completedTasks;}
-	public List<Battle> getBattles() {return battles;}
-	public int getPistachios() {return pistachios;}
-	public List<String> getConfirmedFriends(){return confirmedFriends;}
-	public List<String> getFriendRequests(){return friendRequests;}
-	public String getBattleID() {return battleID;}
-	public List<String> getTeam() {return this.team;}
-  
-	public void setUser(String user) {this.user = user;}
-	public void setPass(String pass) {this.pass = pass;}
-	public void setConfirmedFriends(List<String> confirmedFriends) {this.confirmedFriends = confirmedFriends;}
-	public void setFriendRequests(List<String> friendRequests) {this.friendRequests = friendRequests;}
-	public void setStatus(PlayerStatus status) {this.status = status;}
-	public void setCollections(List<String> collections) {this.collections = collections;}
-	public void setCompletedTasks(List<String> completedTasks){this.completedTasks = completedTasks;}
-	public void setBattles(List<Battle> battles) {this.battles = battles;}
-	public void setPistachios(int pistachios) {this.pistachios = pistachios;}
-	public void setBattleID(String battle) {this.battleID=battle;}
-	public void setBattle(Battle b) {this.battleID=b.getId();}
-	public void setTeam(List<String> team) {this.team = team;}
+
+	public PlayerStatus getStatus() {
+		return status;
+	}
+
+	public List<String> getCollections() {
+		return collections;
+	}
+
+	public List<String> getCompletedTasks() {
+		return completedTasks;
+	}
+
+	public List<Battle> getBattles() {
+		return battles;
+	}
+
+	public int getPistachios() {
+		return pistachios;
+	}
+
+	public List<Player> getConfirmedFriends() {
+		return confirmedFriends;
+	}
+
+	public List<Player> getFriendRequests() {
+		return friendRequests;
+	}
+
+	public String getBattleID() {
+		return battleID;
+	}
+
+	public List<String> getTeam() {
+		return this.team;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public void setConfirmedFriends(List<Player> confirmedFriends) {
+		this.confirmedFriends = confirmedFriends;
+	}
+
+	public void setFriendRequests(List<Player> friendRequests) {
+		this.friendRequests = friendRequests;
+	}
+
+	public void setStatus(PlayerStatus status) {
+		this.status = status;
+	}
+
+	public void setCollections(List<String> collections) {
+		this.collections = collections;
+	}
+
+	public void setCompletedTasks(List<String> completedTasks) {
+		this.completedTasks = completedTasks;
+	}
+
+	public void setBattles(List<Battle> battles) {
+		this.battles = battles;
+	}
+
+	public void setPistachios(int pistachios) {
+		this.pistachios = pistachios;
+	}
+
+	public void setBattleID(String battle) {
+		this.battleID = battle;
+	}
+
+	public void setBattle(Battle b) {
+		this.battleID = b.getId();
+	}
+
+	public void setTeam(List<String> team) {
+		this.team = team;
+	}
 
 	// -[Constructors]--------------------------------------------------------------------------------------------------------
 
@@ -125,11 +183,10 @@ public class Player {
 		this.pass = "";
 		// this._ID = "";
 	}
-	
-	//-[Methods]--------------------------------------------------------------------------------------------------------
+
 	/**
-	 * Creates a player with pass for authentication. <b>THIS USER MUST ONLY BE
-	 * USED FOR AUTHENTICATION</b>
+	 * Creates a player with pass for authentication. <b>THIS USER MUST ONLY BE USED
+	 * FOR AUTHENTICATION</b>
 	 * 
 	 * @param User
 	 * @param Pass
@@ -143,153 +200,199 @@ public class Player {
 	// -[Methods]--------------------------------------------------------------------------------------------------------
 
 	/**
-	* Check if the player is in a battle
-	* @return battleID!=""
-	*/
-	public boolean inBattle() {return battleID!="";}
+	 * Check if the player is in a battle
+	 * 
+	 * @return battleID!=""
+	 */
+	public boolean inBattle() {
+		return battleID != "";
+	}
 
 	/**
-	* Clears the battleID. Essentially, makes this player no longer in battle.
-	*/
-	public void clearBattle() {battleID="";}
+	 * Clears the battleID. Essentially, makes this player no longer in battle.
+	 */
+	public void clearBattle() {
+		battleID = "";
+	}
 
 	/**
-	* Checks that the provided pass is the same as this user's pass
-	* @param pass Pass to check
-	* @return True if and only if the pass matches the one held in this
-	player
-	*/
+	 * Checks that the provided pass is the same as this user's pass
+	 * 
+	 * @param pass Pass to check
+	 * @return True if and only if the pass matches the one held in this player
+	 */
 	public boolean checkPass(String pass) {
-		if(this.pass==null) {throw new IllegalStateException("This user isn't meant for authentication purposes");}
+		if (this.pass == null) {
+			throw new IllegalStateException("This user isn't meant for authentication purposes");
+		}
 		return pass.contentEquals(this.pass);
 	}
 
 	/**
-	* Clears the pass of this user in memory. <b>MUST BE USED BEFORE SENDING
-	PLAYER THROUGH NETWORK</b>
-	*/
-	public void clearPass() {pass=null;}
-  
-	 * Adds given player P to the pending friends list of this player. Player P <b>must not</b> already be a friend OR have sent a request.
+	 * Clears the pass of this user in memory. <b>MUST BE USED BEFORE SENDING PLAYER
+	 * THROUGH NETWORK</b>
+	 */
+	public void clearPass() {
+		pass = null;
+	}
+
+	/**
+	 * Adds given player P to the pending friends list of this player. Player P
+	 * <b>must not</b> already be a friend OR have sent a request.
+	 * 
 	 * @param p Player who is requesting friendship
 	 */
-	public void requestFriendship(String p) {
-		if(confirmedFriends.contains(p)) {throw new IllegalArgumentException("Player " + p + " is already friends with this player!");}
-		if(friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p + " has already requested frienship.");}
+	public void requestFriendship(Player p) {
+		if (confirmedFriends.contains(p)) {
+			throw new IllegalArgumentException("Player " + p.getUser() + " is already friends with this player!");
+		}
+		if (friendRequests.contains(p)) {
+			throw new IllegalArgumentException("Player " + p.getUser() + " has already requested frienship.");
+		}
 		friendRequests.add(p);
 	}
 
-	 * Accepts friendship request from the given player P (Who <b>must</b> be in the pending friends list).
+	/**
+	 * 
+	 * Adds a player object to the list of players in the user's friends list
+	 * 
 	 * @param p
 	 */
-	public void acceptFriendship(String p) {
-		if(!friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p + " is not in the pending friends list");}
+
+	public void addFriend(Player p) {
+		this.confirmedFriends.add(p);
+	}
+
+	/**
+	 * 
+	 * Accepts friendship request from the given player P (Who <b>must</b> be in the
+	 * pending friends list). Adds this player to Player P's confirmed friends list
+	 * 
+	 * @param p
+	 */
+	public void acceptFriendship(Player p) {
+		if (!friendRequests.contains(p)) {
+			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
+		}
 		friendRequests.remove(p);
 		confirmedFriends.add(p);
-	}
-	
-	/**
-	 * Force add a player to this player's confirmed friends
-	 * @param P 
-	 */
-	public void addFriend(String P) {
-		if(confirmedFriends.contains(P)) {throw new IllegalArgumentException("Player " + P + " is already friends with this player!");}
-		confirmedFriends.add(P);
+		p.confirmedFriends.add(this);
 	}
 
-	 * Declines friendship request from the given player P (Who <b>must</b> be in the pending friends list).
+	/**
+	 * Declines friendship request from the given player P (Who <b>must</b> be in
+	 * the pending friends list).
+	 * 
 	 * @param p
 	 */
-	public void declineFriendship(String p) {
-		if(!friendRequests.contains(p)) {throw new IllegalArgumentException("Player " + p + " is not in the pending friends list");}
+	public void declineFriendship(Player p) {
+		if (!friendRequests.contains(p)) {
+			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
+		}
 		friendRequests.remove(p);
 	}
 
-	 * Removes player P from this player's friend list. Player P <b>must</b> be in the confirmed friends list.
+	/**
+	 * Removes player P from this player's friend list. Player P <b>must</b> be in
+	 * the confirmed friends list.
+	 * 
 	 * @param p
 	 */
-	public void removeFriend(String p) {
-		if(!confirmedFriends.contains(p)) {throw new IllegalArgumentException("Player " + p + " is not friends with this player");}
+	public void removeFriend(Player p) {
+		if (!confirmedFriends.contains(p)) {
+			throw new IllegalArgumentException("Player" + p.getUser() + " is not friends with this player");
+		}
 		confirmedFriends.remove(p);
+		p.confirmedFriends.remove(this);
 	}
 
 	/**
-	* Adds the specified amount P to the pistachios this player has (can be
-	negative to charge pistacios)
-	* @param p
-	*/
-	public void addPistachio(int p) { this.pistachios+=p;}
+	 * Adds the specified amount P to the pistachios this player has (can be
+	 * negative to charge pistacios)
+	 * 
+	 * @param p
+	 */
+	public void addPistachio(int p) {
+		this.pistachios += p;
+	}
 
 	/***
-	* Adds monster M to the default collection of this player
-	* @param m
-	*/
+	 * Adds monster M to the default collection of this player
+	 * 
+	 * @param m
+	 */
 	public void addMonster(Monster m) {
-	//TODO: actually code this.
+		// TODO: actually code this.
 	}
 
 	/**
-	* Marks provided task t as complete.
-	* @param t
-	*/
+	 * Marks provided task t as complete.
+	 * 
+	 * @param t
+	 */
 	public void markTaskComplete(Task t) {
-		if(completedTasks.contains(t.get_ID())) {throw new IllegalArgumentException("Player has already completed task " + t.getName());}
+		if (completedTasks.contains(t.get_ID())) {
+			throw new IllegalArgumentException("Player has already completed task " + t.getName());
+		}
 		completedTasks.add(t.get_ID());
 	}
 
 	/**
-	* Checks if task T is in the list of completed tasks.
-	* @param t
-	*/
-	public boolean hasTaskCompleted(Task t) {return completedTasks.contains(t.get_ID());}
+	 * Checks if task T is in the list of completed tasks.
+	 * 
+	 * @param t
+	 */
+	public boolean hasTaskCompleted(Task t) {
+		return completedTasks.contains(t.get_ID());
+	}
 
 	/**
-	* Clears completed tasks. Should be done once new tasks are available.
-	*/
-	public void clearCompletedTasks() {completedTasks.clear();}
+	 * Clears completed tasks. Should be done once new tasks are available.
+	 */
+	public void clearCompletedTasks() {
+		completedTasks.clear();
+	}
 
 	/**
-	* Adds given battle B to the list of battles this player is in
-	* @param b
-	*/
-	public void addBattle(Battle b) {battles.add(b);}
+	 * Adds given battle B to the list of battles this player is in
+	 * 
+	 * @param b
+	 */
+	public void addBattle(Battle b) {
+		battles.add(b);
+	}
 
 	/**
-	* Removes given battle B from the list of battles this player is in
-	* @param b
-	*/
-	public void removeBattle(Battle b) {battles.remove(b);}
+	 * Removes given battle B from the list of battles this player is in
+	 * 
+	 * @param b
+	 */
+	public void removeBattle(Battle b) {
+		battles.remove(b);
+	}
 
 	/**
-	* Compares this player with another object. Returns true if and only if the
-	other object is a player, and their user is the same as this one's
-	*/
+	 * Compares this player with another object. Returns true if and only if the
+	 * other object is a player, and their user is the same as this one's
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {return true;}
-		if (!(obj instanceof Player)) {return false;}
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Player)) {
+			return false;
+		}
 		Player other = (Player) obj;
 		return user.contentEquals(other.user);
 	}
 
 	/**
-	* Returns the player's user. For debugging purposes.
-	*/
+	 * Returns the player's user. For debugging purposes.
+	 */
 	@Override
-	public String toString() {return "Player [User=" + user + "]";}
-
-	/**
-	 * @return the _ID
-	 */
-	public String get_ID() {
-		return this._ID;
-	}
-
-	/**
-	 * @param _ID the _ID to set
-	 */
-	public void set_ID(String _ID) {
-		this._ID = _ID;
+	public String toString() {
+		return "Player [User=" + user + "]";
 	}
 
 }
