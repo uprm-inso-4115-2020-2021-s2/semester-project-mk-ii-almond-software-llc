@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import Signup from './components/userAuth/signup';
 import Login from './components/userAuth/login';
+import Form from './formPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,9 @@ ReactDOM.render(
         </Route>
         <Route path="/main" exact>
           <App />
+        </Route>
+        <Route path="/form" exact>
+          <Form />
         </Route>
       </Switch>
     </Router>
