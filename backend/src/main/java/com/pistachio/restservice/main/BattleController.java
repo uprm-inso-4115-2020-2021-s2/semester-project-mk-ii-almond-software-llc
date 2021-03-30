@@ -66,8 +66,7 @@ public class BattleController {
 
         // If no battles are available
         if (battleList.isEmpty()) {
-            // Create new battle
-            Battle battleToCreate = new Battle();
+           Battle battleToCreate = new Battle();
 
             // Set player 1
             battleToCreate.setFirstPlayerID(playerSearchingForBattle.getUser());
@@ -94,10 +93,32 @@ public class BattleController {
             // Insert Player into available battle
             Battle battleToInsert = battleList.get(0);
 
+            //Check that we're not inserting player into a battle with itself and if we are then move on to the next one in the list if possible
+            if (battleToInsert.getFirstPlayerID().equals(playerSearchingForBattle.getUser()))
+            {
+                if(battleList.size() > 1)
+                {
+                    battleToInsert = battleList.get(1);
+                }
+
+            }
+
             // Set player2
             battleToInsert.setSecondPlayerID(playerSearchingForBattle.getUser());
 
-            // Set player 2 team
+             // Set player 12team
+             System.out.println(playerSearchingForBattle);
+
+             List<Monster> team = new ArrayList<Monster>();
+ 
+             List<String> teamList = playerSearchingForBattle.getTeam();
+ 
+             for (String monster : teamList) {
+                 Monster mon = monsterRepo.findById(monster).get();
+                 team.add(mon);
+             }
+ 
+             battleToInsert.setSecondPlayerTeam(team);
 
             return battleRepo.save(battleToInsert);
 
