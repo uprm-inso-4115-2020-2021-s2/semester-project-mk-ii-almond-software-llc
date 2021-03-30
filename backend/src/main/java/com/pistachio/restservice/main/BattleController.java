@@ -14,6 +14,8 @@ public class BattleController {
     private BattleRepository battleRepo;
     @Autowired
     private MonsterRepository monsterRepo;
+    @Autowired
+    private PlayerRepository playerRepo;
 
     @PostMapping("/battle/add")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -58,8 +60,13 @@ public class BattleController {
     }
 
     @PutMapping("/battle/queue")
-    public Battle matchmake(@RequestBody Player playerSearchingForBattle) {
+    public Battle matchmake(@RequestParam(name = "player") String name) {
 
+        
+        //Get player thingy
+
+        Player playerSearchingForBattle = playerRepo.findById(name).get();
+        
         // Search for available battles
 
         List<Battle> battleList = this.findBySecondPlayerID("");
@@ -106,7 +113,7 @@ public class BattleController {
             // Set player2
             battleToInsert.setSecondPlayerID(playerSearchingForBattle.getUser());
 
-             // Set player 12team
+             // Set player 2team
              System.out.println(playerSearchingForBattle);
 
              List<Monster> team = new ArrayList<Monster>();
