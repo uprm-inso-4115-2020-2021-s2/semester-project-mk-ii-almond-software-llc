@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
 public class PlayerController {
     @Autowired
     private PlayerRepository playerRepo;

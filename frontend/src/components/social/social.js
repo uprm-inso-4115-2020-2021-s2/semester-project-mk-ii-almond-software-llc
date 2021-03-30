@@ -125,6 +125,11 @@ export default function Social() {
     console.log("view team selected", current);
   }
 
+  const clickRemove = () => {
+    setAnchor(null);
+    console.log("remove friend selected", current);
+  }
+
   const addFriend = () => {
     
   }
@@ -231,6 +236,7 @@ export default function Social() {
         <MenuItem onClick={clickBattle}>Battle</MenuItem>
         <MenuItem onClick={clickTrade}>Trade</MenuItem>
         <MenuItem onClick={clickViewTeam}>View Team</MenuItem>
+        <MenuItem onClick={clickRemove}>Remove</MenuItem>
       </Menu>
     </div >
   );

@@ -71,8 +71,8 @@ export default function SignUp() {
           data: {
             user: user,
             pass: password,
-            collections: [{ id: "6059075360d5c11c373f4930" }],
-            team: [{ id: "6059075360d5c11c373f4930" }]
+            // collections: [{ id: "6059075360d5c11c373f4930" }],
+            // team: [{ id: "6059075360d5c11c373f4930" }]
           }
         });
         history.push("/")
@@ -169,7 +169,7 @@ export default function SignUp() {
 
         <Grid container justify="flex-end">
           <Grid item>
-            <Link href="/login">{"Already have an account? Login"}</Link>
+            <Link href="/">{"Already have an account? Login"}</Link>
           </Grid>
         </Grid>
       </div>
