@@ -107,11 +107,11 @@ export default function Social() {
 	const getFriendList = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/friendList?user=" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/friendList?user=" +
 					Cookies.get("user")
 			)
 			.then((res) => {
-				console.log(res);
+				setFriendList(res.data);
 			});
 	};
 

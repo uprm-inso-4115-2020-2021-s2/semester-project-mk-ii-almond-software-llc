@@ -63,10 +63,7 @@ export default function Login() {
 
 	const verifyLogin = async () => {
 		await axios
-			.get(
-				"https://almond-pistachio-back-end.herokuapp.com/api/player/getUser?user=" +
-					user
-			)
+			.get("http://localhost:8080/api/player/getUser?user=" + user)
 			.then((res) => {
 				setValidLogin(res.data !== "");
 				if (res.data !== "") {
