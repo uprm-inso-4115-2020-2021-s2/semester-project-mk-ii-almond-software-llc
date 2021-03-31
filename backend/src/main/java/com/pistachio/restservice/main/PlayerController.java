@@ -85,9 +85,6 @@ public class PlayerController {
         // Execute the accpet
         D.acceptFriendship(O);
 
-        // Force add the destination to the origin's list of friends
-        O.addFriend(D);
-
         // Save both players
         update(Destination, D);
         update(Origin, O);
