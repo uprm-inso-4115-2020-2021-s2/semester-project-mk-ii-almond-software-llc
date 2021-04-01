@@ -93,39 +93,41 @@ public class PlayerController {
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/acceptFriend/{Origin}/{Destination}")
+    @PutMapping(value = "/player/acceptFriend/{Origin}/{Destination}/yes")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void acceptFriend(@PathVariable String Origin, @PathVariable String Destination) {
         // Get the origin and destination player
-        Player D = getUser(Destination);
-        Player O = getUser(Origin);
+        Player playerThatRequested = getUser(Destination);
+        Player playerThatAccepted = getUser(Origin);
 
-        // Execute the accpet
-        D.acceptFriendship(O);
+        if(playerThatAccepted.acceptFriendship(playerThatRequested, false)){
+            playerThatRequested.addFriend(playerThatAccepted);
+        }
 
-        // Save both players
-        update(Destination, D);
-        update(Origin, O);
+        // Save both players into db regardless of wether friendship was accepted or not
+        this.update(playerThatRequested.getUser(), playerThatRequested);
+        this.update(playerThatAccepted.getUser(), playerThatAccepted);
     }
-
-    /**
-     * Makes the destination player reject a request from the origin player
+     /**
+     * Makes the destination player accepts a request from the origin player
      * 
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/rejectFriend/{Origin}/{Destination}")
+    @PutMapping(value = "/player/acceptFriend/{Origin}/{Destination}/no")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void rejectFriend(String Origin, String Destination) {
-        // get the destination player
-        Player D = getUser(Destination);
-        Player O = getUser(Origin);
+    public void rejectFriend(@PathVariable String Origin, @PathVariable String Destination) {
+        // Get the origin and destination player
+        Player playerThatRequested = getUser(Destination);
+        Player playerThatAccepted = getUser(Origin);
 
-        // Execute the reject
-        D.declineFriendship(O);
+        if(playerThatAccepted.acceptFriendship(playerThatRequested, true)){
+            playerThatRequested.addFriend(playerThatAccepted);
+        }
 
-        // Save the destination player
-        update(Destination, D);
+        // Save both players into db regardless of wether friendship was accepted or not
+        this.playerRepo.save(playerThatRequested);
+        this.playerRepo.save(playerThatAccepted);
     }
 
     /**

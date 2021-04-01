@@ -270,27 +270,27 @@ public class Player {
 	 * 
 	 * @param p
 	 */
-	public void acceptFriendship(Player p) {
+	public boolean acceptFriendship(Player p, boolean reject) {
 		if (!friendRequests.contains(p)) {
-			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
+			// throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
+			return false;
 		}
-		this.friendRequests.remove(p);
-		this.confirmedFriends.add(p);
-		p.confirmedFriends.add(this);
+		else if(friendRequests.contains(p) && !reject)
+		{
+			this.confirmedFriends.add(p);
+			this.friendRequests.remove(p);
+
+			return true;
+		}
+
+		else if(friendRequests.contains(p) && reject)
+		{
+			this.friendRequests.remove(p);
+			return false;
+		}
+		else {return false;}
 	}
 
-	/**
-	 * Declines friendship request from the given player P (Who <b>must</b> be in
-	 * the pending friends list).
-	 * 
-	 * @param p
-	 */
-	public void declineFriendship(Player p) {
-		if (!friendRequests.contains(p)) {
-			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
-		}
-		this.friendRequests.remove(p);
-	}
 
 	/**
 	 * Removes player P from this player's friend list. Player P <b>must</b> be in
