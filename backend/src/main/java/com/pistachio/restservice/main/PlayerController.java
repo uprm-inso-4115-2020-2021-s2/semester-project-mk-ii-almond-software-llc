@@ -61,7 +61,7 @@ public class PlayerController {
     // Get the list of friends from the player
     @GetMapping(value = "/player/friendList")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public List<Player> getFriends(@RequestParam(value = "user", defaultValue = "") String user) {
+    public List<String> getFriends(@RequestParam(value = "user", defaultValue = "") String user) {
         return getUser(user).getConfirmedFriends();
     }
 
