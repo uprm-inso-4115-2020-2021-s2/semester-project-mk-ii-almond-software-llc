@@ -274,8 +274,8 @@ public class Player {
 		if (!friendRequests.contains(p)) {
 			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
 		}
-		friendRequests.remove(p);
-		confirmedFriends.add(p);
+		this.friendRequests.remove(p);
+		this.confirmedFriends.add(p);
 		p.confirmedFriends.add(this);
 	}
 
@@ -289,7 +289,7 @@ public class Player {
 		if (!friendRequests.contains(p)) {
 			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
 		}
-		friendRequests.remove(p);
+		this.friendRequests.remove(p);
 	}
 
 	/**

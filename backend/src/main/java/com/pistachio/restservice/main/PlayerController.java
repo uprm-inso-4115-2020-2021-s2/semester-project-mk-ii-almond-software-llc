@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PlayerController {
     @Autowired
     private PlayerRepository playerRepo;
@@ -37,6 +37,17 @@ public class PlayerController {
     @PutMapping(value = "/player/{id}")
     public Player update(@PathVariable String id, @RequestBody Player updatedPlayer) {
         Player player = playerRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+
+        player.setBattleID(updatedPlayer.getBattleID());
+        player.setBattles(updatedPlayer.getBattles());
+        player.setCollections(updatedPlayer.getCollections());
+        player.setCompletedTasks(updatedPlayer.getCompletedTasks());
+        player.setConfirmedFriends(updatedPlayer.getConfirmedFriends());
+        player.setFriendRequests(updatedPlayer.getFriendRequests());
+        player.setPistachios(updatedPlayer.getPistachios());
+        player.setStatus(updatedPlayer.getStatus());
+        player.setTeam(updatedPlayer.getTeam());
+
         return playerRepo.save(player);
     }
 
@@ -47,15 +58,22 @@ public class PlayerController {
         playerRepo.delete(player);
     }
 
+    // Get the list of friends from the player
+    @GetMapping(value = "/player/friendList")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public List<Player> getFriends(@RequestParam(value = "user", defaultValue = "") String user) {
+        return getUser(user).getConfirmedFriends();
+    }
+
     /**
      * Adds the origin player to the destination player's friend list
      * 
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/requestFriend/{Origin}-{Destination}")
+    @GetMapping(value = "/player/requestFriend/{Origin}/{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void requestFriend(String Origin, String Destination) {
+    public void requestFriend(@PathVariable String Origin, @PathVariable String Destination) {
 
         Player O = getUser(Origin);
 
@@ -75,9 +93,9 @@ public class PlayerController {
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/acceptFriend/{Origin}-{Destination}")
+    @GetMapping(value = "/player/acceptFriend/{Origin}/{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void acceptFriend(String Origin, String Destination) {
+    public void acceptFriend(@PathVariable String Origin, @PathVariable String Destination) {
         // Get the origin and destination player
         Player D = getUser(Destination);
         Player O = getUser(Origin);
@@ -96,7 +114,7 @@ public class PlayerController {
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/rejectFriend/{Origin}-{Destination}")
+    @GetMapping(value = "/player/rejectFriend/{Origin}/{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void rejectFriend(String Origin, String Destination) {
         // get the destination player
