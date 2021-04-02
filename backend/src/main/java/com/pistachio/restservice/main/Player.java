@@ -48,7 +48,7 @@ public class Player {
 	/**
 	 * List of players who have requested this player's friendship.
 	 */
-	private List<Player> friendRequests = new ArrayList<Player>();
+	private List<String> friendRequests = new ArrayList<String>();
 
 	/**
 	 * List of IDs of tasks that this player has completed. Should be cleared when
@@ -106,7 +106,7 @@ public class Player {
 		return confirmedFriends;
 	}
 
-	public List<Player> getFriendRequests() {
+	public List<String> getFriendRequests() {
 		return friendRequests;
 	}
 
@@ -130,7 +130,7 @@ public class Player {
 		this.confirmedFriends = confirmedFriends;
 	}
 
-	public void setFriendRequests(List<Player> friendRequests) {
+	public void setFriendRequests(List<String> friendRequests) {
 		this.friendRequests = friendRequests;
 	}
 
@@ -243,13 +243,13 @@ public class Player {
 	 * @param p Player who is requesting friendship
 	 */
 	public void requestFriendship(Player p) {
-		if (confirmedFriends.contains(p)) {
+		if (confirmedFriends.contains(p.getUser())) {
 			throw new IllegalArgumentException("Player " + p.getUser() + " is already friends with this player!");
 		}
-		if (friendRequests.contains(p)) {
+		if (friendRequests.contains(p.getUser())) {
 			throw new IllegalArgumentException("Player " + p.getUser() + " has already requested frienship.");
 		}
-		friendRequests.add(p);
+		friendRequests.add(p.getUser());
 	}
 
 	/**
@@ -271,27 +271,29 @@ public class Player {
 	 * @param p
 	 */
 	public boolean acceptFriendship(Player p, boolean reject) {
-		if (!friendRequests.contains(p)) {
-			// throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
+		if (!friendRequests.contains(p.getUser())) {
+			// throw new IllegalArgumentException("Player " + p.getUser() + " is not in the
+			// pending friends list");
 			return false;
 		}
-		//THIS IS THE PROBLEM
-		else if(friendRequests.contains(p) && !reject)
-		{
+		// THIS IS THE PROBLEM
+		else if (friendRequests.contains(p.getUser()) && !reject) {
+			if (p.friendRequests.contains(this.getUser())) {
+				p.friendRequests.remove(this.getUser());
+			}
 			this.confirmedFriends.add(p.getUser());
-			this.friendRequests.remove(p);
-
+			this.friendRequests.remove(p.getUser());
 			return true;
+
 		}
 
-		else if(friendRequests.contains(p) && reject)
-		{
-			this.friendRequests.remove(p);
+		else if (friendRequests.contains(p.getUser()) && reject) {
+			this.friendRequests.remove(p.getUser());
+			return false;
+		} else {
 			return false;
 		}
-		else {return false;}
 	}
-
 
 	/**
 	 * Removes player P from this player's friend list. Player P <b>must</b> be in
@@ -300,8 +302,8 @@ public class Player {
 	 * @param p
 	 */
 	public void removeFriend(Player p) {
-		if (!confirmedFriends.contains(p)) {
-			throw new IllegalArgumentException("Player" + p.getUser() + " is not friends with this player");
+		if (!confirmedFriends.contains(p.getUser())) {
+			throw new IllegalArgumentException("Player " + p.getUser() + " is not friends with this player");
 		}
 		confirmedFriends.remove(p.getUser());
 		p.confirmedFriends.remove(this.getUser());

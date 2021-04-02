@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,16 @@ public class PlayerController {
     @GetMapping("/player")
     public List<Player> getAll() {
         return playerRepo.findAll();
+    }
+
+    @GetMapping("/player/username")
+    public List<String> getAllUsernames() {
+        List<Player> allPlayers = playerRepo.findAll();
+        List<String> allUsernames = new ArrayList<String>();
+        for (Player player : allPlayers) {
+            allUsernames.add(player.getUser());
+        }
+        return allUsernames;
     }
 
     @GetMapping(value = "/player/getUser")
@@ -65,6 +76,13 @@ public class PlayerController {
         return getUser(user).getConfirmedFriends();
     }
 
+    // Get the list of friends from the player
+    @GetMapping(value = "/player/requestFriendList")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public List<String> getRequestFriendList(@RequestParam(value = "user", defaultValue = "") String user) {
+        return getUser(user).getFriendRequests();
+    }
+
     /**
      * Adds the origin player to the destination player's friend list
      * 
@@ -100,7 +118,7 @@ public class PlayerController {
         Player playerThatRequested = getUser(Destination);
         Player playerThatAccepted = getUser(Origin);
 
-        if(playerThatAccepted.acceptFriendship(playerThatRequested, false)){
+        if (playerThatAccepted.acceptFriendship(playerThatRequested, false)) {
             playerThatRequested.addFriend(playerThatAccepted);
         }
 
@@ -108,26 +126,27 @@ public class PlayerController {
         this.update(playerThatRequested.getUser(), playerThatRequested);
         this.update(playerThatAccepted.getUser(), playerThatAccepted);
     }
-     /**
+
+    /**
      * Makes the destination player accepts a request from the origin player
      * 
      * @param Origin
      * @param Destination
      */
-    @PutMapping(value = "/player/acceptFriend/{Origin}/{Destination}/no")
+    @PutMapping(value = "/player/rejectFriend/{Origin}/{Destination}/no")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void rejectFriend(@PathVariable String Origin, @PathVariable String Destination) {
         // Get the origin and destination player
         Player playerThatRequested = getUser(Destination);
-        Player playerThatAccepted = getUser(Origin);
+        Player playerThatRejected = getUser(Origin);
 
-        if(playerThatAccepted.acceptFriendship(playerThatRequested, true)){
-            playerThatRequested.addFriend(playerThatAccepted);
+        if (playerThatRejected.acceptFriendship(playerThatRequested, true)) {
+            playerThatRequested.addFriend(playerThatRejected);
         }
 
         // Save both players into db regardless of wether friendship was accepted or not
-        this.playerRepo.save(playerThatRequested);
-        this.playerRepo.save(playerThatAccepted);
+        this.update(playerThatRequested.getUser(), playerThatRequested);
+        this.update(playerThatRejected.getUser(), playerThatRejected);
     }
 
     /**
@@ -136,18 +155,15 @@ public class PlayerController {
      * @param Origin
      * @param Destination
      */
-    @GetMapping(value = "/player/removeFriend/{Origin}-{Destination}")
+    @PutMapping(value = "/player/removeFriend/{Origin}/{Destination}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void removeFriend(String Origin, String Destination) {
+    public void removeFriend(@PathVariable String Origin, @PathVariable String Destination) {
         // Get the origin and destination player
         Player D = getUser(Destination);
         Player O = getUser(Origin);
 
         // remove the origin player from the destination player's friend list
         D.removeFriend(O);
-
-        // remove the destination player from the origin player's friend list
-        O.removeFriend(D);
 
         // Save both players
         update(Destination, D);
