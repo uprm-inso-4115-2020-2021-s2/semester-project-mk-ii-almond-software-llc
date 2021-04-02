@@ -6,13 +6,12 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Class that stores an instance of a monster along with their respect moveset and stats.
- * @author jose Bermudez
+ * @author jose Bermudez Kevin B.
  */
 
 public class Monster {
-    @Id
-    private String _ID;
 
+    @Id
     private String name;
 
     private Stats stats;
@@ -31,20 +30,6 @@ public class Monster {
         this.name = Name;
         this.stats = Stats;
         this.moves = Moves;
-    }
-
-    /**
-     * @return the _ID
-     */
-    public String getID() {
-        return _ID;
-    }
-
-    /**
-     * @param _ID the _ID to set
-     */
-    public void setID(String _ID) {
-        this._ID = _ID;
     }
 
     /**

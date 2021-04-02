@@ -279,6 +279,7 @@ public class Player {
 		p.confirmedFriends.add(this);
 	}
 
+
 	/**
 	 * Declines friendship request from the given player P (Who <b>must</b> be in
 	 * the pending friends list).
@@ -291,6 +292,7 @@ public class Player {
 		}
 		this.friendRequests.remove(p);
 	}
+
 
 	/**
 	 * Removes player P from this player's friend list. Player P <b>must</b> be in
@@ -388,6 +390,7 @@ public class Player {
 	}
 
 	/**
+
 	 * Returns the player's user. For debugging purposes.
 	 */
 	@Override
