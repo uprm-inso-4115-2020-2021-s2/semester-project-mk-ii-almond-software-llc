@@ -17,9 +17,4 @@ public class PistachioController {
 		return new Pistachio(counter.incrementAndGet(), String.format(template, name));
 	}
 
-	@GetMapping("/test")
-	public String test() {
-		return "BUENAS TARDES FUOKBUOI";
-	}
-
 }

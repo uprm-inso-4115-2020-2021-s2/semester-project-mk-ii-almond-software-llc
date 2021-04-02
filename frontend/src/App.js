@@ -42,11 +42,16 @@ const useStyles = makeStyles((theme) => ({
   logoutButton: {
     marginLeft: theme.spacing(2),
   },
+  appBar: {
+    top: 'auto',
+    bottom: 0,
+  },
 }));
 
 export default function App() {
   const classes = useStyles();
   const { height, width } = useWindowDimensions();
+  const [appHeight, setAppHeight] = useState(height);
   const [value, setValue] = useState(0);
   let history = useHistory();
 
@@ -56,13 +61,17 @@ export default function App() {
 
   const logoutUser = () => {
     Cookies.set("user", "")
-    history.push("/login");
+    history.push("/");
   }
 
   return (
     <div className="App">
-      <div className={classes.root}>
-        <AppBar position='static'>
+      <div className={classes.root} ref={e => {
+        if (!e) return;
+        setAppHeight(height - e.getBoundingClientRect().height);
+        console.log(appHeight);
+      }}>
+        <AppBar position='static' elevation={3} style={{ backgroundColor: 'green' }}>
           <Toolbar variant='dense' style={{ justifyContent: 'space-between' }}>
             <IconButton edge="start" className={classes.taskButton} color="inherit" aria-label="menu">
               <AssignmentIcon fontSize="small" />
@@ -84,7 +93,7 @@ export default function App() {
         </AppBar>
       </div>
 
-      <div style={{ height: 0.75 * height, overflowY: 'scroll' }}>
+      <div style={{ height: 0.85 * appHeight, overflowY: 'scroll' }}>
         <TabPanel value={value} index={0}>
           <Social />
         </TabPanel>
@@ -94,23 +103,24 @@ export default function App() {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <Battle />
+          <Battle appHeight={(0.85 * appHeight) - (0.15 * appHeight)} />
         </TabPanel>
       </div>
 
-      <Paper>
-        <Grid
-          container
-          alignItems="center"
-          justify="center"
-          direction="row"
-          className={classes.rectangle}
-          style={{ height: 0.15 * height, background: 'black' }}
-        >
-          <Typography style={{ color: 'white' }} variant="h4" component="h4">Hello, I am Team Bar.</Typography>
-        </Grid>
-      </Paper>
 
+      <div>
+        <AppBar position="fixed" color="primary" className={classes.appBar}>
+          <Grid
+            container
+            alignItems="center"
+            justify="center"
+            direction="row"
+            style={{ height: 0.15 * appHeight, background: 'green' }}
+          >
+            <Typography style={{ color: 'white' }} variant="h4" component="h4">Hello, I am Team Bar.</Typography>
+          </Grid>
+        </AppBar>
+      </div>
 
     </div >
   );

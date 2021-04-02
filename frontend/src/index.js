@@ -6,19 +6,23 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import Signup from './components/userAuth/signup';
 import Login from './components/userAuth/login';
+import Form from './formPage';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route path="/main" exact>
-          <App />
-        </Route>
-        <Route path="/login" exact>
+        <Route path="/" exact>
           <Login />
         </Route>
         <Route path="/signup" exact>
           <Signup />
+        </Route>
+        <Route path="/main" exact>
+          <App />
+        </Route>
+        <Route path="/form" exact>
+          <Form />
         </Route>
       </Switch>
     </Router>

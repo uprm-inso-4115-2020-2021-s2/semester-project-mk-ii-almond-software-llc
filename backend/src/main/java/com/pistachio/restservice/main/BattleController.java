@@ -9,7 +9,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class BattleController {
+@CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
+public class BattleController
+{
     @Autowired
     private BattleRepository battleRepo;
     @Autowired
