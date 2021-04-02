@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useCallback, Fragment } from "react";
 import {
 	Typography,
 	Grid,
@@ -22,6 +22,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
 	add: {
@@ -100,14 +101,20 @@ const useStyles = makeStyles((theme) => ({
 export default function Social() {
 	const classes = useStyles();
 	const [friendList, setFriendList] = useState([]);
+	const [requestFriendList, setRequestFriendList] = useState([]);
+	const [usernames, setUsernames] = useState([]);
+	const [playerRequesting, setPlayerRequesting] = useState(Cookies.get("user"));
+	const [playerBeingRequested, setPlayerBeingRequested] = useState(null);
 	const [checked, setChecked] = useState([1]);
-	const [anchor, setAnchor] = useState(null);
+	const [friendAnchor, setFriendAnchor] = useState(null);
+	const [requestAnchor, setRequestAnchor] = useState(null);
 	const [current, setCurrent] = useState(null);
+	const history = useHistory();
 
 	const getFriendList = async () => {
 		await axios
 			.get(
-				"https://almond-pistachio-back-end.herokuapp.com/api/player/friendList?user=" +
+				"http://localhost:8080/api/player/friendList?user=" +
 					Cookies.get("user")
 			)
 			.then((res) => {
@@ -115,33 +122,119 @@ export default function Social() {
 			});
 	};
 
-	const openMenu = (event, value) => {
-		setAnchor(event.currentTarget);
+	const getRequestFriendList = async () => {
+		await axios
+			.get(
+				"http://localhost:8080/api/player/requestFriendList?user=" +
+					Cookies.get("user")
+			)
+			.then((res) => {
+				setRequestFriendList(res.data);
+			});
+	};
+
+	const getAllUsers = async () => {
+		await axios.get("http://localhost:8080/api/player/username").then((res) => {
+			setUsernames(res.data);
+		});
+	};
+
+	const requestFriend = async () => {
+		await axios.get(
+			"http://localhost:8080/api/player/requestFriend/" +
+				playerRequesting +
+				"/" +
+				playerBeingRequested
+		);
+	};
+
+	const acceptFriend = async () => {
+		await axios
+			.put(
+				"http://localhost:8080/api/player/acceptFriend/" +
+					playerRequesting +
+					"/" +
+					current +
+					"/yes"
+			)
+			.then(() => {
+				window.location.reload();
+			});
+	};
+
+	const rejectFriend = async () => {
+		await axios
+			.put(
+				"http://localhost:8080/api/player/rejectFriend/" +
+					playerRequesting +
+					"/" +
+					current +
+					"/no"
+			)
+			.then(() => {
+				window.location.reload();
+			});
+	};
+
+	const removeFriend = async () => {
+		await axios
+			.put(
+				"http://localhost:8080/api/player/removeFriend/" +
+					current +
+					"/" +
+					playerRequesting
+			)
+			.then(() => {
+				window.location.reload();
+			});
+	};
+
+	const openFriendMenu = (event, value) => {
+		setFriendAnchor(event.currentTarget);
 		setCurrent(value);
 	};
 
-	const closeMenu = () => {
-		setAnchor(null);
+	const openRequestMenu = (event, value) => {
+		setRequestAnchor(event.currentTarget);
+		setCurrent(value);
+	};
+
+	const clickAccept = () => {
+		setRequestAnchor(null);
+		acceptFriend();
+	};
+
+	const clickDecline = () => {
+		setRequestAnchor(null);
+		rejectFriend();
+	};
+
+	const closeRequestMenu = () => {
+		setRequestAnchor(null);
+	};
+
+	const closeFriendMenu = () => {
+		setFriendAnchor(null);
 	};
 
 	const clickBattle = () => {
-		setAnchor(null);
+		setFriendAnchor(null);
 		console.log("battle selected", current);
 	};
 
 	const clickTrade = () => {
-		setAnchor(null);
+		setFriendAnchor(null);
 		console.log("trade selected", current);
 	};
 
 	const clickViewTeam = () => {
-		setAnchor(null);
+		setFriendAnchor(null);
 		console.log("view team selected", current);
 	};
 
 	const clickRemove = () => {
-		setAnchor(null);
-		console.log("remove friend selected", current);
+		setFriendAnchor(null);
+		removeFriend();
 	};
 
 	const addFriend = () => {};
@@ -160,6 +253,7 @@ export default function Social() {
 	};
 
 	useEffect(() => {
+		getRequestFriendList();
 		getFriendList();
 	}, []);
 
@@ -169,34 +263,67 @@ export default function Social() {
 				{/* <Grid container alignItems="center" justify="center" direction="column" style={{}}> */}
 				<Grid container alignItems="center" justify="center" direction="row">
 					<Grid item>
-						<Autocomplete
-							className={classes.searchBox}
-							freeSolo
-							id="search-bar"
-							disableClearable
-							options={players.map((option) => option.playerName)}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									label="Search"
-									margin="normal"
-									variant="outlined"
-									InputProps={{ ...params.InputProps, type: "search" }}
-								/>
-							)}
+						<TextField
+							label="Search"
+							margin="normal"
+							variant="outlined"
+							onChange={(e) => setPlayerBeingRequested(e.target.value)}
 						/>
 					</Grid>
 					<Grid item style={{ padding: "10px" }}>
-						<Button className={classes.add} color="primary" variant="contained">
+						<Button
+							className={classes.add}
+							color="primary"
+							variant="contained"
+							onClick={() => {
+								requestFriend();
+							}}
+						>
 							Add
 						</Button>
 					</Grid>
 				</Grid>
-				{/* </Grid> */}
-
-				{/* <Container className={classes.gridLayout}> */}
-				{/* <Container className={classes.friendsComponent}> */}
+				{/* RequestFriendList */}
 				<Grid item alignItems="center" justify="center">
+					<Typography align="left">Friend Requests</Typography>
+					<List>
+						{requestFriendList.map((value) => {
+							const labelId = `checkbox-list-secondary-label-${value}`;
+							return (
+								<ListItem
+									key={value}
+									// className={classes.friendsList}
+								>
+									<ListItemAvatar>
+										<Avatar
+											alt={`Avatar n°${value + 1}`}
+											src={`/static/images/avatar/${value}.jpg`}
+										/>
+									</ListItemAvatar>
+									<ListItemText
+										id={labelId}
+										primary={`${value}`}
+										secondary={"Testing"}
+									/>
+									<ListItemSecondaryAction>
+										<IconButton
+											edge="end"
+											aria-label="more"
+											onClick={(e) => {
+												openRequestMenu(e, value);
+											}}
+										>
+											<MoreHorizIcon />
+										</IconButton>
+									</ListItemSecondaryAction>
+								</ListItem>
+							);
+						})}
+					</List>
+				</Grid>
+				{/* FriendList */}
+				<Grid item alignItems="center" justify="center">
+					<Typography align="left">Friend List</Typography>
 					<List>
 						{friendList.map((value) => {
 							const labelId = `checkbox-list-secondary-label-${value}`;
@@ -213,24 +340,15 @@ export default function Social() {
 									</ListItemAvatar>
 									<ListItemText
 										id={labelId}
-										primary={`Line item ${value}`}
+										primary={`${value}`}
 										secondary={"Testing"}
 									/>
-									{/* <Typography variant="h4">
-                    {`Line item ${value + 1}`}
-                  </Typography> */}
 									<ListItemSecondaryAction>
-										{/* <Checkbox
-                        edge="end"
-                        onChange={handleToggle(value)}
-                        checked={checked.indexOf(value) !== -1}
-                        inputProps={{ "aria-labelledby": labelId }}
-                      /> */}
 										<IconButton
 											edge="end"
 											aria-label="more"
 											onClick={(e) => {
-												openMenu(e, value);
+												openFriendMenu(e, value);
 											}}
 										>
 											<MoreHorizIcon />
@@ -241,43 +359,30 @@ export default function Social() {
 						})}
 					</List>
 				</Grid>
-				{/* </Container> */}
-
-				{/* <Container className={classes.buttonsContainer}>
-            <Button className={classes.buttonsArrangement}>Battle</Button>
-            <Button className={classes.buttonsArrangement}>Trade</Button>
-            <Button className={classes.buttonsArrangement}>View Team</Button>
-          </Container> */}
-				{/* </Container> */}
 			</Grid>
 			<Menu
 				id="simple-menu"
-				anchorEl={anchor}
+				anchorEl={friendAnchor}
 				keepMounted
-				open={Boolean(anchor)}
-				onClose={closeMenu}
+				open={Boolean(friendAnchor)}
+				onClose={closeFriendMenu}
 			>
 				<MenuItem onClick={clickBattle}>Battle</MenuItem>
 				<MenuItem onClick={clickTrade}>Trade</MenuItem>
 				<MenuItem onClick={clickViewTeam}>View Team</MenuItem>
 				<MenuItem onClick={clickRemove}>Remove</MenuItem>
 			</Menu>
+			{/* Request Friend List Menu */}
+			<Menu
+				id="simple-menu"
+				anchorEl={requestAnchor}
+				keepMounted
+				open={Boolean(requestAnchor)}
+				onClose={closeRequestMenu}
+			>
+				<MenuItem onClick={clickAccept}>Accept</MenuItem>
+				<MenuItem onClick={clickDecline}>Decline</MenuItem>
+			</Menu>
 		</div>
 	);
 }
-
-const players = [
-	{ playerName: "The Shawshank Redemption" },
-	{ playerName: "The Godfather" },
-	{ playerName: "The Godfather: Part II" },
-	{ playerName: "The Dark Knight" },
-	{ playerName: "12 Angry Men" },
-	{ playerName: "Schindler's List" },
-	{ playerName: "Pulp Fiction" },
-	{ playerName: "The Lord of the Rings: The Return of the King" },
-	{ playerName: "The Good, the Bad and the Ugly" },
-	{ playerName: "Fight Club" },
-	{ playerName: "The Lord of the Rings: The Fellowship of the Ring" },
-	{ playerName: "Star Wars: Episode V - The Empire Strikes Back" },
-	{ playerName: "Forrest Gump" },
-];
