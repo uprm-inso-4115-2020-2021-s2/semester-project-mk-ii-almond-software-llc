@@ -62,6 +62,14 @@ public class PlayerController {
         return playerRepo.save(player);
     }
 
+    @PutMapping(value = "/player/{id}/{battleID}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void playerInBattle(@PathVariable String id, @PathVariable String battleID) {
+        Player player = getUser(id);
+        player.setBattleID(battleID);
+        update(id, player);
+    }
+
     @DeleteMapping(value = "/player/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void delete(@PathVariable String id) {
