@@ -32,6 +32,7 @@ export default function Battle(props) {
 		console.log(matched);
 	};
 
+	//axios queuePlayer
 	const queuePlayer = async () => {
 		await axios
 			.put("http://localhost:8080/api/battle/queue?player=" + player)
