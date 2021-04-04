@@ -8,6 +8,8 @@ import {
 } from "@material-ui/core";
 import BattleSystem from "./battleSystem";
 import PublicIcon from "@material-ui/icons/Public";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
 	matchmaking: {
@@ -21,21 +23,42 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Battle(props) {
 	const classes = useStyles();
-
-	const [matching, setMatching] = useState(false);
+	const [matched, setMatched] = useState(false);
+	const player = Cookies.get("user");
+	const [battleID, setBattleID] = useState("");
 
 	const toggleMatchmaking = () => {
-		setMatching(!matching);
-		console.log(matching);
+		queuePlayer();
+		console.log(matched);
 	};
 
-	const queuePlayer = () => {};
+	const queuePlayer = async () => {
+		await axios
+			.put("http://localhost:8080/api/battle/queue?player=" + player)
+			.then((res) => {
+				axios({
+					method: "put",
+					url:
+						"http://localhost:8080/api/player/" +
+						player +
+						"/" +
+						res.data.battleID,
+				});
+				setBattleID(res.data.battleID);
+				setMatched(!matched);
+			});
+	};
 
 	return (
 		<div>
-			{matching ? (
+			{matched ? (
 				<div>
-					<BattleSystem matching={matching} setMatching={setMatching} />
+					<BattleSystem
+						matched={matched}
+						setMatched={setMatched}
+						player={player}
+						battleID={battleID}
+					/>
 				</div>
 			) : (
 				<div
@@ -58,7 +81,7 @@ export default function Battle(props) {
 									aria-label="search"
 									color="primary"
 									onClick={() => {
-										toggleMatchmaking();
+										queuePlayer();
 									}}
 								>
 									<PublicIcon style={{ fontSize: 75, color: "white" }} />
@@ -72,7 +95,7 @@ export default function Battle(props) {
 								color="primary"
 								className={classes.matchmaking}
 								onClick={() => {
-									toggleMatchmaking();
+									queuePlayer();
 								}}
 							>
 								<Typography
