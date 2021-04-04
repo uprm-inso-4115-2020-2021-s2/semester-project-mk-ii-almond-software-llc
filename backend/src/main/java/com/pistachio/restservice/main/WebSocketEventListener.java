@@ -29,19 +29,19 @@ public class WebSocketEventListener {
   public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
 
     StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-    String name = (String) headerAccessor.getSessionAttributes().get("name");
-    String room = (String) headerAccessor.getSessionAttributes().get("room");
+    String username = (String) headerAccessor.getSessionAttributes().get("username");
+    String battleID = (String) headerAccessor.getSessionAttributes().get("battleID");
 
-    System.out.println("Disconnect detected from " + name + " in room " + room);
+    System.out.println("Disconnect detected from " + username + " in battleID " + battleID);
 
-    if (name != null) {
-      logger.info(name + " has disconnected!");
+    if (username != null) {
+      logger.info(username + " has disconnected!");
 
       Action action = new Action();
-      action.setUsername(name);
-      action.setContent(name + " has disconnected!");
+      action.setUsername(username);
+      action.setContent(username + " has disconnected!");
       action.setServer(true);
-      messagingTemplate.convertAndSend(format("/topic/%s", room), action);
+      messagingTemplate.convertAndSend(format("/topic/%s", battleID), action);
     }
   }
   

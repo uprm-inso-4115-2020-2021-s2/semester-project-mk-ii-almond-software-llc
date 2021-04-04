@@ -21,15 +21,15 @@ public class WebSocketController{
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
-    @MessageMapping("/sendMessage/{room}")
-    public void sendToAll(@DestinationVariable String room, @Payload Action action) {
-        messagingTemplate.convertAndSend(format("/topic/%s", room), action);
+    @MessageMapping("/sendMessage/{battleID}")
+    public void sendToAll(@DestinationVariable String battleID, @Payload Action action) {
+        messagingTemplate.convertAndSend(format("/topic/%s", battleID), action);
     }
 
-    @MessageMapping("/addUser/{room}")
-    public void addUser(@DestinationVariable String room, @Payload Action newAction,
+    @MessageMapping("/addUser/{battleID}")
+    public void addUser(@DestinationVariable String battleID, @Payload Action newAction,
             SimpMessageHeaderAccessor headerAccessor) {
-        String currentRoom = (String) headerAccessor.getSessionAttributes().put("room", room);
+        String currentRoom = (String) headerAccessor.getSessionAttributes().put("battleID", battleID);
         if (currentRoom != null) {
             Action leaveAction = new Action();
             leaveAction.setUsername(newAction.getUsername());
@@ -37,8 +37,8 @@ public class WebSocketController{
             leaveAction.setServer(true);
             messagingTemplate.convertAndSend(format("/channel/%s", currentRoom), leaveAction);
         }
-        headerAccessor.getSessionAttributes().put("name", newAction.getUsername());
-        messagingTemplate.convertAndSend(format("/topic/%s", room), newAction);
+        headerAccessor.getSessionAttributes().put("username", newAction.getUsername());
+        messagingTemplate.convertAndSend(format("/topic/%s", battleID), newAction);
     }
     
 
