@@ -39,6 +39,8 @@ public class Battle {
      */
     private List<Monster> secondPlayerTeam;
 
+    private String victor;
+
 
     //-[Getters/Setters]--------------------------------------------------
 
@@ -47,12 +49,14 @@ public class Battle {
     public List<Monster> getFirstPlayerTeam() {return firstPlayerTeam;}
     public String getSecondPlayerID() {return secondPlayerID;}
     public List<Monster> getSecondPlayerTeam() {return secondPlayerTeam;}
+    public String getVictor() {return victor;}
 
     public void setBattleID(String battleID) {this.battleID = battleID;}
     public void setFirstPlayerID(String firstPlayerID) {this.firstPlayerID = firstPlayerID;}
     public void setFirstPlayerTeam(List<Monster> firstPlayerTeam) {this.firstPlayerTeam = firstPlayerTeam;}
     public void setSecondPlayerID(String secondPlayerID) {this.secondPlayerID = secondPlayerID;}
     public void setSecondPlayerTeam(List<Monster> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
+    public void setVictor(String winnerUsername) {this.victor= winnerUsername;}
 
     //-[Constructors]----------------------------------------------------------
 
