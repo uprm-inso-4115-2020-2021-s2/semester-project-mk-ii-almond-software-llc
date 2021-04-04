@@ -3904,3 +3904,4 @@ com.mongodb.MongoSocketReadException: Prematurely reached end of stream
 2021-04-04 01:43:37.456  INFO 17496 --- [http-nio-8080-exec-2] c.p.r.main.WebSocketEventListener        : test1 has disconnected!
 2021-04-04 01:43:59.960  INFO 17496 --- [clientOutboundChannel-29] c.p.r.main.WebSocketEventListener        : Received a new web socket connection.
 2021-04-04 01:44:01.779  INFO 17496 --- [clientOutboundChannel-31] c.p.r.main.WebSocketEventListener        : Received a new web socket connection.
+2021-04-04 01:44:07.800  INFO 17496 --- [http-nio-8080-exec-9] c.p.r.main.WebSocketEventListener        : test2 has disconnected!
