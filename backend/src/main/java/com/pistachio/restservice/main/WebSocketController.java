@@ -1,10 +1,14 @@
 package com.pistachio.restservice.main;
 
+import static java.lang.String.format;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
@@ -19,28 +23,26 @@ import javax.websocket.server.ServerEndpoint;
 public class WebSocketController{
 
     @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
-    private final SimpUserRegistry simpUserRegistry;
+    private SimpMessageSendingOperations messagingTemplate;
 
-
-    public WebSocketController(SimpUserRegistry simpUserRegistry) {
-        this.simpUserRegistry = simpUserRegistry;
-
+    @MessageMapping("/sendMessage/{room}")
+    public void sendToAll(@DestinationVariable String room, @Payload Action action) {
+        messagingTemplate.convertAndSend(format("/topic/%s", room), action);
     }
 
-    @MessageMapping("chat/")
-    @SendTo("/queue/")
-    public Action sendAction(@Payload Action action){
-
-       SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
-        headerAccessor.setSessionId(action.getReceiver());
-        headerAccessor.setLeaveMutable(true);
-        simpMessagingTemplate.convertAndSendToUser(action.getUsername(),"/queue/",
-                action.getContent(),headerAccessor.getMessageHeaders());
-
-
-        return action;
-
+    @MessageMapping("/addUser/{room}")
+    public void addUser(@DestinationVariable String room, @Payload Action newAction,
+            SimpMessageHeaderAccessor headerAccessor) {
+        String currentRoom = (String) headerAccessor.getSessionAttributes().put("room", room);
+        if (currentRoom != null) {
+            Action leaveAction = new Action();
+            leaveAction.setUsername(newAction.getUsername());
+            leaveAction.setContent(newAction.getContent() + " has disconnected!");
+            leaveAction.setServer(true);
+            messagingTemplate.convertAndSend(format("/channel/%s", currentRoom), leaveAction);
+        }
+        headerAccessor.getSessionAttributes().put("name", newAction.getUsername());
+        messagingTemplate.convertAndSend(format("/topic/%s", room), newAction);
     }
     
 

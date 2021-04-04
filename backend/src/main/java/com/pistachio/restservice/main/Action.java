@@ -5,25 +5,25 @@ import java.util.Objects;
 public class Action {
 
     private String username;
-    private String receiver;
+    private Boolean server;
     private String content;
 
 
     //Constructors
     public Action(){}
 
-    public Action(String username, String receiver, String content)
+    public Action(String username, Boolean server, String content)
     {
         this.username = username;
-        this.receiver = receiver;
+        this.server = server;
         this.content = content;
     }
 
     //Getters and setters
     public String getUsername() {return username;}
     public void setUsername(String username) {this.username = username;}
-    public String getReceiver() {return receiver;}
-    public void setReceiver(String receiver) {this.receiver = receiver;}
+    public Boolean getServer() {return server;}
+    public void setServer(Boolean server) {this.server = server;}
     public String getContent() {return content;}
     public void setContent(String content) {this.content = content;}
 
