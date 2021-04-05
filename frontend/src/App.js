@@ -27,6 +27,7 @@ import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import CachedIcon from "@material-ui/icons/Cached";
+import Loot from './components/loot/loot';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,8 +50,15 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
   },
   names: {
-    borderStyle: "solid",
+    // borderStyle: "solid",
   },
+  monsterNames: {
+		margin: theme.spacing(3, 0, 2),
+		backgroundColor: "green",
+		"&:hover": {
+			backgroundColor: "darkgreen",
+		},
+	},
   // icon: {
   //   position: "absolute",
   //   color: "black",
@@ -65,10 +73,11 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles();
   const { height, width } = useWindowDimensions();
+  const [matched, setMatched] = useState(false);
   const [appHeight, setAppHeight] = useState(height);
   const [value, setValue] = useState(0);
   let history = useHistory();
-  const monsterCollection = [1, 2, 3,];
+  const monsterCollection = [1, 2, 3];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -94,29 +103,32 @@ export default function App() {
           elevation={3}
           style={{ backgroundColor: "green" }}
         >
-          <Toolbar variant="dense" style={{ justifyContent: "space-between" }}>
-            <IconButton
+          <Toolbar variant="dense" style={{ justifyContent: "center" }}>
+            {/* <IconButton
               edge="start"
               className={classes.taskButton}
               color="inherit"
               aria-label="menu"
             >
               <AssignmentIcon fontSize="small" />
-            </IconButton>
+            </IconButton> */}
             <Tabs value={value} onChange={handleChange}>
               <Tab
                 icon={<PeopleIcon fontSize="small" />}
                 label="Social"
+                disabled={matched}
                 {...a11yProps(0)}
               />
               <Tab
                 icon={<HomeIcon fontSize="small" />}
                 label="Main"
+                disabled={matched}
                 {...a11yProps(1)}
               />
               <Tab
                 icon={<SportsKabaddiIcon fontSize="small" />}
                 label="Battle"
+                disabled={matched}
                 {...a11yProps(2)}
               />
             </Tabs>
@@ -125,13 +137,11 @@ export default function App() {
               className={classes.logoutButton}
               color="inherit"
               aria-label="menu"
+              onClick={() => {
+                logoutUser();
+              }}
             >
-              <ExitToAppIcon
-                fontSize="small"
-                onClick={() => {
-                  logoutUser();
-                }}
-              />
+              <ExitToAppIcon fontSize="small" />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -147,7 +157,7 @@ export default function App() {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <Battle appHeight={0.85 * appHeight - 0.15 * appHeight} />
+          <Battle appHeight={0.85 * appHeight - 0.15 * appHeight} matched={matched} setMatched={setMatched} />
         </TabPanel>
       </div>
 
@@ -161,12 +171,12 @@ export default function App() {
             style={{ height: 0.15 * appHeight, background: "green" }}
           >
             <Grid container item xs={12} spacing={3}>
-              {monsterCollection.map((i) => {
+              {monsterCollection.map((e, i) => {
                 return (
-                  <Grid item xs={4} alignItems="center" justify="center">
+                  <Grid item xs={4} key={i}>
                     <AccountCircleRoundedIcon style={{ fontSize: "2.5rem" }} />
                     <Typography className={classes.names}>
-                      {"monster " + monsterCollection[i]}
+                      {"Monster " + e}
                     </Typography>
                   </Grid>
                 );

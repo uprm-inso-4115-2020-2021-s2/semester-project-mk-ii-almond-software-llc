@@ -23,6 +23,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router";
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 
 const useStyles = makeStyles((theme) => ({
 	add: {
@@ -115,7 +116,7 @@ export default function Social() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/friendList?user=" +
-					Cookies.get("user")
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setFriendList(res.data);
@@ -126,7 +127,7 @@ export default function Social() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/requestFriendList?user=" +
-					Cookies.get("user")
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setRequestFriendList(res.data);
@@ -142,9 +143,9 @@ export default function Social() {
 	const requestFriend = async () => {
 		await axios.get(
 			"http://localhost:8080/api/player/requestFriend/" +
-				playerRequesting +
-				"/" +
-				playerBeingRequested
+			playerRequesting +
+			"/" +
+			playerBeingRequested
 		);
 	};
 
@@ -152,10 +153,10 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/acceptFriend/" +
-					playerRequesting +
-					"/" +
-					current +
-					"/yes"
+				playerRequesting +
+				"/" +
+				current +
+				"/yes"
 			)
 			.then(() => {
 				window.location.reload();
@@ -166,10 +167,10 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/rejectFriend/" +
-					playerRequesting +
-					"/" +
-					current +
-					"/no"
+				playerRequesting +
+				"/" +
+				current +
+				"/no"
 			)
 			.then(() => {
 				window.location.reload();
@@ -180,9 +181,9 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/removeFriend/" +
-					current +
-					"/" +
-					playerRequesting
+				current +
+				"/" +
+				playerRequesting
 			)
 			.then(() => {
 				window.location.reload();
@@ -237,7 +238,7 @@ export default function Social() {
 		removeFriend();
 	};
 
-	const addFriend = () => {};
+	const addFriend = () => { };
 
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
@@ -284,81 +285,87 @@ export default function Social() {
 					</Grid>
 				</Grid>
 				{/* RequestFriendList */}
-				<Grid item alignItems="center" justify="center">
-					<Typography align="left">Friend Requests</Typography>
-					<List>
-						{requestFriendList.map((value) => {
-							const labelId = `checkbox-list-secondary-label-${value}`;
-							return (
-								<ListItem
-									key={value}
+				{requestFriendList.length > 0 ?
+					<Grid item >
+						<Typography align="left" variant="h5">Friend Requests</Typography>
+						<List>
+							{requestFriendList.map((value) => {
+								const labelId = `checkbox-list-secondary-label-${value}`;
+								return (
+									<ListItem
+										key={value}
 									// className={classes.friendsList}
-								>
-									<ListItemAvatar>
-										<Avatar
-											alt={`Avatar n°${value + 1}`}
-											src={`/static/images/avatar/${value}.jpg`}
+									>
+										<ListItemAvatar>
+											<AccountCircleRoundedIcon style={{ fontSize: "4rem", color: 'green' }} />
+											{/* <Avatar
+										alt={`Avatar n°${value + 1}`}
+										src={`/static/images/avatar/${value}.jpg`}
+									/> */}
+										</ListItemAvatar>
+										<ListItemText
+											id={labelId}
+											primary={value}
+											secondary={"Testing"}
 										/>
-									</ListItemAvatar>
-									<ListItemText
-										id={labelId}
-										primary={`${value}`}
-										secondary={"Testing"}
-									/>
-									<ListItemSecondaryAction>
-										<IconButton
-											edge="end"
-											aria-label="more"
-											onClick={(e) => {
-												openRequestMenu(e, value);
-											}}
-										>
-											<MoreHorizIcon />
-										</IconButton>
-									</ListItemSecondaryAction>
-								</ListItem>
-							);
-						})}
-					</List>
-				</Grid>
+										<ListItemSecondaryAction>
+											<IconButton
+												edge="end"
+												aria-label="more"
+												onClick={(e) => {
+													openRequestMenu(e, value);
+												}}
+											>
+												<MoreHorizIcon />
+											</IconButton>
+										</ListItemSecondaryAction>
+									</ListItem>
+								);
+							})}
+						</List>
+					</Grid> : <div />
+				}
 				{/* FriendList */}
-				<Grid item alignItems="center" justify="center">
-					<Typography align="left">Friend List</Typography>
-					<List>
-						{friendList.map((value) => {
-							const labelId = `checkbox-list-secondary-label-${value}`;
-							return (
-								<ListItem
-									key={value}
+				{friendList.length > 0 ?
+					<Grid item>
+						<Typography align="left" variant="h5">Friends List</Typography>
+						<List>
+							{friendList.map((value) => {
+								const labelId = `checkbox-list-secondary-label-${value}`;
+								return (
+									<ListItem
+										key={value}
 									// className={classes.friendsList}
-								>
-									<ListItemAvatar>
-										<Avatar
-											alt={`Avatar n°${value + 1}`}
-											src={`/static/images/avatar/${value}.jpg`}
+									>
+										<ListItemAvatar>
+											<AccountCircleRoundedIcon style={{ fontSize: "3rem", color: 'green' }} />
+											{/* <Avatar
+										alt={`Avatar n°${value + 1}`}
+										src={`/static/images/avatar/${value}.jpg`}
+									/> */}
+										</ListItemAvatar>
+										<ListItemText
+											id={labelId}
+											primary={`${value}`}
+											secondary={"Testing"}
 										/>
-									</ListItemAvatar>
-									<ListItemText
-										id={labelId}
-										primary={`${value}`}
-										secondary={"Testing"}
-									/>
-									<ListItemSecondaryAction>
-										<IconButton
-											edge="end"
-											aria-label="more"
-											onClick={(e) => {
-												openFriendMenu(e, value);
-											}}
-										>
-											<MoreHorizIcon />
-										</IconButton>
-									</ListItemSecondaryAction>
-								</ListItem>
-							);
-						})}
-					</List>
-				</Grid>
+										<ListItemSecondaryAction>
+											<IconButton
+												edge="end"
+												aria-label="more"
+												onClick={(e) => {
+													openFriendMenu(e, value);
+												}}
+											>
+												<MoreHorizIcon />
+											</IconButton>
+										</ListItemSecondaryAction>
+									</ListItem>
+								);
+							})}
+						</List>
+					</Grid> : <div />
+				}
 			</Grid>
 			<Menu
 				id="simple-menu"

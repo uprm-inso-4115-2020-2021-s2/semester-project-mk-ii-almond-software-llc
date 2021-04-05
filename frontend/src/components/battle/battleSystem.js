@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { Typography, Grid, Button, makeStyles } from "@material-ui/core";
 import SockJsClient from 'react-stomp';
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
 	back: {
@@ -32,6 +33,8 @@ export default function BattleSystem(props) {
 	};
 
 	const leaveRoom = () => {
+		// Cookies.set("matched", false)
+		props.setMatched(!props.matched);
 		const tempTopics = []
 		setTopics(tempTopics)
 		const tempMessages = []
@@ -48,7 +51,6 @@ export default function BattleSystem(props) {
 					color="primary"
 					onClick={() => {
 						leaveRoom();
-						props.setMatched(!props.matched);
 					}}
 				>
 					Back

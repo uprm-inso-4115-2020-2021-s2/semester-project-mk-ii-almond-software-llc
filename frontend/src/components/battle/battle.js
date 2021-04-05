@@ -14,23 +14,18 @@ import axios from "axios";
 const useStyles = makeStyles((theme) => ({
 	matchmaking: {
 		margin: theme.spacing(3, 0, 2),
-		backgroundColor: "green",
-		"&:hover": {
-			backgroundColor: "darkgreen",
-		},
+		// backgroundColor: "gray",
+		// "&:hover": {
+		// 	backgroundColor: "darkgray",
+		// },
 	},
 }));
 
 export default function Battle(props) {
 	const classes = useStyles();
-	const [matched, setMatched] = useState(false);
+	// const [matched, setMatched] = useState(false);
 	const player = Cookies.get("user");
 	const [battleID, setBattleID] = useState("");
-
-	const toggleMatchmaking = () => {
-		queuePlayer();
-		console.log(matched);
-	};
 
 	//axios queuePlayer
 	const queuePlayer = async () => {
@@ -39,24 +34,20 @@ export default function Battle(props) {
 			.then((res) => {
 				axios({
 					method: "put",
-					url:
-						"http://localhost:8080/api/player/" +
-						player +
-						"/" +
-						res.data.battleID,
+					url: "http://localhost:8080/api/player/" + player + "/" + res.data.battleID,
 				});
 				setBattleID(res.data.battleID);
-				setMatched(!matched);
+				props.setMatched(!props.matched);
 			});
 	};
 
 	return (
 		<div>
-			{matched ? (
+			{props.matched ? (
 				<div>
 					<BattleSystem
-						matched={matched}
-						setMatched={setMatched}
+						matched={props.matched}
+						setMatched={props.setMatched}
 						player={player}
 						battleID={battleID}
 					/>
@@ -91,7 +82,7 @@ export default function Battle(props) {
 						</Grid>
 						<Grid item>
 							<Button
-								variant="contained"
+								// variant="contained"
 								size="large"
 								color="primary"
 								className={classes.matchmaking}
@@ -102,7 +93,6 @@ export default function Battle(props) {
 								<Typography
 									variant="h5"
 									component="h5"
-									style={{ color: "white" }}
 								>
 									Matchmaking
 								</Typography>

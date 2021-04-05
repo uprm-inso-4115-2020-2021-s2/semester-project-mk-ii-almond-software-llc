@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,18 +16,17 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   names: {
-    borderStyle: "solid",
+    // borderStyle: "solid",
     maxWidth: "auto",
-    //marginLeft: "9rem",
-    // [theme.breakpoints.between("300", "700")]: {
-    //   marginLeft: "1rem",
-    // },
-    // [theme.breakpoints.between("710", "750")]: {
-    //   marginLeft: "2rem",
-    // },
-    // [theme.breakpoints.between("768", "lg")]: {
-    //   marginLeft: "5rem",
-    // },
+    [theme.breakpoints.between("300", "700")]: {
+      fontSize: "14px",
+    },
+    [theme.breakpoints.between("710", "750")]: {
+      fontSize: "18px",
+    },
+    [theme.breakpoints.between("768", "lg")]: {
+      fontSize: "22px",
+    },
   },
 }));
 
@@ -48,22 +47,19 @@ export default function Main() {
 
   return (
     <div className={classes.root}>
-      <Grid container alignItems="center" justify="center" spacing={1}>
-        <Typography align="center" className={classes.main}>
-          Main
-        </Typography>
-        <Grid container item xs={12} spacing={3}>
-          {monsterCollection.map((i) => {
-            return (
-              <Grid item xs={4} alignItems="center" justify="center">
-                <AccountCircleRoundedIcon style={{ fontSize: "4rem" }} />
+      <Grid container item spacing={4} justify="space-around" alignItems="center">
+        {monsterCollection.map((e, i) => {
+          return (
+            <Grid item xs={4} key={i}>
+              <Grid container direction="column" alignItems="center" justify="center">
+                <AccountCircleRoundedIcon style={{ fontSize: "5rem", color: 'green' }} />
                 <Typography className={classes.names}>
-                  {"monster " + monsterCollection[i]}
+                  {"Monster " + e}
                 </Typography>
               </Grid>
-            );
-          })}
-        </Grid>
+            </Grid>
+          );
+        })}
       </Grid>
     </div>
   );
