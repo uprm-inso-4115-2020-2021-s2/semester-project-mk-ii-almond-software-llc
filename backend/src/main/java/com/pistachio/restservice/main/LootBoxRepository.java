@@ -1,5 +1,5 @@
 package com.pistachio.restservice.main;
 
-public class LootBoxREpository {
+public class LootBoxRepository {
     
 }
