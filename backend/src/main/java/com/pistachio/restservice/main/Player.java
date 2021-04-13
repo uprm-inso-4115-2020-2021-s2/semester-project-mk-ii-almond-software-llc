@@ -285,19 +285,6 @@ public class Player {
 			this.friendRequests.remove(p.getUser());
 			return true;
 
-<<<<<<< HEAD
-
-	/**
-	 * Declines friendship request from the given player P (Who <b>must</b> be in
-	 * the pending friends list).
-	 * 
-	 * @param p
-	 */
-	public void declineFriendship(Player p) {
-		if (!friendRequests.contains(p)) {
-			throw new IllegalArgumentException("Player " + p.getUser() + " is not in the pending friends list");
-=======
->>>>>>> 0725bfc2b969fde90e4178f6785102285cf1de8e
 		}
 
 		else if (friendRequests.contains(p.getUser()) && reject) {
