@@ -38,7 +38,7 @@ export default function Main(props) {
 	const postMonster = async () => {
 		await axios({
 			method: "post",
-			url: "https://almond-pistachio-back-end.herokuapp.com/api/monster/add",
+			url: "http://localhost:8080/api/monster/add",
 			data: {
 				name: name,
 				stats: {
