@@ -10,6 +10,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import HomeIcon from '@material-ui/icons/Home';
 import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 import PeopleIcon from '@material-ui/icons/People';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,13 +22,13 @@ import a11yProps from './components/tabs/a11yProps';
 import Social from './components/social/social';
 import Main from './components/main/main';
 import Battle from './components/battle/battle';
+import Loot from './components/loot/loot';
 import { Typography, Grid } from '@material-ui/core';
 import useWindowDimensions from './components/windowDimensions/useWindowDimensions'
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import CachedIcon from "@material-ui/icons/Cached";
-import Loot from './components/loot/loot';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -131,6 +132,12 @@ export default function App() {
                 disabled={matched}
                 {...a11yProps(2)}
               />
+              <Tab
+                icon={<LocalMallIcon fontSize="small" />}
+                label="Loot"
+                disabled={matched}
+                {...a11yProps(3)}
+              />
             </Tabs>
             <IconButton
               edge="end"
@@ -158,6 +165,10 @@ export default function App() {
 
         <TabPanel value={value} index={2}>
           <Battle appHeight={0.85 * appHeight - 0.15 * appHeight} matched={matched} setMatched={setMatched} />
+        </TabPanel>
+
+        <TabPanel value={value} index={3}>
+          <Loot />
         </TabPanel>
       </div>
 
