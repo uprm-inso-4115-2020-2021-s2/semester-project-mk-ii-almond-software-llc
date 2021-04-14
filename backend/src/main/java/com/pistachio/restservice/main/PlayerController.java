@@ -122,7 +122,7 @@ public class PlayerController {
             playerThatRequested.addFriend(playerThatAccepted);
         }
 
-        // Save both players into db regardless of wether friendship was accepted or not
+        // Save both players into db regardless of whether friendship was accepted or not
         this.update(playerThatRequested.getUser(), playerThatRequested);
         this.update(playerThatAccepted.getUser(), playerThatAccepted);
     }
