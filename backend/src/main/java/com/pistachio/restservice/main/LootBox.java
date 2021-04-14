@@ -21,11 +21,22 @@ public class LootBox {
 		this.ID=ID;
 		this.Monsters=Monsters;
 	}
+
+	/**
+	 * @return the monsters
+	 */
+	public List<Monster> getMonsters() {return Monsters;}
+
+	/**
+	 * @param monsters the monsters to set
+	 */
+	public void setMonsters(List<Monster> monsters) {Monsters = monsters;}
+
 	
 	/**
 	 * Static randomizer used to randomize *all* lootboxes
 	 */
-	private static Random Randomizer = new Random();
+	private static final Random Randomizer = new Random();
 	
 	/**
 	 * Picks one of the monsters in the provided lootbox
