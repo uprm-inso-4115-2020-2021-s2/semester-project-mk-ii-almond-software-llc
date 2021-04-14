@@ -118,7 +118,7 @@ public class PlayerController {
         Player playerThatRequested = getUser(Destination);
         Player playerThatAccepted = getUser(Origin);
 
-        if (playerThatAccepted.acceptFriendship(playerThatRequested, false)) {
+        if (playerThatAccepted.respondToFriendshipRequest(playerThatRequested, false)) {
             playerThatRequested.addFriend(playerThatAccepted);
         }
 
@@ -140,7 +140,7 @@ public class PlayerController {
         Player playerThatRequested = getUser(Destination);
         Player playerThatRejected = getUser(Origin);
 
-        if (playerThatRejected.acceptFriendship(playerThatRequested, true)) {
+        if (playerThatRejected.respondToFriendshipRequest(playerThatRequested, true)) {
             playerThatRequested.addFriend(playerThatRejected);
         }
 

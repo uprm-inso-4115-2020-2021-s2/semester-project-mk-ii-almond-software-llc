@@ -253,30 +253,41 @@ public class Player {
 	}
 
 	/**
-	 * 
 	 * Adds a player object to the list of players in the user's friends list
-	 * 
 	 * @param p
 	 */
 
-	public void addFriend(Player p) {
-		this.confirmedFriends.add(p.getUser());
-	}
+	public void addFriend(Player p) {this.confirmedFriends.add(p.getUser());}
 
 	/**
-	 * 
 	 * Accepts friendship request from the given player P (Who <b>must</b> be in the
 	 * pending friends list). Adds this player to Player P's confirmed friends list
 	 * 
 	 * @param p
+	 * @return RespondToFriendshipRequest(p,false) 
+	*/
+	public boolean acceptFriendship(Player p) {return respondToFriendshipRequest(p, false);}
+	
+	/**
+	 * Rejects friendship request from the given player P (Who <b>must</b> be in the
+	 * pending friends list).
+	 * @param p
+	 * @return RespondToFriendshipRequest(p,true)
 	 */
-	public boolean acceptFriendship(Player p, boolean reject) {
-		if (!friendRequests.contains(p.getUser())) {
-			// throw new IllegalArgumentException("Player " + p.getUser() + " is not in the
-			// pending friends list");
-			return false;
-		}
-		// THIS IS THE PROBLEM
+	public boolean rejectFriendship(Player p) {return respondToFriendshipRequest(p, true);}
+	
+	
+	/**
+	 * Responds to a friendship request from the given player P (Who <b>must</b> be in the
+	 * pending friends list). Adds this player to Player P's confirmed friends list
+	 * 
+	 * @return True if the specified command was able to be done.
+	 * 
+	 * @param p
+	 * @param reject Whether or not to reject the friendship request
+	 */
+	public boolean respondToFriendshipRequest(Player p, boolean reject) {
+		if (!friendRequests.contains(p.getUser())) {return false;}
 		else if (friendRequests.contains(p.getUser()) && !reject) {
 			if (p.friendRequests.contains(this.getUser())) {
 				p.friendRequests.remove(this.getUser());
@@ -289,9 +300,7 @@ public class Player {
 		else if (friendRequests.contains(p.getUser()) && reject) {
 			this.friendRequests.remove(p.getUser());
 			return false;
-		} else {
-			return false;
-		}
+		} else {return false;}
 	}
 
 
