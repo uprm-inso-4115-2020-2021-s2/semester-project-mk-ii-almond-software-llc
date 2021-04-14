@@ -222,7 +222,7 @@ public class Player {
 	 * @return True if and only if the pass matches the one held in this player
 	 */
 	public boolean checkPass(String pass) {
-		if (this.pass == null) {
+		if (this.pass == "") {
 			throw new IllegalStateException("This user isn't meant for authentication purposes");
 		}
 		return pass.contentEquals(this.pass);
@@ -232,9 +232,7 @@ public class Player {
 	 * Clears the pass of this user in memory. <b>MUST BE USED BEFORE SENDING PLAYER
 	 * THROUGH NETWORK</b>
 	 */
-	public void clearPass() {
-		pass = null;
-	}
+	public void clearPass() {pass = "";}
 
 	/**
 	 * Adds given player P to the pending friends list of this player. Player P
