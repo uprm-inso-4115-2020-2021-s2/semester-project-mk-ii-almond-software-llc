@@ -15,9 +15,9 @@ public class LootBox {
  
 	@Id
 	private String ID;
-	private List<Monster> Monsters;
+	private List<String> Monsters;
 	
-	public LootBox(String ID, List<Monster> Monsters) {
+	public LootBox(String ID, List<String> Monsters) {
 		this.ID=ID;
 		this.Monsters=Monsters;
 	}
@@ -25,12 +25,12 @@ public class LootBox {
 	/**
 	 * @return the monsters
 	 */
-	public List<Monster> getMonsters() {return Monsters;}
+	public List<String> getMonsters() {return Monsters;}
 
 	/**
 	 * @param monsters the monsters to set
 	 */
-	public void setMonsters(List<Monster> monsters) {Monsters = monsters;}
+	public void setMonsters(List<String> monsters) {Monsters = monsters;}
 
 	
 	/**
@@ -43,7 +43,7 @@ public class LootBox {
 	 * @param l
 	 * @return
 	 */
-	public static Monster OpenLootbox(LootBox l) {return l.Monsters.get(Randomizer.nextInt(l.Monsters.size()));}
+	public static String OpenLootbox(LootBox l) {return l.Monsters.get(Randomizer.nextInt(l.Monsters.size()));}
 
 	@Override
 	public String toString() {
