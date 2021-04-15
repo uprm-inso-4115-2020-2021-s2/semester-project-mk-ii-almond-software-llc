@@ -18,6 +18,9 @@ public class LootBoxController
     
     @Autowired
     private PlayerRepository PlayerRepo;
+    
+    @Autowired
+    private MonsterRepository MonsterRepo;
 
     @PostMapping("/lootbox/add")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -53,7 +56,8 @@ public class LootBoxController
     	Player p = PlayerRepo.findById(player).orElseThrow(() -> new ResourceNotFoundException());
     	LootBox L = getOne(id);
     	
-    	Monster ReturnMonster = LootBox.OpenLootbox(L);
+    	Monster ReturnMonster = MonsterRepo.findById(LootBox.OpenLootbox(L))
+    							.orElseThrow(() -> new ResourceNotFoundException());
     	
     	if(ReturnMonster.getName().startsWith("PISTACHIO")) {
     		//Cash monster
