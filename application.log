@@ -7396,3 +7396,4 @@ Caused by: java.net.UnknownHostException: No such host is known (pistachiocluste
 	at com.mongodb.ServerAddress.getSocketAddresses(ServerAddress.java:203) ~[mongodb-driver-core-4.1.1.jar:na]
 	... 6 common frames omitted
 
+2021-04-06 12:39:01.162  INFO 17496 --- [MessageBroker-6] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 29 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(29)-CONNECTED(29)-DISCONNECT(21)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 471], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 128], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 2, completed tasks = 46597]

@@ -116,7 +116,7 @@ export default function Social() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/friendList?user=" +
-					Cookies.get("user")
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setFriendList(res.data);
@@ -127,7 +127,7 @@ export default function Social() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/requestFriendList?user=" +
-					Cookies.get("user")
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setRequestFriendList(res.data);
@@ -143,9 +143,9 @@ export default function Social() {
 	const requestFriend = async () => {
 		await axios.get(
 			"http://localhost:8080/api/player/requestFriend/" +
-				playerRequesting +
-				"/" +
-				playerBeingRequested
+			playerRequesting +
+			"/" +
+			playerBeingRequested
 		);
 	};
 
@@ -153,10 +153,10 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/acceptFriend/" +
-					playerRequesting +
-					"/" +
-					current +
-					"/yes"
+				playerRequesting +
+				"/" +
+				current +
+				"/yes"
 			)
 			.then(() => {
 				window.location.reload();
@@ -167,10 +167,10 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/rejectFriend/" +
-					playerRequesting +
-					"/" +
-					current +
-					"/no"
+				playerRequesting +
+				"/" +
+				current +
+				"/no"
 			)
 			.then(() => {
 				window.location.reload();
@@ -181,9 +181,9 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/removeFriend/" +
-					current +
-					"/" +
-					playerRequesting
+				current +
+				"/" +
+				playerRequesting
 			)
 			.then(() => {
 				window.location.reload();
@@ -238,7 +238,7 @@ export default function Social() {
 		removeFriend();
 	};
 
-	const addFriend = () => {};
+	const addFriend = () => { };
 
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
