@@ -116,7 +116,7 @@ export default function Social() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/friendList?user=" +
-				Cookies.get("user")
+					Cookies.get("user")
 			)
 			.then((res) => {
 				setFriendList(res.data);
@@ -127,7 +127,7 @@ export default function Social() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/requestFriendList?user=" +
-				Cookies.get("user")
+					Cookies.get("user")
 			)
 			.then((res) => {
 				setRequestFriendList(res.data);
@@ -143,9 +143,9 @@ export default function Social() {
 	const requestFriend = async () => {
 		await axios.get(
 			"http://localhost:8080/api/player/requestFriend/" +
-			playerRequesting +
-			"/" +
-			playerBeingRequested
+				playerRequesting +
+				"/" +
+				playerBeingRequested
 		);
 	};
 
@@ -153,10 +153,10 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/acceptFriend/" +
-				playerRequesting +
-				"/" +
-				current +
-				"/yes"
+					playerRequesting +
+					"/" +
+					current +
+					"/yes"
 			)
 			.then(() => {
 				window.location.reload();
@@ -167,10 +167,10 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/rejectFriend/" +
-				playerRequesting +
-				"/" +
-				current +
-				"/no"
+					playerRequesting +
+					"/" +
+					current +
+					"/no"
 			)
 			.then(() => {
 				window.location.reload();
@@ -181,9 +181,9 @@ export default function Social() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/removeFriend/" +
-				current +
-				"/" +
-				playerRequesting
+					current +
+					"/" +
+					playerRequesting
 			)
 			.then(() => {
 				window.location.reload();
@@ -238,7 +238,7 @@ export default function Social() {
 		removeFriend();
 	};
 
-	const addFriend = () => { };
+	const addFriend = () => {};
 
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
@@ -285,71 +285,84 @@ export default function Social() {
 					</Grid>
 				</Grid>
 				{/* RequestFriendList */}
-				{requestFriendList.length > 0 ?
-					<Grid item >
-						<Typography align="left" variant="h5">Friend Requests</Typography>
-						<List>
+				{requestFriendList.length > 0 ? (
+					<Grid item>
+						<Typography align="left" variant="h5">
+							Friend Requests
+						</Typography>
+						<Grid
+							container
+							justify="center"
+							alignItems="center"
+							direction="row"
+						>
 							{requestFriendList.map((value) => {
 								const labelId = `checkbox-list-secondary-label-${value}`;
 								return (
-									<ListItem
-										key={value}
-									// className={classes.friendsList}
+									<Grid
+										container
+										justify="flex-start"
+										alignItems="center"
+										direction="row"
 									>
-										<ListItemAvatar>
-											<AccountCircleRoundedIcon style={{ fontSize: "4rem", color: 'green' }} />
-											{/* <Avatar
-										alt={`Avatar n°${value + 1}`}
-										src={`/static/images/avatar/${value}.jpg`}
-									/> */}
-										</ListItemAvatar>
-										<ListItemText
-											id={labelId}
-											primary={value}
-											secondary={"Testing"}
-										/>
-										<ListItemSecondaryAction>
-											<IconButton
-												edge="end"
-												aria-label="more"
-												onClick={(e) => {
-													openRequestMenu(e, value);
-												}}
-											>
-												<MoreHorizIcon />
-											</IconButton>
-										</ListItemSecondaryAction>
-									</ListItem>
+										<Grid item xs={0.5}>
+											<AccountCircleRoundedIcon
+												style={{ fontSize: "4rem", color: "green" }}
+											/>
+											<Grid item xs>
+												<Typography align="left">{value}</Typography>
+											</Grid>
+
+											<Grid item>
+												<IconButton
+													edge="end"
+													aria-label="more"
+													onClick={(e) => {
+														openRequestMenu(e, value);
+													}}
+												>
+													<MoreHorizIcon />
+												</IconButton>
+											</Grid>
+										</Grid>
+									</Grid>
 								);
 							})}
-						</List>
-					</Grid> : <div />
-				}
+						</Grid>
+					</Grid>
+				) : (
+					<div />
+				)}
 				{/* FriendList */}
-				{friendList.length > 0 ?
+				{friendList.length > 0 ? (
 					<Grid item>
-						<Typography align="left" variant="h5">Friends List</Typography>
-						<List>
+						<Typography align="left" variant="h5">
+							Friends List
+						</Typography>
+						<Grid
+							container
+							justify="center"
+							alignItems="center"
+							direction="row"
+						>
 							{friendList.map((value) => {
 								const labelId = `checkbox-list-secondary-label-${value}`;
 								return (
-									<ListItem
-										key={value}
-									// className={classes.friendsList}
+									<Grid
+										container
+										justify="flex-start"
+										alignItems="center"
+										direction="row"
 									>
-										<ListItemAvatar>
-											<AccountCircleRoundedIcon style={{ fontSize: "3rem", color: 'green' }} />
-											{/* <Avatar
-										alt={`Avatar n°${value + 1}`}
-										src={`/static/images/avatar/${value}.jpg`}
-									/> */}
-										</ListItemAvatar>
-										<ListItemText
-											id={labelId}
-											primary={`${value}`}
-											secondary={"Testing"}
-										/>
-										<ListItemSecondaryAction>
+										<Grid item xs={0.5}>
+											<AccountCircleRoundedIcon
+												style={{ fontSize: "3rem", color: "green" }}
+											/>
+										</Grid>
+										<Grid item xs>
+											<Typography align="left">{value}</Typography>
+										</Grid>
+										<Grid item>
 											<IconButton
 												edge="end"
 												aria-label="more"
@@ -359,13 +372,15 @@ export default function Social() {
 											>
 												<MoreHorizIcon />
 											</IconButton>
-										</ListItemSecondaryAction>
-									</ListItem>
+										</Grid>
+									</Grid>
 								);
 							})}
-						</List>
-					</Grid> : <div />
-				}
+						</Grid>
+					</Grid>
+				) : (
+					<div />
+				)}
 			</Grid>
 			<Menu
 				id="simple-menu"
