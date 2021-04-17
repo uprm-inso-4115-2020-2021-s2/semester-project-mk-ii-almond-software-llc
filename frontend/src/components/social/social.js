@@ -23,6 +23,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router";
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 
 const useStyles = makeStyles((theme) => ({
 	add: {
@@ -284,81 +285,102 @@ export default function Social() {
 					</Grid>
 				</Grid>
 				{/* RequestFriendList */}
-				<Grid item alignItems="center" justify="center">
-					<Typography align="left">Friend Requests</Typography>
-					<List>
-						{requestFriendList.map((value) => {
-							const labelId = `checkbox-list-secondary-label-${value}`;
-							return (
-								<ListItem
-									key={value}
-									// className={classes.friendsList}
-								>
-									<ListItemAvatar>
-										<Avatar
-											alt={`Avatar n°${value + 1}`}
-											src={`/static/images/avatar/${value}.jpg`}
-										/>
-									</ListItemAvatar>
-									<ListItemText
-										id={labelId}
-										primary={`${value}`}
-										secondary={"Testing"}
-									/>
-									<ListItemSecondaryAction>
-										<IconButton
-											edge="end"
-											aria-label="more"
-											onClick={(e) => {
-												openRequestMenu(e, value);
-											}}
-										>
-											<MoreHorizIcon />
-										</IconButton>
-									</ListItemSecondaryAction>
-								</ListItem>
-							);
-						})}
-					</List>
-				</Grid>
+				{requestFriendList.length > 0 ? (
+					<Grid item>
+						<Typography align="left" variant="h5">
+							Friend Requests
+						</Typography>
+						<Grid
+							container
+							justify="center"
+							alignItems="center"
+							direction="row"
+						>
+							{requestFriendList.map((value) => {
+								const labelId = `checkbox-list-secondary-label-${value}`;
+								return (
+									<Grid
+										container
+										justify="flex-start"
+										alignItems="center"
+										direction="row"
+									>
+										<Grid item xs={0.5}>
+											<AccountCircleRoundedIcon
+												style={{ fontSize: "4rem", color: "green" }}
+											/>
+											<Grid item xs>
+												<Typography align="left">{value}</Typography>
+											</Grid>
+
+											<Grid item>
+												<IconButton
+													edge="end"
+													aria-label="more"
+													onClick={(e) => {
+														openRequestMenu(e, value);
+													}}
+												>
+													<MoreHorizIcon />
+												</IconButton>
+											</Grid>
+										</Grid>
+									</Grid>
+								);
+							})}
+						</Grid>
+					</Grid>
+				) : (
+					<div />
+				)}
 				{/* FriendList */}
-				<Grid item alignItems="center" justify="center">
-					<Typography align="left">Friend List</Typography>
-					<List>
-						{friendList.map((value) => {
-							const labelId = `checkbox-list-secondary-label-${value}`;
-							return (
-								<ListItem
-									key={value}
-									// className={classes.friendsList}
-								>
-									<ListItemAvatar>
-										<Avatar
-											alt={`Avatar n°${value + 1}`}
-											src={`/static/images/avatar/${value}.jpg`}
-										/>
-									</ListItemAvatar>
-									<ListItemText
-										id={labelId}
-										primary={`${value}`}
-										secondary={"Testing"}
-									/>
-									<ListItemSecondaryAction>
-										<IconButton
-											edge="end"
-											aria-label="more"
-											onClick={(e) => {
-												openFriendMenu(e, value);
-											}}
-										>
-											<MoreHorizIcon />
-										</IconButton>
-									</ListItemSecondaryAction>
-								</ListItem>
-							);
-						})}
-					</List>
-				</Grid>
+				{friendList.length > 0 ? (
+					<Grid item>
+						<Typography align="left" variant="h5">
+							Friends List
+						</Typography>
+						<Grid
+							container
+							justify="center"
+							alignItems="center"
+							direction="row"
+						>
+							{friendList.map((value) => {
+								const labelId = `checkbox-list-secondary-label-${value}`;
+								return (
+									<Grid
+										container
+										justify="flex-start"
+										alignItems="center"
+										direction="row"
+									>
+										<Grid item xs={0.5}>
+											<AccountCircleRoundedIcon
+												style={{ fontSize: "3rem", color: "green" }}
+											/>
+										</Grid>
+										<Grid item xs>
+											<Typography align="left">{value}</Typography>
+										</Grid>
+										<Grid item>
+											<IconButton
+												edge="end"
+												aria-label="more"
+												onClick={(e) => {
+													openFriendMenu(e, value);
+												}}
+											>
+												<MoreHorizIcon />
+											</IconButton>
+										</Grid>
+									</Grid>
+								);
+							})}
+						</Grid>
+					</Grid>
+				) : (
+					<div />
+				)}
 			</Grid>
 			<Menu
 				id="simple-menu"

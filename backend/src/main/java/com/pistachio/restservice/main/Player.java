@@ -59,7 +59,7 @@ public class Player {
 	/**
 	 * List of batles this player is currently in.
 	 */
-	private List<Battle> battles = new ArrayList<Battle>();
+	private List<String> battles = new ArrayList<String>();
 
 	/**
 	 * Amount of pistachios the user has
@@ -94,7 +94,7 @@ public class Player {
 		return completedTasks;
 	}
 
-	public List<Battle> getBattles() {
+	public List<String> getBattles() {
 		return battles;
 	}
 
@@ -146,7 +146,7 @@ public class Player {
 		this.completedTasks = completedTasks;
 	}
 
-	public void setBattles(List<Battle> battles) {
+	public void setBattles(List<String> battles) {
 		this.battles = battles;
 	}
 
@@ -301,7 +301,6 @@ public class Player {
 		} else {return false;}
 	}
 
-
 	/**
 	 * Removes player P from this player's friend list. Player P <b>must</b> be in
 	 * the confirmed friends list.
@@ -368,8 +367,8 @@ public class Player {
 	 * 
 	 * @param b
 	 */
-	public void addBattle(Battle b) {
-		battles.add(b);
+	public void addBattle(String battle) {
+		battles.add(battle);
 	}
 
 	/**
@@ -377,8 +376,8 @@ public class Player {
 	 * 
 	 * @param b
 	 */
-	public void removeBattle(Battle b) {
-		battles.remove(b);
+	public void removeBattle(String battle) {
+		battles.remove(battle);
 	}
 
 	/**
@@ -398,7 +397,7 @@ public class Player {
 	}
 
 	/**
-
+	 * 
 	 * Returns the player's user. For debugging purposes.
 	 */
 	@Override

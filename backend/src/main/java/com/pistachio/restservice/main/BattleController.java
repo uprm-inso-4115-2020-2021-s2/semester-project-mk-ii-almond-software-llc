@@ -10,8 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
-public class BattleController
-{
+public class BattleController {
     @Autowired
     private BattleRepository battleRepo;
     @Autowired
@@ -62,20 +61,18 @@ public class BattleController
     }
 
     @PutMapping("/battle/queue")
-    public Battle matchmake(@RequestParam(name = "player") String name) {
-
-        
-        //Get player thingy
+    public Battle matchmake(@RequestParam(value = "player", defaultValue = "") String name) {
+        // Get player thingy
 
         Player playerSearchingForBattle = playerRepo.findById(name).get();
-        
+
         // Search for available battles
 
         List<Battle> battleList = this.findBySecondPlayerID("");
 
         // If no battles are available
         if (battleList.isEmpty()) {
-           Battle battleToCreate = new Battle();
+            Battle battleToCreate = new Battle();
 
             // Set player 1
             battleToCreate.setFirstPlayerID(playerSearchingForBattle.getUser());
@@ -102,11 +99,10 @@ public class BattleController
             // Insert Player into available battle
             Battle battleToInsert = battleList.get(0);
 
-            //Check that we're not inserting player into a battle with itself and if we are then move on to the next one in the list if possible
-            if (battleToInsert.getFirstPlayerID().equals(playerSearchingForBattle.getUser()))
-            {
-                if(battleList.size() > 1)
-                {
+            // Check that we're not inserting player into a battle with itself and if we are
+            // then move on to the next one in the list if possible
+            if (battleToInsert.getFirstPlayerID().equals(playerSearchingForBattle.getUser())) {
+                if (battleList.size() > 1) {
                     battleToInsert = battleList.get(1);
                 }
 
@@ -115,19 +111,19 @@ public class BattleController
             // Set player2
             battleToInsert.setSecondPlayerID(playerSearchingForBattle.getUser());
 
-             // Set player 2team
-             System.out.println(playerSearchingForBattle);
+            // Set player 2team
+            System.out.println(playerSearchingForBattle);
 
-             List<Monster> team = new ArrayList<Monster>();
- 
-             List<String> teamList = playerSearchingForBattle.getTeam();
- 
-             for (String monster : teamList) {
-                 Monster mon = monsterRepo.findById(monster).get();
-                 team.add(mon);
-             }
- 
-             battleToInsert.setSecondPlayerTeam(team);
+            List<Monster> team = new ArrayList<Monster>();
+
+            List<String> teamList = playerSearchingForBattle.getTeam();
+
+            for (String monster : teamList) {
+                Monster mon = monsterRepo.findById(monster).get();
+                team.add(mon);
+            }
+
+            battleToInsert.setSecondPlayerTeam(team);
 
             return battleRepo.save(battleToInsert);
 
