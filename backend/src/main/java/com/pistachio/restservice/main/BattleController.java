@@ -44,6 +44,10 @@ public class BattleController
         battle.setFirstPlayerTeam(updatedBattle.getFirstPlayerTeam());
         battle.setSecondPlayerID(updatedBattle.getSecondPlayerID());
         battle.setSecondPlayerTeam(updatedBattle.getSecondPlayerTeam());
+        battle.setActiveMonster1(updatedBattle.getFirstPlayerTeam().get(0));
+        battle.setActiveMonster2(updatedBattle.getSecondPlayerTeam().get(0));
+        battle.setPlayer1TeamSize(updatedBattle.getSecondPlayerTeam().size());
+        battle.setPlayer2TeamSize(updatedBattle.getSecondPlayerTeam().size());
         // battle.setActionLog(updatedBattle.getActionLog());
 
         return battleRepo.save(battle);
@@ -93,6 +97,8 @@ public class BattleController
             }
 
             battleToCreate.setFirstPlayerTeam(team);
+            battleToCreate.setActiveMonster1(battleToCreate.getFirstPlayerTeam().get(0));
+            battleToCreate.setPlayer1TeamSize(battleToCreate.getFirstPlayerTeam().size());
 
             return battleRepo.save(battleToCreate);
 
@@ -128,6 +134,8 @@ public class BattleController
              }
  
              battleToInsert.setSecondPlayerTeam(team);
+             battleToInsert.setActiveMonster2(battleToInsert.getSecondPlayerTeam().get(0));
+             battleToInsert.setPlayer2TeamSize(battleToInsert.getSecondPlayerTeam().size());
 
             return battleRepo.save(battleToInsert);
 
