@@ -33,7 +33,6 @@ export default function BattleSystem(props) {
 	};
 
 	const leaveRoom = () => {
-		// Cookies.set("matched", false)
 		props.setMatched(!props.matched);
 		const tempTopics = []
 		setTopics(tempTopics)
