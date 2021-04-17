@@ -39,6 +39,7 @@ public class Battle {
      */
     private List<Monster> secondPlayerTeam;
 
+    private String victor;
     private Monster activeMonsterPlayer1;
 
     private Monster activeMonsterPlayer2;
@@ -54,6 +55,7 @@ public class Battle {
     public List<Monster> getFirstPlayerTeam() {return firstPlayerTeam;}
     public String getSecondPlayerID() {return secondPlayerID;}
     public List<Monster> getSecondPlayerTeam() {return secondPlayerTeam;}
+    public String getVictor() {return victor;}
     public Monster getActiveMonster1() {return activeMonsterPlayer1;}
     public Monster getActiveMonster2() {return activeMonsterPlayer2;}
     public int getPlayer1TeamSize() {return player1Teamsize;}
@@ -64,6 +66,7 @@ public class Battle {
     public void setFirstPlayerTeam(List<Monster> firstPlayerTeam) {this.firstPlayerTeam = firstPlayerTeam;}
     public void setSecondPlayerID(String secondPlayerID) {this.secondPlayerID = secondPlayerID;}
     public void setSecondPlayerTeam(List<Monster> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
+    public void setVictor(String winnerUsername) {this.victor= winnerUsername;}
     public void setActiveMonster1(Monster monsterToSwitch) {this.activeMonsterPlayer1 = monsterToSwitch;}
     public void setActiveMonster2(Monster monsterToSwitch) {this.activeMonsterPlayer2 = monsterToSwitch;}
     public void setPlayer1TeamSize(int newSize) {this.player1Teamsize = newSize;}

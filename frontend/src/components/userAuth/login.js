@@ -70,6 +70,7 @@ export default function Login() {
 					setValidLogin(res.data.pass === password);
 					if (res.data.pass === password) {
 						Cookies.set("user", res.data.user);
+						// Cookies.set("matched". false);
 						Cookies.remove("loggedIn");
 						history.push("/main");
 					} else {

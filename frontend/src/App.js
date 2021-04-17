@@ -25,16 +25,19 @@ import { Typography, Grid } from '@material-ui/core';
 import useWindowDimensions from './components/windowDimensions/useWindowDimensions'
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
+import CachedIcon from "@material-ui/icons/Cached";
+import Loot from './components/loot/loot';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   rectangle: {
-    width: '100%',
-    top: 'auto',
+    width: "100%",
+    top: "auto",
     bottom: 0,
-    position: 'fixed',
+    position: "fixed",
   },
   taskButton: {
     marginRight: theme.spacing(2),
@@ -43,17 +46,38 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
   },
   appBar: {
-    top: 'auto',
+    top: "auto",
     bottom: 0,
   },
+  names: {
+    // borderStyle: "solid",
+  },
+  monsterNames: {
+		margin: theme.spacing(3, 0, 2),
+		backgroundColor: "green",
+		"&:hover": {
+			backgroundColor: "darkgreen",
+		},
+	},
+  // icon: {
+  //   position: "absolute",
+  //   color: "black",
+  //   fontSize: "2rem",
+  //   marginTop: "-2rem",
+  //   border: "solid black",
+  //   borderRadius: "2rem",
+  //   marginLeft:"76rem"
+  // },
 }));
 
 export default function App() {
   const classes = useStyles();
   const { height, width } = useWindowDimensions();
+  const [matched, setMatched] = useState(false);
   const [appHeight, setAppHeight] = useState(height);
   const [value, setValue] = useState(0);
   let history = useHistory();
+  const monsterCollection = [1, 2, 3];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -66,34 +90,64 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className={classes.root} ref={e => {
-        if (!e) return;
-        setAppHeight(height - e.getBoundingClientRect().height);
-        console.log(appHeight);
-      }}>
-        <AppBar position='static' elevation={3} style={{ backgroundColor: 'green' }}>
-          <Toolbar variant='dense' style={{ justifyContent: 'space-between' }}>
-            <IconButton edge="start" className={classes.taskButton} color="inherit" aria-label="menu">
+      <div
+        className={classes.root}
+        ref={(e) => {
+          if (!e) return;
+          setAppHeight(height - e.getBoundingClientRect().height);
+          console.log(appHeight);
+        }}
+      >
+        <AppBar
+          position="static"
+          elevation={3}
+          style={{ backgroundColor: "green" }}
+        >
+          <Toolbar variant="dense" style={{ justifyContent: "center" }}>
+            {/* <IconButton
+              edge="start"
+              className={classes.taskButton}
+              color="inherit"
+              aria-label="menu"
+            >
               <AssignmentIcon fontSize="small" />
-            </IconButton>
-            <Tabs value={value} onChange={handleChange} >
-              <Tab icon={<PeopleIcon fontSize="small" />} label="Social" {...a11yProps(0)} />
-              <Tab icon={<HomeIcon fontSize="small" />} label="Main" {...a11yProps(1)} />
-              <Tab icon={<SportsKabaddiIcon fontSize="small" />} label="Battle" {...a11yProps(2)} />
-            </Tabs>
-            <IconButton edge="end" className={classes.logoutButton} color="inherit" aria-label="menu">
-              <ExitToAppIcon
-                fontSize="small"
-                onClick={() => {
-                  logoutUser();
-                }}
+            </IconButton> */}
+            <Tabs value={value} onChange={handleChange}>
+              <Tab
+                icon={<PeopleIcon fontSize="small" />}
+                label="Social"
+                disabled={matched}
+                {...a11yProps(0)}
               />
+              <Tab
+                icon={<HomeIcon fontSize="small" />}
+                label="Main"
+                disabled={matched}
+                {...a11yProps(1)}
+              />
+              <Tab
+                icon={<SportsKabaddiIcon fontSize="small" />}
+                label="Battle"
+                disabled={matched}
+                {...a11yProps(2)}
+              />
+            </Tabs>
+            <IconButton
+              edge="end"
+              className={classes.logoutButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => {
+                logoutUser();
+              }}
+            >
+              <ExitToAppIcon fontSize="small" />
             </IconButton>
           </Toolbar>
         </AppBar>
       </div>
 
-      <div style={{ height: 0.85 * appHeight, overflowY: 'scroll' }}>
+      <div style={{ height: 0.85 * appHeight, overflowY: "scroll" }}>
         <TabPanel value={value} index={0}>
           <Social />
         </TabPanel>
@@ -103,10 +157,9 @@ export default function App() {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <Battle appHeight={(0.85 * appHeight) - (0.15 * appHeight)} />
+          <Battle appHeight={0.85 * appHeight - 0.15 * appHeight} matched={matched} setMatched={setMatched} />
         </TabPanel>
       </div>
-
 
       <div>
         <AppBar position="fixed" color="primary" className={classes.appBar}>
@@ -115,13 +168,24 @@ export default function App() {
             alignItems="center"
             justify="center"
             direction="row"
-            style={{ height: 0.15 * appHeight, background: 'green' }}
+            style={{ height: 0.15 * appHeight, background: "green" }}
           >
-            <Typography style={{ color: 'white' }} variant="h4" component="h4">Hello, I am Team Bar.</Typography>
+            <Grid container item xs={12} spacing={3}>
+              {monsterCollection.map((e, i) => {
+                return (
+                  <Grid item xs={4} key={i}>
+                    <AccountCircleRoundedIcon style={{ fontSize: "2.5rem" }} />
+                    <Typography className={classes.names}>
+                      {"Monster " + e}
+                    </Typography>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            {/* <CachedIcon className={classes.icon}/> */}
           </Grid>
         </AppBar>
       </div>
-
-    </div >
+    </div>
   );
 }
