@@ -126,11 +126,11 @@ public class PlayerController {
         Player playerThatRequested = getUser(Destination);
         Player playerThatAccepted = getUser(Origin);
 
-        if (playerThatAccepted.acceptFriendship(playerThatRequested, false)) {
+        if (playerThatAccepted.respondToFriendshipRequest(playerThatRequested, false)) {
             playerThatRequested.addFriend(playerThatAccepted);
         }
 
-        // Save both players into db regardless of wether friendship was accepted or not
+        // Save both players into db regardless of whether friendship was accepted or not
         this.update(playerThatRequested.getUser(), playerThatRequested);
         this.update(playerThatAccepted.getUser(), playerThatAccepted);
     }
@@ -148,7 +148,7 @@ public class PlayerController {
         Player playerThatRequested = getUser(Destination);
         Player playerThatRejected = getUser(Origin);
 
-        if (playerThatRejected.acceptFriendship(playerThatRequested, true)) {
+        if (playerThatRejected.respondToFriendshipRequest(playerThatRequested, true)) {
             playerThatRequested.addFriend(playerThatRejected);
         }
 

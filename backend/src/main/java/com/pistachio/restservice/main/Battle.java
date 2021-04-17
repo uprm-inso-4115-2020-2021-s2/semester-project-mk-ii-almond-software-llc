@@ -40,6 +40,12 @@ public class Battle {
     private List<Monster> secondPlayerTeam;
 
     private String victor;
+    private Monster activeMonsterPlayer1;
+
+    private Monster activeMonsterPlayer2;
+
+    private int player1Teamsize;
+    private int player2Teamsize;
 
 
     //-[Getters/Setters]--------------------------------------------------
@@ -50,6 +56,10 @@ public class Battle {
     public String getSecondPlayerID() {return secondPlayerID;}
     public List<Monster> getSecondPlayerTeam() {return secondPlayerTeam;}
     public String getVictor() {return victor;}
+    public Monster getActiveMonster1() {return activeMonsterPlayer1;}
+    public Monster getActiveMonster2() {return activeMonsterPlayer2;}
+    public int getPlayer1TeamSize() {return player1Teamsize;}
+    public int getPlayer2TeamSize() {return player2Teamsize;}
 
     public void setBattleID(String battleID) {this.battleID = battleID;}
     public void setFirstPlayerID(String firstPlayerID) {this.firstPlayerID = firstPlayerID;}
@@ -57,6 +67,10 @@ public class Battle {
     public void setSecondPlayerID(String secondPlayerID) {this.secondPlayerID = secondPlayerID;}
     public void setSecondPlayerTeam(List<Monster> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
     public void setVictor(String winnerUsername) {this.victor= winnerUsername;}
+    public void setActiveMonster1(Monster monsterToSwitch) {this.activeMonsterPlayer1 = monsterToSwitch;}
+    public void setActiveMonster2(Monster monsterToSwitch) {this.activeMonsterPlayer2 = monsterToSwitch;}
+    public void setPlayer1TeamSize(int newSize) {this.player1Teamsize = newSize;}
+    public void setPlayer2TeamSize(int newSize) {this.player2Teamsize = newSize;}
 
     //-[Constructors]----------------------------------------------------------
 
@@ -64,8 +78,13 @@ public class Battle {
         this.battleID = battleID;
         this.firstPlayerID = firstPlayerID;
         this.firstPlayerTeam = firstPlayerTeam;
+        setActiveMonster1(this.firstPlayerTeam.get(0));
+        setPlayer1TeamSize(this.firstPlayerTeam.size());
+
         this.secondPlayerID = secondPlayerID;
         this.secondPlayerTeam = secondPlayerTeam;
+        setActiveMonster2(this.secondPlayerTeam.get(0));
+        setPlayer2TeamSize(this.secondPlayerTeam.size());
     }
 
     public Battle(){
