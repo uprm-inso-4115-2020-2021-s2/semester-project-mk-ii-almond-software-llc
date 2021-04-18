@@ -29,6 +29,8 @@ import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 import Loot from './components/loot/loot';
 
+import BattleSystemMenu from "../src/components/battle/battleSystemMenu"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -131,6 +133,13 @@ export default function App() {
                 disabled={matched}
                 {...a11yProps(2)}
               />
+
+              <Tab
+                icon={<SportsKabaddiIcon fontSize="small" />}
+                label="Battle System Menu"
+                disabled={matched}
+                {...a11yProps(3)}
+              />
             </Tabs>
             <IconButton
               edge="end"
@@ -157,7 +166,15 @@ export default function App() {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <Battle appHeight={0.85 * appHeight - 0.15 * appHeight} matched={matched} setMatched={setMatched} />
+          <Battle
+            appHeight={0.85 * appHeight - 0.15 * appHeight}
+            matched={matched}
+            setMatched={setMatched}
+          />
+        </TabPanel>
+
+        <TabPanel value={value} index={3}>
+          <BattleSystemMenu />
         </TabPanel>
       </div>
 
