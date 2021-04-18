@@ -221,7 +221,7 @@ class PlayerTest {
 	 	assertFalse(Juan.inBattle());
 
 	 	//now lets put him in battle
-	 	Juan.setBattle(B1);
+	 	Juan.setBattle(B1.getBattleID());
 
 	 	//Let's ensure the battle ID matches:
 	 	assertEquals(B1.getBattleID(), Juan.getBattleID());
@@ -236,12 +236,12 @@ class PlayerTest {
 	 	assertFalse(Juan.inBattle());
 
 	 	//Let's go ahead and add the battle, then remove it.
-	 	Juan.addBattle(B1);
-	 	assertTrue(Juan.getBattles().contains(B1));
+	 	Juan.addBattle(B1.getBattleID());
+	 	assertTrue(Juan.getBattles().contains(B1.getBattleID()));
 
 	 	//Now let's remove it.
-	 	Juan.removeBattle(B1);
-	 	assertFalse(Juan.getBattles().contains(B1));
+	 	Juan.removeBattle(B1.getBattleID());
+	 	assertFalse(Juan.getBattles().contains(B1.getBattleID()));
 
 	 }
 	
