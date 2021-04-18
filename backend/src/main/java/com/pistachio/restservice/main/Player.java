@@ -158,8 +158,8 @@ public class Player {
 		this.battleID = battle;
 	}
 
-	public void setBattle(Battle b) {
-		this.battleID = b.getId();
+	public void setBattle(String b) {
+		this.battleID = b;
 	}
 
 	public void setTeam(List<String> team) {
