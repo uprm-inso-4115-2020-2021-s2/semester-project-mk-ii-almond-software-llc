@@ -24,7 +24,7 @@ class BattleTest {
 		
 	// 	assertTrue(B1.equals(B2));
 	// 	assertFalse(B1.equals(B3));
-	// }
+	}
 
 	@Test
 	void ActionsTest() {
