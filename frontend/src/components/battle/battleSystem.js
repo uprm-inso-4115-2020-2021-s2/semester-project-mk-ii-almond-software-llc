@@ -1,6 +1,9 @@
 import { React, useState } from "react";
 import { Typography, Grid, Button, makeStyles } from "@material-ui/core";
 import SockJsClient from 'react-stomp';
+import AndroidIcon from "@material-ui/icons/Android";
+import AppleIcon from "@material-ui/icons/Apple";
+import BattleSystemMenu from '../battle/battleSystemMenu';
 import Cookies from "js-cookie";
 
 
@@ -12,6 +15,40 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: "darkgreen",
 		},
 		alignSelf: "start",
+	},
+	progress: {
+		background: "grey",
+		borderRadius: "1rem",
+		width: "15rem",
+		margin: theme.spacing(2),
+		marginLeft: "10rem",
+
+		[theme.breakpoints.between("300", "700")]: {
+			width: "10rem",
+			marginLeft: 0,
+		},
+		[theme.breakpoints.between("768", "810")]: {
+			marginLeft: "3rem",
+		},
+	},
+	progressBar: {
+		borderRadius: "1rem",
+		backgroundColor: "orange",
+		width: "50%",
+
+		[theme.breakpoints.between("300", "700")]: {
+			marginLeft: 0,
+			width: "50%",
+		},
+	},
+	monsterIcon: {
+		fontSize: "4rem",
+	},
+	buttonMenu: {
+		backgroundColor: "#f2f2f2",
+	},
+	buttonMenuButtons: {
+		backgroundColor: "white"
 	},
 }));
 
@@ -44,6 +81,7 @@ export default function BattleSystem(props) {
 
 	return (
 		<div>
+			{/* this grid container holds the back button */}
 			<Grid container justify="flex-start" alignItems="center">
 				<Button
 					className={classes.back}
@@ -56,6 +94,8 @@ export default function BattleSystem(props) {
 					Back
 				</Button>
 			</Grid>
+
+			{/* this grid container holds the battle messages */}
 			<Grid container direction="column" justify="center" alignItems="center">
 				{messages.map((e, i) => {
 					return (
@@ -72,6 +112,11 @@ export default function BattleSystem(props) {
 					)
 				})}
 			</Grid>
+
+			{/* this grid container holds the battle ui */}
+			<BattleSystemMenu />
+
+			{/* this is the websocket :) */}
 			<SockJsClient
 				url='http://localhost:8080/websocket-chat/'
 				topics={topics}

@@ -139,12 +139,12 @@ export default function App() {
                 label="Loot"
                 disabled={matched}
               />
-              <Tab
+              {/* <Tab
                 icon={<SportsKabaddiIcon fontSize="small" />}
                 label="Battle System Menu"
                 disabled={matched}
                 {...a11yProps(3)}
-              />
+              /> */}
             </Tabs>
             <IconButton
               edge="end"
@@ -180,9 +180,9 @@ export default function App() {
         <TabPanel value={value} index={3}>
           <Loot />
         </TabPanel>
-        <TabPanel value={value} index={4}>
+        {/* <TabPanel value={value} index={4}>
           <BattleSystemMenu />
-        </TabPanel>
+        </TabPanel> */}
       </div>
 
       <div>
