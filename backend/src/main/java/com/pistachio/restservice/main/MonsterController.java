@@ -8,16 +8,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
-public class MonsterController
-{
+@CrossOrigin(origins = "http://localhost:3000")
+
+public class MonsterController {
     @Autowired
     private MonsterRepository monsterRepo;
 
     @PostMapping("/monster/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Monster add(@RequestBody Monster monster)
-    {
+    public Monster add(@RequestBody Monster monster) {
         return monsterRepo.save(monster);
     }
 
@@ -28,30 +27,27 @@ public class MonsterController
 
     @GetMapping(value = "/monster/{id}")
     public Monster getOne(@PathVariable String id) {
-        return monsterRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException());
+        return monsterRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
     }
 
     @PutMapping(value = "/monster/{id}")
     public Monster update(@PathVariable String id, @RequestBody Monster updatedmonster) {
-        Monster monster = monsterRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException());
+        Monster monster = monsterRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
         monster.setName(updatedmonster.getName());
         monster.setMoves(updatedmonster.getMoves());
         monster.setStats(updatedmonster.getStats());
 
-        
         return monsterRepo.save(monster);
     }
 
     @DeleteMapping(value = "/monster/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void delete(@PathVariable String id) {
-        Monster monster = monsterRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException());
+        Monster monster = monsterRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException());
         monsterRepo.delete(monster);
     }
 
     @Autowired
-    public MonsterController(){}
+    public MonsterController() {
+    }
 }
