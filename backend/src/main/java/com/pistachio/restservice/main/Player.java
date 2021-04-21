@@ -293,7 +293,6 @@ public class Player {
 			this.confirmedFriends.add(p.getUser());
 			this.friendRequests.remove(p.getUser());
 			return true;
-
 		}
 
 		else if (friendRequests.contains(p.getUser()) && reject) {

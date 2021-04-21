@@ -30,6 +30,8 @@ import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 
+import BattleSystemMenu from "../src/components/battle/battleSystemMenu"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -54,12 +56,12 @@ const useStyles = makeStyles((theme) => ({
     // borderStyle: "solid",
   },
   monsterNames: {
-		margin: theme.spacing(3, 0, 2),
-		backgroundColor: "green",
-		"&:hover": {
-			backgroundColor: "darkgreen",
-		},
-	},
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "green",
+    "&:hover": {
+      backgroundColor: "darkgreen",
+    },
+  },
   // icon: {
   //   position: "absolute",
   //   color: "black",
@@ -135,6 +137,10 @@ export default function App() {
               <Tab
                 icon={<LocalMallIcon fontSize="small" />}
                 label="Loot"
+              />
+              <Tab
+                icon={<SportsKabaddiIcon fontSize="small" />}
+                label="Battle System Menu"
                 disabled={matched}
                 {...a11yProps(3)}
               />
@@ -164,7 +170,15 @@ export default function App() {
         </TabPanel>
 
         <TabPanel value={value} index={2}>
-          <Battle appHeight={0.85 * appHeight - 0.15 * appHeight} matched={matched} setMatched={setMatched} />
+          <Battle
+            appHeight={0.85 * appHeight - 0.15 * appHeight}
+            matched={matched}
+            setMatched={setMatched}
+          />
+        </TabPanel>
+
+        <TabPanel value={value} index={3}>
+          <BattleSystemMenu />
         </TabPanel>
 
         <TabPanel value={value} index={3}>
