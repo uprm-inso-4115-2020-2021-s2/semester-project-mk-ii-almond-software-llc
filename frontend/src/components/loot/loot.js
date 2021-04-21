@@ -190,7 +190,7 @@ export default function Loot() {
                             }} >
                                 Yes
                                     </Button>
-                            <Button onClick={handleOption1}>
+                            <Button onClick={handleOption2}>
                                 No
                                     </Button>
                         </DialogActions>
