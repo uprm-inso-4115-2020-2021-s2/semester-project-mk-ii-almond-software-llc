@@ -9,9 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.pistachio.restservice.main.LootBox;
-import com.pistachio.restservice.main.Monster;
-import com.pistachio.restservice.main.Move;
-import com.pistachio.restservice.main.Stats;
 
 class LootBoxTest {
 
