@@ -14,10 +14,10 @@ import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   matchmaking: {
     margin: theme.spacing(3, 0, 2),
-    // backgroundColor: "gray",
-    // "&:hover": {
-    // 	backgroundColor: "darkgray",
-    // },
+    backgroundColor: "gray",
+    "&:hover": {
+      backgroundColor: "darkgray",
+    },
   },
 }));
 
@@ -40,11 +40,7 @@ export default function Battle(props) {
       .then((res) => {
         axios({
           method: "put",
-          url:
-            "http://localhost:8080/api/player/" +
-            player +
-            "/" +
-            res.data.battleID,
+          url: "http://localhost:8080/api/player/" + player + "/" + res.data.battleID,
         });
         setBattleID(res.data.battleID);
         props.setMatched(!props.matched);
@@ -92,7 +88,7 @@ export default function Battle(props) {
             </Grid>
             <Grid item>
               <Button
-                // variant="contained"
+                variant="contained"
                 size="large"
                 color="primary"
                 className={classes.matchmaking}

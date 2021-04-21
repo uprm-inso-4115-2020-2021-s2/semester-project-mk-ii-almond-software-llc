@@ -137,6 +137,7 @@ export default function App() {
               <Tab
                 icon={<LocalMallIcon fontSize="small" />}
                 label="Loot"
+                disabled={matched}
               />
               <Tab
                 icon={<SportsKabaddiIcon fontSize="small" />}
@@ -176,13 +177,11 @@ export default function App() {
             setMatched={setMatched}
           />
         </TabPanel>
-
-        <TabPanel value={value} index={3}>
-          <BattleSystemMenu />
-        </TabPanel>
-
         <TabPanel value={value} index={3}>
           <Loot />
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          <BattleSystemMenu />
         </TabPanel>
       </div>
 
