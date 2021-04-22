@@ -30,7 +30,7 @@ import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 
-import BattleSystemMenu from "../src/components/battle/battleSystemMenu"
+import BattleMenu from "../src/components/battle/battleMenu.js"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -172,7 +172,7 @@ export default function App() {
 
         <TabPanel value={value} index={2}>
           <Battle
-            appHeight={0.85 * appHeight - 0.15 * appHeight}
+            appHeight={0.85 * appHeight - 0.065 * appHeight}
             matched={matched}
             setMatched={setMatched}
           />
@@ -181,7 +181,7 @@ export default function App() {
           <Loot />
         </TabPanel>
         {/* <TabPanel value={value} index={4}>
-          <BattleSystemMenu />
+          <BattleMenu />
         </TabPanel> */}
       </div>
 
