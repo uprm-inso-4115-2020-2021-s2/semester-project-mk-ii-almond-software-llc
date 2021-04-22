@@ -49,22 +49,31 @@ public class WebSocketController {
 
         // Obtain battle
         Battle battleToUse = battleRepo.findById(battleID).get();
-
         String userAction = recievedAction.getContent();
+        Boolean updateBattle = false;
+
         // Figure out which player sent action
         switch (userAction.charAt(0)) {
         // Player 1
-        case 0:
+        case '0':
             // Add action to battle
             battleToUse.setPlayer1Action(userAction.substring(1));
             battleRepo.save(battleToUse);
 
             // Player 2
-        case 1:
+        case '1':
             // Add action to battle
             battleToUse.setPlayer2Action(userAction.substring(1));
             battleRepo.save(battleToUse);
         }
+
+        if (!battleToUse.getPlayer1Action().isBlank() && !battleToUse.getPlayer2Action().isBlank()) {
+            System.out.println("both players chose an action!");
+            updateBattle = true;
+        }
+
+        messagingTemplate.convertAndSend(format("/topic/%s", battleID), updateBattle);
+
     }
 
 }

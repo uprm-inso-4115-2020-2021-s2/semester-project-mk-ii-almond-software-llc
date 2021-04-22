@@ -98,7 +98,7 @@ export default function BattleMenu(props) {
         {playerMoves.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button className={classes.buttonMenuButtons}>{e.name}</Button>
+              <Button className={classes.buttonMenuButtons} onClick={() => { props.sendMove(i) }}>{e.name}</Button>
               <Typography>Base Damage: {e.baseDamage}</Typography>
             </Grid>
           )
@@ -112,7 +112,7 @@ export default function BattleMenu(props) {
         {playerTeam.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button className={classes.buttonMenuButtons}>{e.name}</Button>
+              <Button className={classes.buttonMenuButtons} onClick={() => { props.sendSwap(i) }}>{e.name}</Button>
               <Typography>Current HP: {(e.stats.hp / e.stats.maxHp) * 100}</Typography>
             </Grid>
           )

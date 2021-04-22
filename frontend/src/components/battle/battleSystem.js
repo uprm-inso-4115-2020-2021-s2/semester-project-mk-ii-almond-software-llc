@@ -92,6 +92,26 @@ export default function BattleSystem(props) {
 		clientRef.disconnect()
 	}
 
+	const sendMove = (index) => {
+		let playerIndex = player === battle.firstPlayerID ? 0 : 1;
+		console.log('sending move:', playerIndex + '0' + index);
+		clientRef.sendMessage(`/app/sendAction/${battleID}`, JSON.stringify({
+			username: player,
+			server: true,
+			content: playerIndex + '0' + index
+		}));
+	}
+
+	const sendSwap = (index) => {
+		let playerIndex = player === battle.firstPlayerID ? 0 : 1;
+		console.log('sending swap:', playerIndex + '1' + index);
+		clientRef.sendMessage(`/app/sendAction/${battleID}`, JSON.stringify({
+			username: player,
+			server: true,
+			content: playerIndex + '1' + index
+		}));
+	}
+
 	return (
 		<div>
 			<Grid container
@@ -104,7 +124,7 @@ export default function BattleSystem(props) {
 					<div>
 						<BattleAlert player={props.player} battle={battle} messages={messages} />
 						<BattleInfo player={props.player} battle={battle} />
-						<BattleMenu player={props.player} battle={battle} leaveRoom={leaveRoom} />
+						<BattleMenu sendMove={sendMove} sendSwap={sendSwap} player={props.player} battle={battle} leaveRoom={leaveRoom} />
 					</div>}
 
 				{/* this is the websocket :) */}
