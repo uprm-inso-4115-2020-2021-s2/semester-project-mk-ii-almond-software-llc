@@ -37,6 +37,7 @@ import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
+import BattleMenu from "../src/components/battle/battleMenu.js";
 
 function getModalStyle() {
 	const top = 50;
@@ -50,10 +51,7 @@ function getModalStyle() {
 	};
 }
 
-import BattleMenu from "../src/components/battle/battleMenu.js"
-
 const useStyles = makeStyles((theme) => ({
-<<<<<<< HEAD
 	root: {
 		flexGrow: 1,
 	},
@@ -119,46 +117,6 @@ const useStyles = makeStyles((theme) => ({
 	//   borderRadius: "2rem",
 	//   marginLeft:"76rem"
 	// },
-=======
-  root: {
-    flexGrow: 1,
-  },
-  rectangle: {
-    width: "100%",
-    top: "auto",
-    bottom: 0,
-    position: "fixed",
-  },
-  taskButton: {
-    marginRight: theme.spacing(2),
-  },
-  logoutButton: {
-    marginLeft: theme.spacing(2),
-  },
-  appBar: {
-    top: "auto",
-    bottom: 0,
-  },
-  names: {
-    // borderStyle: "solid",
-  },
-  monsterNames: {
-    margin: theme.spacing(3, 0, 2),
-    backgroundColor: "green",
-    "&:hover": {
-      backgroundColor: "darkgreen",
-    },
-  },
-  // icon: {
-  //   position: "absolute",
-  //   color: "black",
-  //   fontSize: "2rem",
-  //   marginTop: "-2rem",
-  //   border: "solid black",
-  //   borderRadius: "2rem",
-  //   marginLeft:"76rem"
-  // },
->>>>>>> d636f1843c94933ea3b2addbcf6c0e7f23bb80b0
 }));
 
 function not(a, b) {
@@ -367,7 +325,6 @@ export default function App() {
             >
               <AssignmentIcon fontSize="small" />
             </IconButton> */}
-<<<<<<< HEAD
 						<Tabs value={value} onChange={handleChange}>
 							<Tab
 								icon={<PeopleIcon fontSize="small" />}
@@ -527,103 +484,3 @@ export default function App() {
 
 {
 }
-=======
-            <Tabs value={value} onChange={handleChange}>
-              <Tab
-                icon={<PeopleIcon fontSize="small" />}
-                label="Social"
-                disabled={matched}
-                {...a11yProps(0)}
-              />
-              <Tab
-                icon={<HomeIcon fontSize="small" />}
-                label="Main"
-                disabled={matched}
-                {...a11yProps(1)}
-              />
-              <Tab
-                icon={<SportsKabaddiIcon fontSize="small" />}
-                label="Battle"
-                disabled={matched}
-                {...a11yProps(2)}
-              />
-              <Tab
-                icon={<LocalMallIcon fontSize="small" />}
-                label="Loot"
-                disabled={matched}
-              />
-              {/* <Tab
-                icon={<SportsKabaddiIcon fontSize="small" />}
-                label="Battle System Menu"
-                disabled={matched}
-                {...a11yProps(3)}
-              /> */}
-            </Tabs>
-            <IconButton
-              edge="end"
-              className={classes.logoutButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={() => {
-                logoutUser();
-              }}
-            >
-              <ExitToAppIcon fontSize="small" />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </div>
-
-      <div style={{ height: 0.85 * appHeight, overflowY: "scroll" }}>
-        <TabPanel value={value} index={0}>
-          <Social />
-        </TabPanel>
-
-        <TabPanel value={value} index={1}>
-          <Main />
-        </TabPanel>
-
-        <TabPanel value={value} index={2}>
-          <Battle
-            appHeight={0.85 * appHeight - 0.065 * appHeight}
-            matched={matched}
-            setMatched={setMatched}
-          />
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <Loot />
-        </TabPanel>
-        {/* <TabPanel value={value} index={4}>
-          <BattleMenu />
-        </TabPanel> */}
-      </div>
-
-      <div>
-        <AppBar position="fixed" color="primary" className={classes.appBar}>
-          <Grid
-            container
-            alignItems="center"
-            justify="center"
-            direction="row"
-            style={{ height: 0.15 * appHeight, background: "green" }}
-          >
-            <Grid container item xs={12} spacing={3}>
-              {monsterCollection.map((e, i) => {
-                return (
-                  <Grid item xs={4} key={i}>
-                    <AccountCircleRoundedIcon style={{ fontSize: "2.5rem" }} />
-                    <Typography className={classes.names}>
-                      {"Monster " + e}
-                    </Typography>
-                  </Grid>
-                );
-              })}
-            </Grid>
-            {/* <CachedIcon className={classes.icon}/> */}
-          </Grid>
-        </AppBar>
-      </div>
-    </div>
-  );
-}
->>>>>>> d636f1843c94933ea3b2addbcf6c0e7f23bb80b0
