@@ -455,7 +455,7 @@ export default function App() {
 													}
 													aria-label="move selected right"
 												>
-													Update Player Team
+													Update Team
 												</Button>
 												<Button
 													variant="outlined"
@@ -465,7 +465,7 @@ export default function App() {
 													disabled={playerTeamChecked.length === 0}
 													aria-label="move selected left"
 												>
-													Remove from Player Team
+													Remove from Team
 												</Button>
 											</Grid>
 										</Grid>
