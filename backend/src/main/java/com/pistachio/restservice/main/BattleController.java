@@ -47,6 +47,9 @@ public class BattleController {
         battle.setActiveMonster2(updatedBattle.getSecondPlayerTeam().get(0));
         battle.setPlayer1TeamSize(updatedBattle.getSecondPlayerTeam().size());
         battle.setPlayer2TeamSize(updatedBattle.getSecondPlayerTeam().size());
+        battle.setPlayer1Action(updatedBattle.getPlayer1Action());
+        battle.setPlayer2Action(updatedBattle.getPlayer2Action());
+        battle.calculateTurnOutcome();
         // battle.setActionLog(updatedBattle.getActionLog());
 
         return battleRepo.save(battle);

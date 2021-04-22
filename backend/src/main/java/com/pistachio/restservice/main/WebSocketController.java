@@ -19,6 +19,9 @@ import javax.websocket.server.ServerEndpoint;
 public class WebSocketController {
 
     @Autowired
+    private BattleRepository battleRepo;
+
+    @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/sendMessage/{battleID}")
@@ -29,7 +32,6 @@ public class WebSocketController {
     @MessageMapping("/addUser/{battleID}")
     public void addUser(@DestinationVariable String battleID, @Payload Action newAction,
             SimpMessageHeaderAccessor headerAccessor) {
-
         headerAccessor.getSessionAttributes().put("battleID", battleID);
         headerAccessor.getSessionAttributes().put("username", newAction.getUsername());
         messagingTemplate.convertAndSend(format("/topic/%s", battleID), newAction);
@@ -42,15 +44,27 @@ public class WebSocketController {
     }
 
     @MessageMapping("/sendAction/{battleID}")
-    public void sendAction(@DestinationVariable String battleID, @Payload String newAction,
+    public void sendAction(@DestinationVariable String battleID, @Payload Action recievedAction,
             SimpMessageHeaderAccessor headerAccessor) {
-                // Action, String username, String content
-                // content = "2,3"
-                // int actionType = content[0]
-                // int actionIndex = content[2]
-                // switch(content.charAt(0)){}
-                // String content
-                // int actionType
+
+        // Obtain battle
+        Battle battleToUse = battleRepo.findById(battleID).get();
+
+        String userAction = recievedAction.getContent();
+        // Figure out which player sent action
+        switch (userAction.charAt(0)) {
+        // Player 1
+        case 0:
+            // Add action to battle
+            battleToUse.setPlayer1Action(userAction.substring(1));
+            battleRepo.save(battleToUse);
+
+            // Player 2
+        case 1:
+            // Add action to battle
+            battleToUse.setPlayer2Action(userAction.substring(1));
+            battleRepo.save(battleToUse);
+        }
     }
 
 }
