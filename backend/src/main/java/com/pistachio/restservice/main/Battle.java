@@ -47,6 +47,9 @@ public class Battle {
     private int player1Teamsize;
     private int player2Teamsize;
 
+    private Action player1Action;
+    private Action player2Action;
+
 
     //-[Getters/Setters]--------------------------------------------------
 
@@ -60,6 +63,8 @@ public class Battle {
     public Monster getActiveMonster2() {return activeMonsterPlayer2;}
     public int getPlayer1TeamSize() {return player1Teamsize;}
     public int getPlayer2TeamSize() {return player2Teamsize;}
+    public Action getPlayer1Action() {return player1Action;}
+    public Action getPlayer2Action() {return player2Action;}
 
     public void setBattleID(String battleID) {this.battleID = battleID;}
     public void setFirstPlayerID(String firstPlayerID) {this.firstPlayerID = firstPlayerID;}
@@ -71,6 +76,8 @@ public class Battle {
     public void setActiveMonster2(Monster monsterToSwitch) {this.activeMonsterPlayer2 = monsterToSwitch;}
     public void setPlayer1TeamSize(int newSize) {this.player1Teamsize = newSize;}
     public void setPlayer2TeamSize(int newSize) {this.player2Teamsize = newSize;}
+    public void setPlayer1Action(Action newAction) {this.player1Action = newAction;}
+    public void setPlayer2Action(Action newAction) {this.player2Action = newAction;}
 
     //-[Constructors]----------------------------------------------------------
 

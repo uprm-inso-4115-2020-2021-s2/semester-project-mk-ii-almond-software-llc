@@ -7,6 +7,7 @@ public class Action {
     private String username;
     private Boolean server;
     private String content;
+    private int type;
 
 
     //Constructors
@@ -26,6 +27,8 @@ public class Action {
     public void setServer(Boolean server) {this.server = server;}
     public String getContent() {return content;}
     public void setContent(String content) {this.content = content;}
+    public int getType() {return type;}
+    public void setType(int type) {this.type = type;}
 
     
     @Override
