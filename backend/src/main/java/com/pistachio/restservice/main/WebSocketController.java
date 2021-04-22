@@ -19,6 +19,9 @@ import javax.websocket.server.ServerEndpoint;
 public class WebSocketController{
 
     @Autowired
+    private BattleRepository battleRepo;
+
+    @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/sendMessage/{battleID}")
@@ -35,5 +38,30 @@ public class WebSocketController{
             messagingTemplate.convertAndSend(format("/topic/%s", battleID), newAction);
     }
     
+    @MessageMapping("/sendAction/{battleID}")
+    public void sendAction(@DestinationVariable String battleID, @Payload Action recievedAction,
+            SimpMessageHeaderAccessor headerAccessor) {
+
+                //Obtain battle
+                Battle battleToUse = battleRepo.findById(battleID).get();
+
+
+                String userAction = recievedAction.getContent();
+                //Figure out which player sent action
+                switch(userAction.charAt(0))
+                {
+                    //Player 1
+                    case 0:
+                        //Add action to battle
+                        battleToUse.setPlayer1Action(userAction.substring(1));
+                        battleRepo.save(battleToUse);
+
+                    //Player 2
+                    case 1:
+                        //Add action to battle
+                        battleToUse.setPlayer2Action(userAction.substring(1));
+                        battleRepo.save(battleToUse);
+                }
+    }
 
 }
