@@ -343,8 +343,8 @@ public class Player {
 	 * 
 	 * @param m
 	 */
-	public void addMonster(String m) {
-		this.collections.add(m);
+	public void addMonster(Monster m) {
+		this.collections.add(m.getName());
 	}
 
 	/**
