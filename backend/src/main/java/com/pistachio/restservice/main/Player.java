@@ -348,6 +348,14 @@ public class Player {
 		this.collections.add(m);
 	}
 
+	public void removeCollectionMonsters(List<String> monsters) {
+		for (String m : monsters) {
+			if (this.collections.contains(m)) {
+				this.collections.remove(m);
+			}
+		}
+	}
+
 	/**
 	 * Marks provided task t as complete.
 	 * 

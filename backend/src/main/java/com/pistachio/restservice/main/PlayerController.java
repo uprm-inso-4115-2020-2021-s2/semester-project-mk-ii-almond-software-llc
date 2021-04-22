@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -202,10 +203,15 @@ public class PlayerController {
     }
 
     // Update the player's team
-    @PutMapping(value = "player/updatePlayerTeam/{id}")
+    @PutMapping(value = "player/updatePlayerTeam/{id}/{monsters}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public void updatePlayerTeam(@PathVariable String id, @RequestParam List<String> monsters) {
-        getOne(id).setTeam(monsters);
+    public void updatePlayerTeam(@PathVariable String id, @PathVariable String monsters) {
+        Player player = getOne(id);
+        List<String> monsterArray = Arrays.asList(monsters.split(","));
+        player.removeCollectionMonsters(monsterArray);
+        player.setTeam(monsterArray);
+        update(id, player);
+
     }
 
 }

@@ -1,14 +1,23 @@
 import "./App.css";
 import React, { Component, useState, useEffect } from "react";
+import {
+	Modal,
+	Grid,
+	Typography,
+	Button,
+	List,
+	Card,
+	CardHeader,
+	ListItem,
+	ListItemText,
+	ListItemIcon,
+	Checkbox,
+	Divider,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 import HomeIcon from "@material-ui/icons/Home";
+import CloseIcon from "@material-ui/icons/Close";
 import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import PeopleIcon from "@material-ui/icons/People";
@@ -23,13 +32,23 @@ import Social from "./components/social/social";
 import Main from "./components/main/main";
 import Battle from "./components/battle/battle";
 import Loot from "./components/loot/loot";
-import { Typography, Grid } from "@material-ui/core";
 import useWindowDimensions from "./components/windowDimensions/useWindowDimensions";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
-import CachedIcon from "@material-ui/icons/Cached";
 import axios from "axios";
+
+function getModalStyle() {
+	const top = 50;
+	const left = 50;
+
+	return {
+		top: `${top}%`,
+		margin: "auto",
+		// left: `${left}%`,
+		// transform: `translate(-${top}%, -${left}%)`,
+	};
+}
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -41,6 +60,11 @@ const useStyles = makeStyles((theme) => ({
 		bottom: 0,
 		position: "fixed",
 	},
+	card: {
+		justifyContent: "center",
+		alignItems: "center",
+		width: 300,
+	},
 	taskButton: {
 		marginRight: theme.spacing(2),
 	},
@@ -50,6 +74,25 @@ const useStyles = makeStyles((theme) => ({
 	appBar: {
 		top: "auto",
 		bottom: 0,
+	},
+	modal: {
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		height: "100%",
+		width: "100%",
+	},
+	cardHeader: {
+		padding: theme.spacing(2, 2),
+	},
+	list: {
+		width: 300,
+		height: 180,
+		backgroundColor: theme.palette.background.paper,
+		overflow: "auto",
+	},
+	button: {
+		margin: theme.spacing(0.5, 0),
 	},
 	names: {
 		// borderStyle: "solid",
@@ -75,6 +118,18 @@ const useStyles = makeStyles((theme) => ({
 	// },
 }));
 
+function not(a, b) {
+	return a.filter((value) => b.indexOf(value) === -1);
+}
+
+function intersection(a, b) {
+	return a.filter((value) => b.indexOf(value) !== -1);
+}
+
+function union(a, b) {
+	return [...a, ...not(b, a)];
+}
+
 export default function App() {
 	const classes = useStyles();
 	const { height, width } = useWindowDimensions();
@@ -82,7 +137,15 @@ export default function App() {
 	const [appHeight, setAppHeight] = useState(height);
 	const [value, setValue] = useState(0);
 	let history = useHistory();
+	const modalStyle = useState(getModalStyle);
 	const [playerTeam, setPlayerTeam] = useState([]);
+	const [open, setOpen] = useState(false);
+	const [monsterCollection, setMonsterCollection] = useState([]);
+	const [checked, setChecked] = useState([]);
+	let maxCapacity = 3;
+
+	const monsterCollectionChecked = intersection(checked, monsterCollection);
+	const playerTeamChecked = intersection(checked, playerTeam);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -103,8 +166,123 @@ export default function App() {
 			});
 	};
 
+	const updatePlayerTeam = async () => {
+		await axios.put(
+			"http://localhost:8080/api/player/updatePlayerTeam/" +
+				Cookies.get("user") +
+				"/" +
+				playerTeam.join()
+		);
+	};
+
+	const getPlayerMonsterCollection = async () => {
+		await axios
+			.get(
+				"http://localhost:8080/api/player/getPlayerMonsterCollection/" +
+					Cookies.get("user")
+			)
+			.then((res) => {
+				setMonsterCollection(res.data);
+			});
+	};
+
+	const openModal = () => {
+		setOpen(true);
+	};
+
+	const closeModal = () => {
+		setOpen(false);
+		updatePlayerTeam();
+	};
+
+	const customList = (title, items) => (
+		<Card className={classes.card}>
+			<CardHeader
+				className={classes.cardHeader}
+				avatar={
+					<Checkbox
+						onClick={handleToggleAll(items)}
+						checked={
+							numberOfChecked(items) === items.length && items.length !== 0
+						}
+						indeterminate={
+							numberOfChecked(items) !== items.length &&
+							numberOfChecked(items) !== 0
+						}
+						disabled={items.length === 0}
+						inputProps={{ "aria-label": "all items selected" }}
+					/>
+				}
+				title={title}
+				subheader={`${numberOfChecked(items)}/${items.length} selected`}
+			/>
+			<Divider />
+			<List className={classes.list} dense component="div" role="list">
+				{items.map((value) => {
+					const labelId = `transfer-list-all-item-${value}-label`;
+
+					return (
+						<ListItem
+							key={value}
+							role="listitem"
+							button
+							onClick={handleToggle(value)}
+						>
+							<ListItemIcon>
+								<Checkbox
+									checked={checked.indexOf(value) !== -1}
+									tabIndex={-1}
+									disableRipple
+									inputProps={{ "aria-labelledby": labelId }}
+								/>
+							</ListItemIcon>
+							<ListItemText id={labelId} primary={` ${value}`} />
+						</ListItem>
+					);
+				})}
+				<ListItem />
+			</List>
+		</Card>
+	);
+
+	const handleToggle = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [...checked];
+
+		if (currentIndex === -1) {
+			newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
+
+		setChecked(newChecked);
+	};
+
+	const numberOfChecked = (items) => intersection(checked, items).length;
+
+	const handleToggleAll = (items) => () => {
+		if (numberOfChecked(items) === items.length) {
+			setChecked(not(checked, items));
+		} else {
+			setChecked(union(checked, items));
+		}
+	};
+
+	const handleCheckedPlayerTeam = () => {
+		setPlayerTeam(playerTeam.concat(monsterCollectionChecked));
+		setMonsterCollection(not(monsterCollection, monsterCollectionChecked));
+		setChecked(not(checked, monsterCollectionChecked));
+	};
+
+	const handleCheckedMonsterCollection = () => {
+		setMonsterCollection(monsterCollection.concat(playerTeamChecked));
+		setPlayerTeam(not(playerTeam, playerTeamChecked));
+		setChecked(not(checked, playerTeamChecked));
+	};
+
 	useEffect(() => {
 		getPlayerTeam();
+		getPlayerMonsterCollection();
 	}, []);
 
 	return (
@@ -217,15 +395,74 @@ export default function App() {
 									variant="contained"
 									className={classes.changeTeamButton}
 									size="small"
+									onClick={openModal}
 								>
 									Change team
 								</Button>
 							</Grid>
+							<Modal
+								open={open}
+								onClose={closeModal}
+								className={classes.modal}
+								contentLabel="Example Modal"
+							>
+								<Card className={classes.card}>
+									<Grid
+										container
+										spacing={2}
+										justify="center"
+										alignItems="center"
+										className={classes.root}
+									>
+										<Grid item>
+											{customList("Monster Collection", monsterCollection)}
+										</Grid>
+										<Grid item>
+											<Grid
+												container
+												direction="column"
+												alignItems="center"
+												justify="center"
+											>
+												<Button
+													variant="outlined"
+													size="small"
+													className={classes.button}
+													onClick={handleCheckedPlayerTeam}
+													disabled={
+														monsterCollectionChecked.length === 0 ||
+														monsterCollectionChecked.length > maxCapacity ||
+														monsterCollectionChecked.length !=
+															maxCapacity - playerTeam.length ||
+														playerTeam.length === maxCapacity
+													}
+													aria-label="move selected right"
+												>
+													&gt;
+												</Button>
+												<Button
+													variant="outlined"
+													size="small"
+													className={classes.button}
+													onClick={handleCheckedMonsterCollection}
+													disabled={playerTeamChecked.length === 0}
+													aria-label="move selected left"
+												>
+													&lt;
+												</Button>
+											</Grid>
+										</Grid>
+										<Grid item>{customList("Player Team", playerTeam)}</Grid>
+									</Grid>
+								</Card>
+							</Modal>
 						</Grid>
-						{/* <CachedIcon className={classes.icon}/> */}
 					</Grid>
 				</AppBar>
 			</div>
 		</div>
 	);
+}
+
+{
 }
