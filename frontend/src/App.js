@@ -143,6 +143,7 @@ export default function App() {
 	const [monsterCollection, setMonsterCollection] = useState([]);
 	const [checked, setChecked] = useState([]);
 	let maxCapacity = 3;
+	const [disabled, setDisabled] = useState(false);
 
 	const monsterCollectionChecked = intersection(checked, monsterCollection);
 	const playerTeamChecked = intersection(checked, playerTeam);
@@ -258,6 +259,16 @@ export default function App() {
 		setChecked(newChecked);
 	};
 
+	const isPresentInPlayerTeam = () => {
+		monsterCollectionChecked.forEach((monster) => {
+			if (playerTeam.includes(monster)) {
+				setDisabled(true);
+			} else {
+				setDisabled(false);
+			}
+		});
+	};
+
 	const numberOfChecked = (items) => intersection(checked, items).length;
 
 	const handleToggleAll = (items) => () => {
@@ -270,12 +281,12 @@ export default function App() {
 
 	const handleCheckedPlayerTeam = () => {
 		setPlayerTeam(playerTeam.concat(monsterCollectionChecked));
-		setMonsterCollection(not(monsterCollection, monsterCollectionChecked));
+		//setMonsterCollection(not(monsterCollection, monsterCollectionChecked));
 		setChecked(not(checked, monsterCollectionChecked));
 	};
 
 	const handleCheckedMonsterCollection = () => {
-		setMonsterCollection(monsterCollection.concat(playerTeamChecked));
+		//setMonsterCollection(monsterCollection.concat(playerTeamChecked));
 		setPlayerTeam(not(playerTeam, playerTeamChecked));
 		setChecked(not(checked, playerTeamChecked));
 	};
@@ -284,6 +295,10 @@ export default function App() {
 		getPlayerTeam();
 		getPlayerMonsterCollection();
 	}, []);
+
+	useEffect(() => {
+		isPresentInPlayerTeam();
+	}, [monsterCollectionChecked]);
 
 	return (
 		<div className="App">
@@ -432,13 +447,15 @@ export default function App() {
 													disabled={
 														monsterCollectionChecked.length === 0 ||
 														monsterCollectionChecked.length > maxCapacity ||
-														monsterCollectionChecked.length !=
-															maxCapacity - playerTeam.length ||
-														playerTeam.length === maxCapacity
+														monsterCollectionChecked.length +
+															playerTeam.length >
+															maxCapacity ||
+														playerTeam.length === maxCapacity ||
+														disabled
 													}
 													aria-label="move selected right"
 												>
-													&gt;
+													Update Player Team
 												</Button>
 												<Button
 													variant="outlined"
@@ -448,7 +465,7 @@ export default function App() {
 													disabled={playerTeamChecked.length === 0}
 													aria-label="move selected left"
 												>
-													&lt;
+													Remove from Player Team
 												</Button>
 											</Grid>
 										</Grid>

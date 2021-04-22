@@ -208,7 +208,6 @@ public class PlayerController {
     public void updatePlayerTeam(@PathVariable String id, @PathVariable String monsters) {
         Player player = getOne(id);
         List<String> monsterArray = Arrays.asList(monsters.split(","));
-        player.removeCollectionMonsters(monsterArray);
         player.setTeam(monsterArray);
         update(id, player);
 
