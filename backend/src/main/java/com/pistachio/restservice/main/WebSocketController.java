@@ -41,4 +41,16 @@ public class WebSocketController {
         messagingTemplate.convertAndSend(format("/topic/%s", battleID), battleReady);
     }
 
+    @MessageMapping("/sendAction/{battleID}")
+    public void sendAction(@DestinationVariable String battleID, @Payload String newAction,
+            SimpMessageHeaderAccessor headerAccessor) {
+                // Action, String username, String content
+                // content = "2,3"
+                // int actionType = content[0]
+                // int actionIndex = content[2]
+                // switch(content.charAt(0)){}
+                // String content
+                // int actionType
+    }
+
 }

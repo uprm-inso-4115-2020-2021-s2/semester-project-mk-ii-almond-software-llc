@@ -102,9 +102,9 @@ export default function BattleSystem(props) {
 
 				{showLoading ? <BattleLoading leaveRoom={leaveRoom} /> :
 					<div>
-						<BattleAlert messages={messages} />
-						<BattleInfo />
-						<BattleMenu leaveRoom={leaveRoom} />
+						<BattleAlert player={props.player} battle={battle} messages={messages} />
+						<BattleInfo player={props.player} battle={battle} />
+						<BattleMenu player={props.player} battle={battle} leaveRoom={leaveRoom} />
 					</div>}
 
 				{/* this is the websocket :) */}

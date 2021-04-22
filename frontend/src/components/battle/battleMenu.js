@@ -51,6 +51,11 @@ export default function BattleMenu(props) {
   const [showMenu, setShowMenu] = useState(true);
   const [showMoves, setShowMoves] = useState(false);
   const [showTeam, setShowTeam] = useState(false);
+  const [battle, setBattle] = useState(props.battle);
+  const [player, setPlayer] = useState(props.player);
+  const [playerMonster, setPlayerMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2);
+  const [playerMoves, setPlayerMoves] = useState(player === battle.firstPlayerID ? battle.activeMonster1.moves : battle.activeMonster2.moves)
+  const [playerTeam, setPlayerTeam] = useState(player === battle.firstPlayerID ? battle.firstPlayerTeam : battle.secondPlayerTeam)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -59,6 +64,7 @@ export default function BattleMenu(props) {
   }
 
   const toggleMoves = () => {
+    console.log(playerMoves, playerTeam)
     setShowMenu(false)
     setShowMoves(!showMoves)
     setShowTeam(false)
@@ -72,30 +78,6 @@ export default function BattleMenu(props) {
 
   return (
     <div className={classes.root}>
-      {/* <Button className={classes.backButton}>Back</Button> */}
-      {/* <Grid container spacing={4}>
-        <Grid item xs={6}>
-          <Typography className={classes.enemyButton}>Enemy</Typography>
-          <div className={classes.progress} item spacing={3}>
-            <div className={classes.progressBar}>50%</div>
-          </div>
-        </Grid>
-
-        <Grid item xs={6}>
-          <AndroidIcon className={classes.monsterIcon} />
-        </Grid>
-
-        <Grid item xs={6}>
-          <AppleIcon className={classes.monsterIcon} />
-        </Grid>
-
-        <Grid item xs={6}>
-          <Typography className={classes.enemyButton}>Monster 1</Typography>
-          <div className={classes.progress} item spacing={3}>
-            <div className={classes.progressBar}>50%</div>
-          </div>
-        </Grid>
-      </Grid> */}
 
       {showMenu ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
@@ -113,30 +95,28 @@ export default function BattleMenu(props) {
         <Grid item xs={6}>
           <Button className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
         </Grid>
-        <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons}>Move 1</Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons}>Move 2</Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons}>Move 3</Button>
-        </Grid>
+        {playerMoves.map((e, i) => {
+          return (
+            <Grid item xs={6} key={i}>
+              <Button className={classes.buttonMenuButtons}>{e.name}</Button>
+              <Typography>Base Damage: {e.baseDamage}</Typography>
+            </Grid>
+          )
+        })}
       </Grid> : <div />}
 
       {showTeam ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
           <Button className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
         </Grid>
-        <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons}>Monster 1</Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons}>Monster 2</Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons}>Monster 3</Button>
-        </Grid>
+        {playerTeam.map((e, i) => {
+          return (
+            <Grid item xs={6} key={i}>
+              <Button className={classes.buttonMenuButtons}>{e.name}</Button>
+              <Typography>Current HP: {(e.stats.hp / e.stats.maxHp) * 100}</Typography>
+            </Grid>
+          )
+        })}
       </Grid> : <div />}
     </div>
   );
