@@ -29,16 +29,10 @@ public class WebSocketController{
     @MessageMapping("/addUser/{battleID}")
     public void addUser(@DestinationVariable String battleID, @Payload Action newAction,
             SimpMessageHeaderAccessor headerAccessor) {
-        String currentRoom = (String) headerAccessor.getSessionAttributes().put("battleID", battleID);
-        if (currentRoom != null) {
-            Action leaveAction = new Action();
-            leaveAction.setUsername(newAction.getUsername());
-            leaveAction.setContent(newAction.getContent() + " has disconnected!");
-            leaveAction.setServer(true);
-            messagingTemplate.convertAndSend(format("/channel/%s", currentRoom), leaveAction);
-        }
-        headerAccessor.getSessionAttributes().put("username", newAction.getUsername());
-        messagingTemplate.convertAndSend(format("/topic/%s", battleID), newAction);
+        
+            headerAccessor.getSessionAttributes().put("battleID", battleID);
+            headerAccessor.getSessionAttributes().put("username", newAction.getUsername());
+            messagingTemplate.convertAndSend(format("/topic/%s", battleID), newAction);
     }
     
 
