@@ -14,6 +14,8 @@ import java.util.List;
 public class PlayerController {
     @Autowired
     private PlayerRepository playerRepo;
+    @Autowired
+    private MonsterRepository monsterRepo;
 
     @PostMapping("/player/add")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -199,7 +201,8 @@ public class PlayerController {
     @PostMapping(value = "player/addToMonsterCollection/{id}/{monsterID}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void addToMonsterCollection(@PathVariable String id, @PathVariable String monsterID) {
-        getOne(id).addMonster(monsterID);
+        Monster m = monsterRepo.findById(monsterID).get();
+        getOne(id).addMonster(m);
     }
 
     // Update the player's team
