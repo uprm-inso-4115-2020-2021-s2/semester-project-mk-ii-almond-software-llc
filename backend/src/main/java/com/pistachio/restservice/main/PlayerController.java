@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -130,7 +131,8 @@ public class PlayerController {
             playerThatRequested.addFriend(playerThatAccepted);
         }
 
-        // Save both players into db regardless of whether friendship was accepted or not
+        // Save both players into db regardless of whether friendship was accepted or
+        // not
         this.update(playerThatRequested.getUser(), playerThatRequested);
         this.update(playerThatAccepted.getUser(), playerThatAccepted);
     }
@@ -176,6 +178,38 @@ public class PlayerController {
         // Save both players
         update(Destination, D);
         update(Origin, O);
+
+    }
+
+    // Get the Player Team
+    @GetMapping(value = "player/getPlayerTeam/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public List<String> getPlayerTeam(@PathVariable String id) {
+        return getOne(id).getTeam();
+    }
+
+    // Get the player's monster collection
+    @GetMapping(value = "player/getPlayerMonsterCollection/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public List<String> getPlayerMonsterCollection(@PathVariable String id) {
+        return getOne(id).getCollections();
+    }
+
+    // Add to the player's monster collection
+    @PostMapping(value = "player/addToMonsterCollection/{id}/{monsterID}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void addToMonsterCollection(@PathVariable String id, @PathVariable String monsterID) {
+        getOne(id).addMonster(monsterID);
+    }
+
+    // Update the player's team
+    @PutMapping(value = "player/updatePlayerTeam/{id}/{monsters}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void updatePlayerTeam(@PathVariable String id, @PathVariable String monsters) {
+        Player player = getOne(id);
+        List<String> monsterArray = Arrays.asList(monsters.split(","));
+        player.setTeam(monsterArray);
+        update(id, player);
 
     }
 
