@@ -120,8 +120,26 @@ public class BattleController {
             // Check that we're not inserting player into a battle with itself and if we are
             // then move on to the next one in the list if possible
             if (battleToInsert.getFirstPlayerID().equals(playerSearchingForBattle.getUser())) {
+                //check for other battles available
                 if (battleList.size() > 1) {
                     battleToInsert = battleList.get(1);
+                }
+                //create a new one
+                else
+                {
+                    List<Monster> team = new ArrayList<Monster>();
+
+                    List<String> teamList = playerSearchingForBattle.getTeam();
+
+                    for (String monster : teamList) {
+                        Monster mon = monsterRepo.findById(monster).get();
+                        team.add(mon);
+                    }
+                    battleToInsert.setFirstPlayerTeam(team);
+                    battleToInsert.setActiveMonster1(battleToInsert.getFirstPlayerTeam().get(0));
+                    battleToInsert.setPlayer1TeamSize(battleToInsert.getFirstPlayerTeam().size());
+        
+                    return battleRepo.save(battleToInsert);
                 }
 
             }
