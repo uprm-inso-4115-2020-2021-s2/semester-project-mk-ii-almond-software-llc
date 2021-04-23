@@ -15,11 +15,12 @@ import org.springframework.data.annotation.Id;
 public class LootBox {
 
 	@Id
-	private String lootCrateName;
+	private String name;
+
 	private List<String> Monsters;
 
-	public LootBox(String lootCrateName, List<String> Monsters) {
-		this.lootCrateName = lootCrateName;
+	public LootBox(String name, List<String> Monsters) {
+		this.name = name;
 		this.Monsters = Monsters;
 	}
 
@@ -54,14 +55,14 @@ public class LootBox {
 
 	@Override
 	public String toString() {
-		return "LootBox [ID=" + lootCrateName + "]";
+		return "LootBox [ID=" + name + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((lootCrateName == null) ? 0 : lootCrateName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -74,11 +75,11 @@ public class LootBox {
 			return false;
 		}
 		LootBox other = (LootBox) obj;
-		if (lootCrateName == null) {
-			if (other.lootCrateName != null) {
+		if (name == null) {
+			if (other.name != null) {
 				return false;
 			}
-		} else if (!lootCrateName.equals(other.lootCrateName)) {
+		} else if (!name.equals(other.name)) {
 			return false;
 		}
 		return true;
