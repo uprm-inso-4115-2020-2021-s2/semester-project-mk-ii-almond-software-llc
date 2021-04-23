@@ -90,7 +90,21 @@ export default function BattleSystem(props) {
 				setBattle(res.data);
 
 				if (res.data.victor != "") {
+					if (res.data.victor === player && res.data.firstPlayerID === player) {
+						console.log(player, " won");
+					} else if (res.data.victor != player) {
+						console.log(player, " lost");
+					}
+					if (
+						res.data.victor === player &&
+						res.data.secondPlayerID === player
+					) {
+						console.log(player, " won");
+					} else if (res.data.victor != player) {
+						console.log(player, " lost");
+					}
 					console.log("victor found!");
+					leaveRoom();
 					// terminate
 				} else if (!res.data.activeMonster1.stats.hp) {
 					console.log("monster 1 died :(");
