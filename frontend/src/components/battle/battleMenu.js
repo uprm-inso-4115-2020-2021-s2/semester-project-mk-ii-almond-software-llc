@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Typography, Grid, makeStyles, Button, Paper } from "@material-ui/core";
+import { Typography, Grid, makeStyles, Button, Paper, CircularProgress } from "@material-ui/core";
 import AndroidIcon from "@material-ui/icons/Android";
 import AppleIcon from "@material-ui/icons/Apple";
 
@@ -47,76 +47,72 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BattleMenu(props) {
+
   const classes = useStyles();
-  const [showMenu, setShowMenu] = useState(true);
-  const [showMoves, setShowMoves] = useState(false);
-  const [showTeam, setShowTeam] = useState(false);
   const [battle, setBattle] = useState(props.battle);
   const [player, setPlayer] = useState(props.player);
-  const [playerMonster, setPlayerMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2);
   const [playerMoves, setPlayerMoves] = useState(player === battle.firstPlayerID ? battle.activeMonster1.moves : battle.activeMonster2.moves)
   const [playerTeam, setPlayerTeam] = useState(player === battle.firstPlayerID ? battle.firstPlayerTeam : battle.secondPlayerTeam)
-
-  const toggleMenu = () => {
-    setShowMenu(!showMenu)
-    setShowMoves(false)
-    setShowTeam(false)
-  }
-
-  const toggleMoves = () => {
-    console.log(playerMoves, playerTeam)
-    setShowMenu(false)
-    setShowMoves(!showMoves)
-    setShowTeam(false)
-  }
-
-  const toggleTeam = () => {
-    setShowMenu(false)
-    setShowMoves(false)
-    setShowTeam(!showTeam)
-  }
+  const [monster, setMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2)
 
   return (
     <div className={classes.root}>
-
-      {showMenu ? <Grid container spacing={4} className={classes.buttonMenu}>
+      {props.showMenu ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons} onClick={toggleMoves}>Moves</Button>
+          <Button className={classes.buttonMenuButtons} onClick={props.toggleMoves}>Moves</Button>
         </Grid>
         <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons} onClick={toggleTeam}>Team</Button>
+          <Button className={classes.buttonMenuButtons} onClick={props.toggleTeam}>Team</Button>
         </Grid>
         <Grid item xs={12}>
           <Button className={classes.buttonMenuButtons} onClick={props.leaveRoom}>Forfeit</Button>
         </Grid>
       </Grid> : <div />}
 
-      {showMoves ? <Grid container spacing={4} className={classes.buttonMenu}>
+      {props.showMoves ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+          <Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
         </Grid>
         {playerMoves.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button className={classes.buttonMenuButtons} onClick={() => { props.sendMove(i) }}>{e.name}</Button>
+              <Button className={classes.buttonMenuButtons}
+                onClick={() => {
+                  props.sendMove(i);
+                  props.setLockMenu(false);
+                }}>
+                {e.name}
+              </Button>
               <Typography>Base Damage: {e.baseDamage}</Typography>
             </Grid>
           )
         })}
       </Grid> : <div />}
 
-      {showTeam ? <Grid container spacing={4} className={classes.buttonMenu}>
+      {props.showTeam ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+          <Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
         </Grid>
         {playerTeam.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button className={classes.buttonMenuButtons} onClick={() => { props.sendSwap(i) }}>{e.name}</Button>
+              <Button disabled={monster.name === e.name} className={classes.buttonMenuButtons}
+                onClick={() => {
+                  props.sendSwap(i);
+                  props.setLockMenu(false);
+                }}>
+                {e.name}
+              </Button>
               <Typography>Current HP: {(e.stats.hp / e.stats.maxHp) * 100}</Typography>
             </Grid>
           )
         })}
+      </Grid> : <div />}
+
+      {props.showIdle ? <Grid container spacing={4} className={classes.buttonMenu}>
+        <Grid item container justify="center" alignItems="center" direction="row">
+          <CircularProgress />
+        </Grid>
       </Grid> : <div />}
     </div>
   );
