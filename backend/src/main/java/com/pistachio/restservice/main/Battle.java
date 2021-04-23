@@ -242,6 +242,17 @@ public class Battle {
                 setPlayer1Action("");
                 setPlayer2Action("");
             }
+            //Player skipping
+            else if(player1Action.startsWith("2")){
+
+                //player 2 will swap
+                setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+            }
+            else if(player2Action.startsWith("2")){
+                //player 1 will swap
+                setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
+            }
+
             //both of them are attacking
             else
             {
