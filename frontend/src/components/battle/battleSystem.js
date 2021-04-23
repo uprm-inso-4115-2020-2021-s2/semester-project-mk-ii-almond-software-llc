@@ -1,12 +1,18 @@
 import { React, useState, useEffect } from "react";
-import { Typography, Grid, Button, makeStyles, CircularProgress } from "@material-ui/core";
-import SockJsClient from 'react-stomp';
+import {
+	Typography,
+	Grid,
+	Button,
+	makeStyles,
+	CircularProgress,
+} from "@material-ui/core";
+import SockJsClient from "react-stomp";
 import AndroidIcon from "@material-ui/icons/Android";
 import AppleIcon from "@material-ui/icons/Apple";
-import BattleMenu from './battleMenu';
-import BattleAlert from './battleAlert';
-import BattleInfo from './battleInfo';
-import BattleLoading from './battleLoading';
+import BattleMenu from "./battleMenu";
+import BattleAlert from "./battleAlert";
+import BattleInfo from "./battleInfo";
+import BattleLoading from "./battleLoading";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -51,12 +57,11 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: "#f2f2f2",
 	},
 	buttonMenuButtons: {
-		backgroundColor: "white"
+		backgroundColor: "white",
 	},
 }));
 
 export default function BattleSystem(props) {
-
 	const classes = useStyles();
 	const [player] = useState(props.player);
 	const [battleID, setBattleID] = useState(props.battleID);
@@ -76,139 +81,185 @@ export default function BattleSystem(props) {
 
 	useEffect(() => {
 		console.log(battle);
-	}, [battle])
+	}, [battle]);
 
 	const updateBattle = async () => {
-		await axios.get("http://localhost:8080/api/battle/" + battleID).then(res => {
-			setBattle(res.data);
+		await axios
+			.get("http://localhost:8080/api/battle/" + battleID)
+			.then((res) => {
+				setBattle(res.data);
 
-			if (res.data.victor === "") {
-				console.log("victor found!")
-				// terminate
-			} else if (!res.data.activeMonster1.stats.hp) {
-				console.log("monster 1 died :(")
-				if (res.data.firstPlayerID === player) {
-					setShowMenu(false)
-					setShowMoves(false)
-					setShowTeam(true)
-					setShowIdle(false)
-					setLockMenu(true)
+				if (res.data.victor != "") {
+					if (res.data.victor === player && res.data.firstPlayerID === player) {
+						console.log(player, " won");
+					} else if (res.data.victor != player) {
+						console.log(player, " lost");
+					}
+					if (
+						res.data.victor === player &&
+						res.data.secondPlayerID === player
+					) {
+						console.log(player, " won");
+					} else if (res.data.victor != player) {
+						console.log(player, " lost");
+					}
+					console.log("victor found!");
+					leaveRoom();
+					// terminate
+				} else if (!res.data.activeMonster1.stats.hp) {
+					console.log("monster 1 died :(");
+					if (res.data.firstPlayerID === player) {
+						setShowMenu(false);
+						setShowMoves(false);
+						setShowTeam(true);
+						setShowIdle(false);
+						setLockMenu(true);
+					} else {
+						sendSkip(0);
+					}
+				} else if (!res.data.activeMonster2.stats.hp) {
+					console.log("monster 2 died :(");
+					if (res.data.secondPlayerID === player) {
+						setShowMenu(false);
+						setShowMoves(false);
+						setShowTeam(true);
+						setShowIdle(false);
+						setLockMenu(true);
+					} else {
+						sendSkip(1);
+					}
 				} else {
-					sendSkip(0);
+					console.log("turning off toggle");
+					setShowMenu(true);
+					setShowMoves(false);
+					setShowTeam(false);
+					setShowIdle(false);
 				}
-			} else if (!res.data.activeMonster2.stats.hp) {
-				console.log("monster 2 died :(")
-				if (res.data.secondPlayerID === player) {
-					setShowMenu(false)
-					setShowMoves(false)
-					setShowTeam(true)
-					setShowIdle(false)
-					setLockMenu(true)
-				} else {
-					sendSkip(1);
-				}
-			} else {
-				console.log("turning off toggle");
-				setShowMenu(true)
-				setShowMoves(false)
-				setShowTeam(false)
-				setShowIdle(false)
-			}
 
-			setPlayerMonster(player === res.data.firstPlayerID ? res.data.activeMonster1 : res.data.activeMonster2);
-			setEnemyMonster(player === res.data.firstPlayerID ? res.data.activeMonster2 : res.data.activeMonster1);
-			setShowLoading(false);
-		})
-	}
+				setPlayerMonster(
+					player === res.data.firstPlayerID
+						? res.data.activeMonster1
+						: res.data.activeMonster2
+				);
+				setEnemyMonster(
+					player === res.data.firstPlayerID
+						? res.data.activeMonster2
+						: res.data.activeMonster1
+				);
+				setShowLoading(false);
+			});
+	};
 
 	const sendMessage = () => {
-		clientRef.sendMessage(`/app/sendMessage/${battleID}`, JSON.stringify({
-			player: player,
-			message: message,
-			server: false
-		}));
+		clientRef.sendMessage(
+			`/app/sendMessage/${battleID}`,
+			JSON.stringify({
+				player: player,
+				message: message,
+				server: false,
+			})
+		);
 	};
 
 	const leaveRoom = () => {
 		props.setMatched(!props.matched);
-		const tempTopics = []
-		setTopics(tempTopics)
-		const tempMessages = []
-		setMessages(tempMessages)
-		clientRef.disconnect()
-	}
+		const tempTopics = [];
+		setTopics(tempTopics);
+		const tempMessages = [];
+		setMessages(tempMessages);
+		clientRef.disconnect();
+	};
 
 	const sendMove = (index) => {
 		let playerIndex = player === battle.firstPlayerID ? 0 : 1;
-		console.log('sending move:', playerIndex + '0' + index);
-		clientRef.sendMessage(`/app/sendAction/${battleID}`, JSON.stringify({
-			username: player,
-			server: true,
-			content: playerIndex + '0' + index
-		}));
+		console.log("sending move:", playerIndex + "0" + index);
+		clientRef.sendMessage(
+			`/app/sendAction/${battleID}`,
+			JSON.stringify({
+				username: player,
+				server: true,
+				content: playerIndex + "0" + index,
+			})
+		);
 		toggleIdle();
-	}
+	};
 
 	const sendSwap = (index) => {
 		let playerIndex = player === battle.firstPlayerID ? 0 : 1;
-		console.log('sending swap:', playerIndex + '1' + index);
-		clientRef.sendMessage(`/app/sendAction/${battleID}`, JSON.stringify({
-			username: player,
-			server: true,
-			content: playerIndex + '1' + index
-		}));
+		console.log("sending swap:", playerIndex + "1" + index);
+		clientRef.sendMessage(
+			`/app/sendAction/${battleID}`,
+			JSON.stringify({
+				username: player,
+				server: true,
+				content: playerIndex + "1" + index,
+			})
+		);
 		toggleIdle();
-	}
+	};
 
 	const sendSkip = (playerIndex) => {
-		console.log('sending skip:', playerIndex + '20');
-		clientRef.sendMessage(`/app/sendAction/${battleID}`, JSON.stringify({
-			username: player,
-			server: true,
-			content: playerIndex + '20'
-		}));
-	}
+		console.log("sending skip:", playerIndex + "20");
+		clientRef.sendMessage(
+			`/app/sendAction/${battleID}`,
+			JSON.stringify({
+				username: player,
+				server: true,
+				content: playerIndex + "20",
+			})
+		);
+	};
 
 	const toggleMenu = () => {
-		setShowMenu(!showMenu)
-		setShowMoves(false)
-		setShowTeam(false)
-		setShowIdle(false)
-	}
+		setShowMenu(!showMenu);
+		setShowMoves(false);
+		setShowTeam(false);
+		setShowIdle(false);
+	};
 
 	const toggleMoves = () => {
-		setShowMenu(false)
-		setShowMoves(!showMoves)
-		setShowTeam(false)
-		setShowIdle(false)
-	}
+		setShowMenu(false);
+		setShowMoves(!showMoves);
+		setShowTeam(false);
+		setShowIdle(false);
+	};
 
 	const toggleTeam = () => {
-		setShowMenu(false)
-		setShowMoves(false)
-		setShowTeam(!showTeam)
-		setShowIdle(false)
-	}
+		setShowMenu(false);
+		setShowMoves(false);
+		setShowTeam(!showTeam);
+		setShowIdle(false);
+	};
 
 	const toggleIdle = () => {
-		setShowMenu(false)
-		setShowMoves(false)
-		setShowTeam(false)
-		setShowIdle(!showIdle)
-	}
+		setShowMenu(false);
+		setShowMoves(false);
+		setShowTeam(false);
+		setShowIdle(!showIdle);
+	};
 
 	return (
 		<div>
-			<Grid container
+			<Grid
+				container
 				direction="column"
 				justify="center"
 				alignItems="center"
-				style={{ justifyContent: "space-between", height: props.appHeight }}>
-
-				{showLoading ? <BattleLoading leaveRoom={leaveRoom} /> :
+				style={{ justifyContent: "space-between", height: props.appHeight }}
+			>
+				{showLoading ? (
+					<BattleLoading leaveRoom={leaveRoom} />
+				) : (
 					<div>
-						<BattleAlert player={props.player} battle={battle} messages={messages} />
-						<BattleInfo enemyMonster={enemyMonster} playerMonster={playerMonster} />
+						<BattleAlert
+							player={props.player}
+							battle={battle}
+							messages={messages}
+						/>
+						<BattleInfo
+							enemyMonster={enemyMonster}
+							playerMonster={playerMonster}
+						/>
 						<BattleMenu
 							sendMove={sendMove}
 							sendSwap={sendSwap}
@@ -224,39 +275,49 @@ export default function BattleSystem(props) {
 							toggleIdle={toggleIdle}
 							setLockMenu={setLockMenu}
 							player={props.player}
-							battle={battle} />
+							battle={battle}
+						/>
 					</div>
-				}
+				)}
 
 				{/* this is the websocket :) */}
 				<SockJsClient
-					url='http://localhost:8080/websocket/'
+					url="http://localhost:8080/websocket/"
 					topics={topics}
 					onConnect={() => {
 						console.log("connected");
-						clientRef.sendMessage(`/app/updateBattle/${battleID}`, props.battleReady);
-						clientRef.sendMessage(`/app/addUser/${battleID}`, JSON.stringify({
-							username: player,
-							server: true,
-							content: player + " has connected!"
-						}));
+						clientRef.sendMessage(
+							`/app/updateBattle/${battleID}`,
+							props.battleReady
+						);
+						clientRef.sendMessage(
+							`/app/addUser/${battleID}`,
+							JSON.stringify({
+								username: player,
+								server: true,
+								content: player + " has connected!",
+							})
+						);
 					}}
 					onDisconnect={() => {
 						console.log("disconnected");
 					}}
 					onMessage={(e) => {
 						if (e === true) {
-							console.log("boolean object:", e)
-							updateBattle()
+							console.log("boolean object:", e);
+							updateBattle();
 						}
 						if (typeof e == typeof {}) {
-							console.log("message object:", e)
+							console.log("message object:", e);
 							const temp = [...messages];
 							temp.push(e);
 							setMessages(temp);
 						}
 					}}
-					ref={(client) => { setClientRef(client) }} />
+					ref={(client) => {
+						setClientRef(client);
+					}}
+				/>
 			</Grid>
 		</div>
 	);
