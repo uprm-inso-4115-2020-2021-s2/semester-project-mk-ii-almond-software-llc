@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Typography, Grid, Button, makeStyles, CircularProgress } from "@material-ui/core";
 import SockJsClient from 'react-stomp';
 import AndroidIcon from "@material-ui/icons/Android";
@@ -66,11 +66,22 @@ export default function BattleSystem(props) {
 	const [messages, setMessages] = useState([]);
 	const [clientRef, setClientRef] = useState();
 	const [showLoading, setShowLoading] = useState(true);
+	const [playerMonster, setPlayerMonster] = useState();
+	const [enemyMonster, setEnemyMonster] = useState();
+	const [playerMonsterHP, setPlayerMonsterHP] = useState()
+	const [enemyMonsterHP, setEnemyMonsterHP] = useState()
+
+	useEffect(() => {
+		console.log(battle);
+	}, [battle])
 
 	const updateBattle = async () => {
 		await axios.get("http://localhost:8080/api/battle/" + battleID).then(res => {
-			console.log(res.data);
 			setBattle(res.data);
+			setPlayerMonster(player === res.data.firstPlayerID ? res.data.activeMonster1 : res.data.activeMonster2);
+			setEnemyMonster(player === res.data.firstPlayerID ? res.data.activeMonster2 : res.data.activeMonster1);
+			setPlayerMonsterHP((res.data.activeMonster1.stats.hp / res.data.activeMonster1.stats.maxHp) * 100);
+			setEnemyMonsterHP((res.data.activeMonster2.stats.hp / res.data.activeMonster2.stats.maxHp) * 100);
 			setShowLoading(false);
 		})
 	}
@@ -123,9 +134,10 @@ export default function BattleSystem(props) {
 				{showLoading ? <BattleLoading leaveRoom={leaveRoom} /> :
 					<div>
 						<BattleAlert player={props.player} battle={battle} messages={messages} />
-						<BattleInfo player={props.player} battle={battle} />
+						<BattleInfo enemyMonster={enemyMonster} playerMonster={playerMonster} />
 						<BattleMenu sendMove={sendMove} sendSwap={sendSwap} player={props.player} battle={battle} leaveRoom={leaveRoom} />
-					</div>}
+					</div>
+				}
 
 				{/* this is the websocket :) */}
 				<SockJsClient

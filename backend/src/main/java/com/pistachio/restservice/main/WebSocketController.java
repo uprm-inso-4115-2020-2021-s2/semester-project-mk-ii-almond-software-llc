@@ -57,19 +57,29 @@ public class WebSocketController {
         // Player 1
         case '0':
             // Add action to battle
+            System.out.println("updating player 1 action");
+
             battleToUse.setPlayer1Action(userAction.substring(1));
             battleToUse.calculateTurnOutcome();
             battleRepo.save(battleToUse);
 
-            // Player 2
+            System.out.println("player 1 action updated: " + battleToUse.getPlayer1Action());
+            break;
+
         case '1':
+            // Player 2
             // Add action to battle
+            System.out.println("updating player 2 action");
+
             battleToUse.setPlayer2Action(userAction.substring(1));
             battleToUse.calculateTurnOutcome();
             battleRepo.save(battleToUse);
+
+            System.out.println("player 2 action updated: " + battleToUse.getPlayer2Action());
+            break;
         }
 
-        if (!battleToUse.getPlayer1Action().isBlank() && !battleToUse.getPlayer2Action().isBlank()) {
+        if (!battleToUse.getPlayer1Action().isEmpty() && !battleToUse.getPlayer2Action().isEmpty()) {
             System.out.println("both players chose an action!");
             updateBattle = true;
         }
