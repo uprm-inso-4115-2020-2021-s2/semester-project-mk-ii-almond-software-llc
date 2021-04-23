@@ -24,6 +24,15 @@ public class BattleController {
         return battleRepo.save(Battle);
     }
 
+    @DeleteMapping(value = "/deleteAllBattles")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void deleteAllBattles() {
+        List<Battle> battles = getAll();
+        for (Battle b : battles) {
+            delete(b.getBattleID());
+        }
+    }
+
     @GetMapping("/battle")
     public List<Battle> getAll() {
         return battleRepo.findAll();

@@ -68,8 +68,10 @@ export default function BattleSystem(props) {
 	const [showLoading, setShowLoading] = useState(true);
 	const [playerMonster, setPlayerMonster] = useState();
 	const [enemyMonster, setEnemyMonster] = useState();
-	const [playerMonsterHP, setPlayerMonsterHP] = useState()
-	const [enemyMonsterHP, setEnemyMonsterHP] = useState()
+	const [showIdle, setShowIdle] = useState(false);
+	const [showMenu, setShowMenu] = useState(true);
+	const [showMoves, setShowMoves] = useState(false);
+	const [showTeam, setShowTeam] = useState(false);
 
 	useEffect(() => {
 		console.log(battle);
@@ -78,10 +80,34 @@ export default function BattleSystem(props) {
 	const updateBattle = async () => {
 		await axios.get("http://localhost:8080/api/battle/" + battleID).then(res => {
 			setBattle(res.data);
+
+			if (res.data.victor === "") {
+				console.log("victor found!")
+				// terminate
+			} else if (!res.data.activeMonster1.stats.hp) {
+				console.log("monster 1 died :(")
+				if (res.data.firstPlayerID === player) {
+					// showTeam = true if you are player 1
+				} else {
+					sendSkip(0);
+				}
+			} else if (!res.data.activeMonster2.stats.hp) {
+				console.log("monster 2 died :(")
+				if (res.data.secondPlayerID === player) {
+					// showTeam = true if you are player 2
+				} else {
+					sendSkip(1);
+				}
+			} else {
+				console.log("turning off toggle");
+				setShowMenu(true)
+				setShowMoves(false)
+				setShowTeam(false)
+				setShowIdle(false)
+			}
+
 			setPlayerMonster(player === res.data.firstPlayerID ? res.data.activeMonster1 : res.data.activeMonster2);
 			setEnemyMonster(player === res.data.firstPlayerID ? res.data.activeMonster2 : res.data.activeMonster1);
-			setPlayerMonsterHP((res.data.activeMonster1.stats.hp / res.data.activeMonster1.stats.maxHp) * 100);
-			setEnemyMonsterHP((res.data.activeMonster2.stats.hp / res.data.activeMonster2.stats.maxHp) * 100);
 			setShowLoading(false);
 		})
 	}
@@ -111,6 +137,7 @@ export default function BattleSystem(props) {
 			server: true,
 			content: playerIndex + '0' + index
 		}));
+		toggleIdle();
 	}
 
 	const sendSwap = (index) => {
@@ -121,6 +148,44 @@ export default function BattleSystem(props) {
 			server: true,
 			content: playerIndex + '1' + index
 		}));
+		toggleIdle();
+	}
+
+	const sendSkip = (playerIndex) => {
+		console.log('sending skip:', playerIndex + '20');
+		clientRef.sendMessage(`/app/sendAction/${battleID}`, JSON.stringify({
+			username: player,
+			server: true,
+			content: playerIndex + '20'
+		}));
+	}
+
+	const toggleMenu = () => {
+		setShowMenu(!showMenu)
+		setShowMoves(false)
+		setShowTeam(false)
+		setShowIdle(false)
+	}
+
+	const toggleMoves = () => {
+		setShowMenu(false)
+		setShowMoves(!showMoves)
+		setShowTeam(false)
+		setShowIdle(false)
+	}
+
+	const toggleTeam = () => {
+		setShowMenu(false)
+		setShowMoves(false)
+		setShowTeam(!showTeam)
+		setShowIdle(false)
+	}
+
+	const toggleIdle = () => {
+		setShowMenu(false)
+		setShowMoves(false)
+		setShowTeam(false)
+		setShowIdle(!showIdle)
 	}
 
 	return (
@@ -135,7 +200,20 @@ export default function BattleSystem(props) {
 					<div>
 						<BattleAlert player={props.player} battle={battle} messages={messages} />
 						<BattleInfo enemyMonster={enemyMonster} playerMonster={playerMonster} />
-						<BattleMenu sendMove={sendMove} sendSwap={sendSwap} player={props.player} battle={battle} leaveRoom={leaveRoom} />
+						<BattleMenu
+							sendMove={sendMove}
+							sendSwap={sendSwap}
+							leaveRoom={leaveRoom}
+							showMenu={showMenu}
+							showMoves={showMoves}
+							showTeam={showTeam}
+							showIdle={showIdle}
+							toggleMenu={toggleMenu}
+							toggleMoves={toggleMoves}
+							toggleTeam={toggleTeam}
+							toggleIdle={toggleIdle}
+							player={props.player}
+							battle={battle} />
 					</div>
 				}
 
