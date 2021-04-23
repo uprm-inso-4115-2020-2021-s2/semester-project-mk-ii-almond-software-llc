@@ -58,12 +58,14 @@ public class WebSocketController {
         case '0':
             // Add action to battle
             battleToUse.setPlayer1Action(userAction.substring(1));
+            battleToUse.calculateTurnOutcome();
             battleRepo.save(battleToUse);
 
             // Player 2
         case '1':
             // Add action to battle
             battleToUse.setPlayer2Action(userAction.substring(1));
+            battleToUse.calculateTurnOutcome();
             battleRepo.save(battleToUse);
         }
 

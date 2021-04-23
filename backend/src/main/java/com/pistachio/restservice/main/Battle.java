@@ -142,29 +142,36 @@ public class Battle {
             if(player1Action.startsWith("1"))
             {
                 //change active monster
-                setActiveMonster1(firstPlayerTeam.get(player1Action.charAt(1)));
+                setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
                 
                 //Player 2 will also change monster
                 if(player2Action.startsWith("1")){
-                    setActiveMonster2(firstPlayerTeam.get(player2Action.charAt(1)));
+                    setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                 }
                 //Player 2 will attack instead
                 else{
-                    calculateDamage(player2Action.charAt(1), activeMonsterPlayer2, activeMonsterPlayer1);
+                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer2, activeMonsterPlayer1);
+                    setPlayer1Action("");
+                    setPlayer2Action("");
                 }
             }
             else if(player2Action.startsWith("1"))
             {
                 //change active monster
-                setActiveMonster2(firstPlayerTeam.get(player2Action.charAt(1)));
+                setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                 
                 //Player 1 will now attack
-                calculateDamage(player1Action.charAt(1), activeMonsterPlayer1, activeMonsterPlayer2);
+                
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2);
+                setPlayer1Action("");
+                setPlayer2Action("");
             }
             //both of them are attacking
             else
             {
-                calculateDamage(player1Action.charAt(1), player2Action.charAt(1));
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), Character.getNumericValue(player2Action.charAt(1)));
+                setPlayer1Action("");
+                setPlayer2Action("");
             }
         }
     }
