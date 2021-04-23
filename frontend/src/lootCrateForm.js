@@ -10,6 +10,7 @@ const Lootbox = () => {
 	const [newItem, setNewItem] = useState([]);
 	const [monsterID, setMonsterID] = useState("");
 	const [monsters, setMonsters] = useState([]);
+	const [amount, setAmount] = useState(0);
 	let history = useHistory();
 
 	const postLootCrate = async () => {
@@ -39,10 +40,20 @@ const Lootbox = () => {
 
 	const thirdEvent = () => {
 		setNewItem([]);
+		setMonsters([]);
 	};
 
 	const setMonsterIDEvent = (event) => {
 		setMonsterID(event.target.value);
+	};
+
+	const loop = () => {
+		for (let index = 0; index < amount; index++) {
+			addMonsters();
+		}
+	};
+	const addAmount = (event) => {
+		setAmount(event.target.value);
 	};
 
 	const addMonsters = () => {
@@ -51,10 +62,6 @@ const Lootbox = () => {
 		});
 
 		setMonsterID("");
-	};
-
-	const setMonstersEvent = () => {
-		setNewItem([]);
 	};
 
 	return (
@@ -88,9 +95,15 @@ const Lootbox = () => {
 					placeholder="Add Monsters"
 					onChange={setMonsterIDEvent}
 				/>
-				<Button onClick={addMonsters}>
+				<Button onClick={loop}>
 					<AddIcon />
 				</Button>
+				<input
+					type="number"
+					value={amount}
+					placeholder="amount of monsters"
+					onChange={addAmount}
+				/>
 				<br />
 				<br />
 				<ul>
@@ -101,7 +114,7 @@ const Lootbox = () => {
 			</div>
 
 			<div>
-				<Button onClick={(setMonstersEvent, thirdEvent)}>
+				<Button onClick={thirdEvent}>
 					<DeleteIcon />
 					Delete All
 				</Button>
