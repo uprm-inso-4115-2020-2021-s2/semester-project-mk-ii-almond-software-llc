@@ -41,7 +41,7 @@ public class Battle {
      */
     private List<Monster> secondPlayerTeam;
 
-    private String victor;
+    private String victor = "";
     private Monster activeMonsterPlayer1;
 
     private Monster activeMonsterPlayer2;
@@ -211,52 +211,49 @@ public class Battle {
     }
 
     public void calculateTurnOutcome() {
-        //check that both players have actions
-        if(!player1Action.isEmpty() && !player2Action.isEmpty())
-        {
-            //Check if player1 is swaping out monster
-            if(player1Action.startsWith("1"))
-            {
-                //change active monster
+        // check that both players have actions
+        if (!player1Action.isEmpty() && !player2Action.isEmpty()) {
+            // Check if player1 is swaping out monster
+            if (player1Action.startsWith("1")) {
+                // change active monster
                 setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
-                
-                //Player 2 will also change monster
-                if(player2Action.startsWith("1")){
+
+                // Player 2 will also change monster
+                if (player2Action.startsWith("1")) {
                     setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                 }
-                //Player 2 will attack instead
-                else{
-                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer2, activeMonsterPlayer1);
+                // Player 2 will attack instead
+                else {
+                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer2,
+                            activeMonsterPlayer1);
                     setPlayer1Action("");
                     setPlayer2Action("");
                 }
-            }
-            else if(player2Action.startsWith("1"))
-            {
-                //change active monster
+            } else if (player2Action.startsWith("1")) {
+                // change active monster
                 setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
-                
-                //Player 1 will now attack
-                
-                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2);
+
+                // Player 1 will now attack
+
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1,
+                        activeMonsterPlayer2);
                 setPlayer1Action("");
                 setPlayer2Action("");
             }
-            //Player skipping
-            else if(player1Action.startsWith("2")){
+            // Player skipping
+            else if (player1Action.startsWith("2")) {
 
-                //player 2 will swap
+                // player 2 will swap
                 setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
-            }
-            else if(player2Action.startsWith("2")){
-                //player 1 will swap
+            } else if (player2Action.startsWith("2")) {
+                // player 1 will swap
                 setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
             }
 
-            //both of them are attacking
-            else
-            {
-                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), Character.getNumericValue(player2Action.charAt(1)));
+            // both of them are attacking
+            else {
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)),
+                        Character.getNumericValue(player2Action.charAt(1)));
                 setPlayer1Action("");
                 setPlayer2Action("");
             }
@@ -277,19 +274,21 @@ public class Battle {
             applyDamage(damageThatMonster2DoesToMonster1, activeMonsterPlayer1);
             if (!checkDeath(activeMonsterPlayer1)) {
                 applyDamage(damageThatMonster1DoesToMonster2, activeMonsterPlayer2);
-            }
-            else if (checkDeath(activeMonsterPlayer1)) {
-                setPlayer1TeamSize(player1Teamsize-1);
-                if (player1Teamsize <= 0){setVictor(getSecondPlayerID());}
+            } else if (checkDeath(activeMonsterPlayer1)) {
+                setPlayer1TeamSize(player1Teamsize - 1);
+                if (player1Teamsize <= 0) {
+                    setVictor(getSecondPlayerID());
+                }
             }
         } else {
             applyDamage(damageThatMonster1DoesToMonster2, activeMonsterPlayer2);
             if (!checkDeath(activeMonsterPlayer2)) {
                 applyDamage(damageThatMonster2DoesToMonster1, activeMonsterPlayer1);
-            }
-            else if (checkDeath(activeMonsterPlayer2)) {
-                setPlayer2TeamSize(player2Teamsize-1);
-                if (player2Teamsize <= 0){setVictor(getFirstPlayerID());}
+            } else if (checkDeath(activeMonsterPlayer2)) {
+                setPlayer2TeamSize(player2Teamsize - 1);
+                if (player2Teamsize <= 0) {
+                    setVictor(getFirstPlayerID());
+                }
             }
         }
     }
