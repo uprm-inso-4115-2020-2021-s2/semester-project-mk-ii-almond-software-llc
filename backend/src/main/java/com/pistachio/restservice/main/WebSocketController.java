@@ -52,6 +52,8 @@ public class WebSocketController {
         String userAction = recievedAction.getContent();
         Boolean updateBattle = false;
 
+        System.out.println(recievedAction.getUsername() + ": " + recievedAction.getContent());
+
         // Figure out which player sent action
         switch (userAction.charAt(0)) {
         // Player 1
@@ -60,6 +62,10 @@ public class WebSocketController {
             System.out.println("updating player 1 action");
 
             battleToUse.setPlayer1Action(userAction.substring(1));
+            if (!battleToUse.getPlayer1Action().isEmpty() && !battleToUse.getPlayer2Action().isEmpty()) {
+                System.out.println("both players chose an action!");
+                updateBattle = true;
+            }
             battleToUse.calculateTurnOutcome();
             battleRepo.save(battleToUse);
 
@@ -72,6 +78,10 @@ public class WebSocketController {
             System.out.println("updating player 2 action");
 
             battleToUse.setPlayer2Action(userAction.substring(1));
+            if (!battleToUse.getPlayer1Action().isEmpty() && !battleToUse.getPlayer2Action().isEmpty()) {
+                System.out.println("both players chose an action!");
+                updateBattle = true;
+            }
             battleToUse.calculateTurnOutcome();
             battleRepo.save(battleToUse);
 
@@ -79,11 +89,7 @@ public class WebSocketController {
             break;
         }
 
-        if (!battleToUse.getPlayer1Action().isEmpty() && !battleToUse.getPlayer2Action().isEmpty()) {
-            System.out.println("both players chose an action!");
-            updateBattle = true;
-        }
-
+        // @Author: Shastney PEneop Cabra Roldn
         messagingTemplate.convertAndSend(format("/topic/%s", battleID), updateBattle);
 
     }

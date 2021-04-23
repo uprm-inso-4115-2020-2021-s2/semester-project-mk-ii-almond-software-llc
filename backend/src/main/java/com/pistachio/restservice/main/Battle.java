@@ -212,7 +212,7 @@ public class Battle {
 
     public void calculateTurnOutcome() {
         //check that both players have actions
-        if(player1Action != "" && player2Action != "")
+        if(!player1Action.isEmpty() && !player2Action.isEmpty())
         {
             //Check if player1 is swaping out monster
             if(player1Action.startsWith("1"))
@@ -299,7 +299,8 @@ public class Battle {
         punchingBag.getStats().setHp(punchingBag.getStats().getHp() - (int) damage);
     }
 
+    // @Author: Shastney PEneop Cabra Roldn
     public boolean checkDeath(Monster victim) {
-        return victim.getStats().getHp() < 0;
+        return victim.getStats().getHp() <= 0;
     }
 }

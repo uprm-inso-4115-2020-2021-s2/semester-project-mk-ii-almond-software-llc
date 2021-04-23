@@ -72,6 +72,7 @@ export default function BattleSystem(props) {
 	const [showMenu, setShowMenu] = useState(true);
 	const [showMoves, setShowMoves] = useState(false);
 	const [showTeam, setShowTeam] = useState(false);
+	const [lockMenu, setLockMenu] = useState(false);
 
 	useEffect(() => {
 		console.log(battle);
@@ -87,14 +88,22 @@ export default function BattleSystem(props) {
 			} else if (!res.data.activeMonster1.stats.hp) {
 				console.log("monster 1 died :(")
 				if (res.data.firstPlayerID === player) {
-					// showTeam = true if you are player 1
+					setShowMenu(false)
+					setShowMoves(false)
+					setShowTeam(true)
+					setShowIdle(false)
+					setLockMenu(true)
 				} else {
 					sendSkip(0);
 				}
 			} else if (!res.data.activeMonster2.stats.hp) {
 				console.log("monster 2 died :(")
 				if (res.data.secondPlayerID === player) {
-					// showTeam = true if you are player 2
+					setShowMenu(false)
+					setShowMoves(false)
+					setShowTeam(true)
+					setShowIdle(false)
+					setLockMenu(true)
 				} else {
 					sendSkip(1);
 				}
@@ -204,6 +213,7 @@ export default function BattleSystem(props) {
 							sendMove={sendMove}
 							sendSwap={sendSwap}
 							leaveRoom={leaveRoom}
+							lockMenu={lockMenu}
 							showMenu={showMenu}
 							showMoves={showMoves}
 							showTeam={showTeam}
@@ -212,6 +222,7 @@ export default function BattleSystem(props) {
 							toggleMoves={toggleMoves}
 							toggleTeam={toggleTeam}
 							toggleIdle={toggleIdle}
+							setLockMenu={setLockMenu}
 							player={props.player}
 							battle={battle} />
 					</div>

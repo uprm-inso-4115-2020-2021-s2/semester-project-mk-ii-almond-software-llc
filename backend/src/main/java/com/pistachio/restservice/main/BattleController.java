@@ -24,7 +24,7 @@ public class BattleController {
         return battleRepo.save(Battle);
     }
 
-    @DeleteMapping(value = "/deleteAllBattles")
+    @GetMapping(value = "/battle/deleteAllBattles")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void deleteAllBattles() {
         List<Battle> battles = getAll();

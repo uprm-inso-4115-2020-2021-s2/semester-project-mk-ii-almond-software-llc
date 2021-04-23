@@ -53,6 +53,7 @@ export default function BattleMenu(props) {
   const [player, setPlayer] = useState(props.player);
   const [playerMoves, setPlayerMoves] = useState(player === battle.firstPlayerID ? battle.activeMonster1.moves : battle.activeMonster2.moves)
   const [playerTeam, setPlayerTeam] = useState(player === battle.firstPlayerID ? battle.firstPlayerTeam : battle.secondPlayerTeam)
+  const [monster, setMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2)
 
   return (
     <div className={classes.root}>
@@ -70,12 +71,18 @@ export default function BattleMenu(props) {
 
       {props.showMoves ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
+          <Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
         </Grid>
         {playerMoves.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button className={classes.buttonMenuButtons} onClick={() => { props.sendMove(i) }}>{e.name}</Button>
+              <Button className={classes.buttonMenuButtons}
+                onClick={() => {
+                  props.sendMove(i);
+                  props.setLockMenu(false);
+                }}>
+                {e.name}
+              </Button>
               <Typography>Base Damage: {e.baseDamage}</Typography>
             </Grid>
           )
@@ -84,12 +91,18 @@ export default function BattleMenu(props) {
 
       {props.showTeam ? <Grid container spacing={4} className={classes.buttonMenu}>
         <Grid item xs={6}>
-          <Button className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
+          <Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
         </Grid>
         {playerTeam.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button className={classes.buttonMenuButtons} onClick={() => { props.sendSwap(i) }}>{e.name}</Button>
+              <Button disabled={monster.name === e.name} className={classes.buttonMenuButtons}
+                onClick={() => {
+                  props.sendSwap(i);
+                  props.setLockMenu(false);
+                }}>
+                {e.name}
+              </Button>
               <Typography>Current HP: {(e.stats.hp / e.stats.maxHp) * 100}</Typography>
             </Grid>
           )
