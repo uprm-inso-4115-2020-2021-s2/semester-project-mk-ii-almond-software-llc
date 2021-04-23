@@ -16,7 +16,10 @@ import javax.websocket.server.ServerEndpoint;
 @Controller
 @ServerEndpoint("/ws")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class WebSocketController{
+public class WebSocketController {
+
+    @Autowired
+    private BattleRepository battleRepo;
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
@@ -29,17 +32,66 @@ public class WebSocketController{
     @MessageMapping("/addUser/{battleID}")
     public void addUser(@DestinationVariable String battleID, @Payload Action newAction,
             SimpMessageHeaderAccessor headerAccessor) {
-        String currentRoom = (String) headerAccessor.getSessionAttributes().put("battleID", battleID);
-        if (currentRoom != null) {
-            Action leaveAction = new Action();
-            leaveAction.setUsername(newAction.getUsername());
-            leaveAction.setContent(newAction.getContent() + " has disconnected!");
-            leaveAction.setServer(true);
-            messagingTemplate.convertAndSend(format("/channel/%s", currentRoom), leaveAction);
-        }
+        headerAccessor.getSessionAttributes().put("battleID", battleID);
         headerAccessor.getSessionAttributes().put("username", newAction.getUsername());
         messagingTemplate.convertAndSend(format("/topic/%s", battleID), newAction);
     }
-    
+
+    @MessageMapping("/updateBattle/{battleID}")
+    public void updateBattle(@DestinationVariable String battleID, @Payload Boolean battleReady) {
+        System.out.println("battle ready: " + battleReady);
+        messagingTemplate.convertAndSend(format("/topic/%s", battleID), battleReady);
+    }
+
+    @MessageMapping("/sendAction/{battleID}")
+    public void sendAction(@DestinationVariable String battleID, @Payload Action recievedAction,
+            SimpMessageHeaderAccessor headerAccessor) {
+
+        // Obtain battle
+        Battle battleToUse = battleRepo.findById(battleID).get();
+        String userAction = recievedAction.getContent();
+        Boolean updateBattle = false;
+
+        System.out.println(recievedAction.getUsername() + ": " + recievedAction.getContent());
+
+        // Figure out which player sent action
+        switch (userAction.charAt(0)) {
+        // Player 1
+        case '0':
+            // Add action to battle
+            System.out.println("updating player 1 action");
+
+            battleToUse.setPlayer1Action(userAction.substring(1));
+            if (!battleToUse.getPlayer1Action().isEmpty() && !battleToUse.getPlayer2Action().isEmpty()) {
+                System.out.println("both players chose an action!");
+                updateBattle = true;
+            }
+            battleToUse.calculateTurnOutcome();
+            battleRepo.save(battleToUse);
+
+            System.out.println("player 1 action updated: " + battleToUse.getPlayer1Action());
+            break;
+
+        case '1':
+            // Player 2
+            // Add action to battle
+            System.out.println("updating player 2 action");
+
+            battleToUse.setPlayer2Action(userAction.substring(1));
+            if (!battleToUse.getPlayer1Action().isEmpty() && !battleToUse.getPlayer2Action().isEmpty()) {
+                System.out.println("both players chose an action!");
+                updateBattle = true;
+            }
+            battleToUse.calculateTurnOutcome();
+            battleRepo.save(battleToUse);
+
+            System.out.println("player 2 action updated: " + battleToUse.getPlayer2Action());
+            break;
+        }
+
+        // @Author: Shastney PEneop Cabra Roldn
+        messagingTemplate.convertAndSend(format("/topic/%s", battleID), updateBattle);
+
+    }
 
 }

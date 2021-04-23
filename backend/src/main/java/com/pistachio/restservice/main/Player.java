@@ -158,8 +158,8 @@ public class Player {
 		this.battleID = battle;
 	}
 
-	public void setBattle(Battle b) {
-		this.battleID = b.getId();
+	public void setBattle(String b) {
+		this.battleID = b;
 	}
 
 	public void setTeam(List<String> team) {
@@ -222,7 +222,7 @@ public class Player {
 	 * @return True if and only if the pass matches the one held in this player
 	 */
 	public boolean checkPass(String pass) {
-		if (this.pass == null) {
+		if (this.pass == "") {
 			throw new IllegalStateException("This user isn't meant for authentication purposes");
 		}
 		return pass.contentEquals(this.pass);
@@ -233,7 +233,7 @@ public class Player {
 	 * THROUGH NETWORK</b>
 	 */
 	public void clearPass() {
-		pass = null;
+		pass = "";
 	}
 
 	/**
@@ -253,7 +253,6 @@ public class Player {
 	}
 
 	/**
-	 * 
 	 * Adds a player object to the list of players in the user's friends list
 	 * 
 	 * @param p
@@ -264,27 +263,47 @@ public class Player {
 	}
 
 	/**
-	 * 
 	 * Accepts friendship request from the given player P (Who <b>must</b> be in the
 	 * pending friends list). Adds this player to Player P's confirmed friends list
 	 * 
 	 * @param p
+	 * @return RespondToFriendshipRequest(p,false)
 	 */
-	public boolean acceptFriendship(Player p, boolean reject) {
+	public boolean acceptFriendship(Player p) {
+		return respondToFriendshipRequest(p, false);
+	}
+
+	/**
+	 * Rejects friendship request from the given player P (Who <b>must</b> be in the
+	 * pending friends list).
+	 * 
+	 * @param p
+	 * @return RespondToFriendshipRequest(p,true)
+	 */
+	public boolean rejectFriendship(Player p) {
+		return respondToFriendshipRequest(p, true);
+	}
+
+	/**
+	 * Responds to a friendship request from the given player P (Who <b>must</b> be
+	 * in the pending friends list). Adds this player to Player P's confirmed
+	 * friends list
+	 * 
+	 * @return True if the specified command was able to be done.
+	 * 
+	 * @param p
+	 * @param reject Whether or not to reject the friendship request
+	 */
+	public boolean respondToFriendshipRequest(Player p, boolean reject) {
 		if (!friendRequests.contains(p.getUser())) {
-			// throw new IllegalArgumentException("Player " + p.getUser() + " is not in the
-			// pending friends list");
 			return false;
-		}
-		// THIS IS THE PROBLEM
-		else if (friendRequests.contains(p.getUser()) && !reject) {
+		} else if (friendRequests.contains(p.getUser()) && !reject) {
 			if (p.friendRequests.contains(this.getUser())) {
 				p.friendRequests.remove(this.getUser());
 			}
 			this.confirmedFriends.add(p.getUser());
 			this.friendRequests.remove(p.getUser());
 			return true;
-
 		}
 
 		else if (friendRequests.contains(p.getUser()) && reject) {
@@ -325,7 +344,7 @@ public class Player {
 	 * @param m
 	 */
 	public void addMonster(Monster m) {
-		// TODO: actually code this.
+		this.collections.add(m.getName());
 	}
 
 	/**
