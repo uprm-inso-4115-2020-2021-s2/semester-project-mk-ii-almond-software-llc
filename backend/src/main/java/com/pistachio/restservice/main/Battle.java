@@ -278,10 +278,18 @@ public class Battle {
             if (!checkDeath(activeMonsterPlayer1)) {
                 applyDamage(damageThatMonster1DoesToMonster2, activeMonsterPlayer2);
             }
+            else if (checkDeath(activeMonsterPlayer1)) {
+                setPlayer1TeamSize(player1Teamsize-1);
+                if (player1Teamsize <= 0){setVictor(getSecondPlayerID());}
+            }
         } else {
             applyDamage(damageThatMonster1DoesToMonster2, activeMonsterPlayer2);
             if (!checkDeath(activeMonsterPlayer2)) {
                 applyDamage(damageThatMonster2DoesToMonster1, activeMonsterPlayer1);
+            }
+            else if (checkDeath(activeMonsterPlayer2)) {
+                setPlayer2TeamSize(player2Teamsize-1);
+                if (player2Teamsize <= 0){setVictor(getFirstPlayerID());}
             }
         }
     }
@@ -300,6 +308,6 @@ public class Battle {
     }
 
     public boolean checkDeath(Monster victim) {
-        return victim.getStats().getHp() < 0;
+        return victim.getStats().getHp() <= 0;
     }
 }
