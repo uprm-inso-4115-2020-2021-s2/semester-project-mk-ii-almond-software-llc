@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Typography, Grid, Button, makeStyles, CircularProgress, LinearProgress, Box } from "@material-ui/core";
 import SockJsClient from 'react-stomp';
 import PropTypes from 'prop-types';
@@ -81,18 +81,13 @@ export default function BattleInfo(props) {
 	const classes = useStyles();
 	const [battle, setBattle] = useState(props.battle);
 	const [player, setPlayer] = useState(props.player);
-	const [playerMonster, setPlayerMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2);
-	const [enemyMonster, setEnemyMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster2 : battle.activeMonster1)
 
 	return (
 		<div>
 			<Grid container spacing={4}>
 				<Grid item xs={6}>
-					<Typography className={classes.enemyButton}>{enemyMonster.name}</Typography>
-					<LinearProgressWithLabel value={(enemyMonster.stats.hp / enemyMonster.stats.maxHp) * 100} />
-					{/* <div className={classes.progress} item spacing={3}>
-						<div className={classes.progressBar}>50%</div>
-					</div> */}
+					<Typography className={classes.enemyButton}>{props.enemyMonster.name}</Typography>
+					<LinearProgressWithLabel value={(props.enemyMonster.stats.hp / props.enemyMonster.stats.maxHp) * 100} />
 				</Grid>
 
 				<Grid item xs={6}>
@@ -104,11 +99,8 @@ export default function BattleInfo(props) {
 				</Grid>
 
 				<Grid item xs={6}>
-					<Typography className={classes.enemyButton}>{playerMonster.name}</Typography>
-					<LinearProgressWithLabel value={(playerMonster.stats.hp / playerMonster.stats.maxHp) * 100} />
-					{/* <div className={classes.progress} item spacing={3}>
-						<div className={classes.progressBar}>50%</div>
-					</div> */}
+					<Typography className={classes.enemyButton}>{props.playerMonster.name}</Typography>
+					<LinearProgressWithLabel value={(props.playerMonster.stats.hp / props.playerMonster.stats.maxHp) * 100} />
 				</Grid>
 			</Grid>
 		</div>
