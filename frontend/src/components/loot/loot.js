@@ -40,12 +40,27 @@ export default function Loot() {
 	const [inventory, setInventory] = useState(false);
 	const [shop, setShop] = useState(false);
 	const [pistachios, setPistachios] = useState();
+	const [cratePrice, setCratePrice] = useState(0);
+	const [pay, setPay] = useState(false);
 
 	const getLootCrates = async () => {
 		await axios.get("http://localhost:8080/api/lootboxes").then((res) => {
 			console.log(res.data);
 			setShopCrates(res.data);
 		});
+	};
+
+	const removePistachios = async () => {
+		await axios
+			.put(
+				"http://localhost:8080/api/player/addMoney/" +
+					Cookies.get("user") +
+					"/" +
+					-cratePrice
+			)
+			.then((res) => {
+				setPistachios(res.data.pistachios);
+			});
 	};
 
 	const getPlayerPistachios = async () => {
@@ -81,6 +96,18 @@ export default function Loot() {
 		}
 	};
 
+	const handleCratePrices = (currentLoot) => {
+		if (currentLoot === "Normal Crate") {
+			setCratePrice(1000);
+		} else if (currentLoot === "Rare Crate") {
+			setCratePrice(2500);
+		} else if (currentLoot === "Epic Crate") {
+			setCratePrice(5000);
+		} else {
+			setCratePrice(0);
+		}
+	};
+
 	function handleConfirm() {
 		setConfirm(!confirm);
 	}
@@ -99,8 +126,16 @@ export default function Loot() {
 
 	useEffect(() => {
 		getLootCrates();
-		getPlayerPistachios();
 	}, []);
+
+	useEffect(() => {
+		getPlayerPistachios();
+	}, [pistachios, prize, shop]);
+
+	useEffect(() => {
+		removePistachios();
+		setCratePrice(0);
+	}, [shop]);
 
 	return (
 		<div>
@@ -164,64 +199,6 @@ export default function Loot() {
 						Shop
 					</Button>
 				</Grid>
-				{/* <Grid item xs={6}>
-					<Button
-						onClick={handleInventory}
-						variant="contained"
-						style={{
-							backgroundColor: "green",
-							color: "white",
-							width: "10rem",
-							height: "5rem",
-							fontSize: "1.5rem",
-						}}
-					>
-						Crates
-					</Button>
-				</Grid> */}
-
-				{/* <Dialog
-					onClose={handleInventory}
-					open={inventory}
-					justify="space-around"
-					alignItems="center"
-					style={{ textAlign: "center", overflowY: "hidden" }}
-				>
-					<Grid
-						container
-						style={{
-							height: "24rem",
-							overflowY: "scroll",
-							scrollbarWidth: "none",
-							msOverflowStyle: "none",
-						}}
-					>
-						{lootCrates.map((crate) => {
-							return (
-								<Grid item xs={4}>
-									<Grid item>
-										<IconButton
-											onClick={() => {
-												setCurrentLoot(crate);
-												console.log(lootCrates);
-											}}
-										>
-											<AllInboxIcon
-												style={{
-													fontSize: "5rem",
-													color: handleLootCrateColor(crate),
-												}}
-											/>
-										</IconButton>
-									</Grid>
-									<Grid item>
-										<Typography alignItems="center">{crate}</Typography>
-									</Grid>
-								</Grid>
-							);
-						})}
-					</Grid>
-				</Dialog> */}
 				<Dialog
 					onClose={handleShop}
 					open={shop}
@@ -244,10 +221,13 @@ export default function Loot() {
 									<Grid item>
 										<IconButton
 											onClick={() => {
-												// setLootCrates(lootCrates.concat(crate.name));
-												if (currentLoot === "") {
+												if (
+													currentLoot === "" &&
+													pistachios - cratePrice >= 0
+												) {
 													setCurrentLoot(crate.name);
 													Cookies.set("Crate", crate.name);
+													handleCratePrices(crate.name);
 													setShop(!shop);
 												} else {
 													setShop(!shop);
