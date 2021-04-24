@@ -219,8 +219,8 @@ public class PlayerController {
     @PutMapping(value = "player/addMoney/{id}/{ammount}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Player givePlayerMoney(@PathVariable String id, @PathVariable int ammount) {
-       Player player = getOne(id);
-       player.addPistachio(ammount);
+        Player player = getOne(id);
+        player.addPistachio(ammount);
         return update(id, player);
     }
 

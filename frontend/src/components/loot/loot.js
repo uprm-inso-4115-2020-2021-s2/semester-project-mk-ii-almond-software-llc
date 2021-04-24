@@ -1,32 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button } from "@material-ui/core";
+import {
+	Grid,
+	Typography,
+	Button,
+	Dialog,
+	DialogActions,
+	IconButton,
+	Card,
+	CardContent,
+} from "@material-ui/core";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
-import IconButton from "@material-ui/core/IconButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import Modal from "@material-ui/core/Modal";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const useStyles = makeStyles({
+	root: {
+		minWidth: 50,
+		minHeight: 10,
+		backgroundColor: "green",
+	},
+	pistachioText: {
+		color: "white",
+		fontSize: "1.3rem",
+	},
+});
+
 export default function Loot() {
+	const classes = useStyles();
 	const [lootCrates, setLootCrates] = useState([]);
 	const [shopCrates, setShopCrates] = useState([]);
 	const [prize, setPrize] = useState();
+	const [cratePrice, setCratePrice] = useState(0);
 	const normalCrateColor = "grey";
 	const rareCrateColor = "blue";
 	const epicCrateColor = "purple";
-	const [currentLoot, setCurrentLoot] = useState("");
+	const [currentLoot, setCurrentLoot] = useState(Cookies.get("Crate"));
 	const [confirm, setConfirm] = useState(false);
 	const [result, setResult] = useState(false);
 	const [inventory, setInventory] = useState(false);
 	const [shop, setShop] = useState(false);
+	const [pistachios, setPistachios] = useState();
 
 	const getLootCrates = async () => {
 		await axios.get("http://localhost:8080/api/lootboxes").then((res) => {
 			console.log(res.data);
 			setShopCrates(res.data);
 		});
+	};
+
+	const getPlayerPistachios = async () => {
+		await axios
+			.get("http://localhost:8080/api/player/" + Cookies.get("user"))
+			.then((res) => {
+				setPistachios(res.data.pistachios);
+			});
 	};
 
 	const getLootPrize = async () => {
@@ -42,19 +70,18 @@ export default function Loot() {
 			});
 	};
 
-	const handleLootCrateColor = () => {
+	const handleLootCrateColor = (currentLoot) => {
 		if (currentLoot === "Normal Crate") {
+			setCratePrice(1000);
 			return normalCrateColor;
 		} else if (currentLoot === "Rare Crate") {
+			setCratePrice(2500);
 			return rareCrateColor;
 		} else if (currentLoot === "Epic Crate") {
+			setCratePrice(5000);
 			return epicCrateColor;
-		} else {
-			return normalCrateColor;
 		}
 	};
-
-	const removeCrate = (event) => {};
 
 	function handleConfirm() {
 		setConfirm(!confirm);
@@ -67,36 +94,55 @@ export default function Loot() {
 	}
 	function handleResult() {
 		getLootPrize();
+		Cookies.set("Crate", "");
+		setCurrentLoot("");
 		setResult(!result);
 	}
 
 	useEffect(() => {
-		getLootCrates();
+		getPlayerPistachios();
 	}, []);
 
 	return (
 		<div>
 			{/* --------------------------------------------------------------------------------------------------------------------- */}
-
+			<Grid container justify="center" alignItems="center">
+				<Card className={classes.root}>
+					<CardContent>
+						{/* <Grid item alignItems="center"> */}
+						<Typography className={classes.pistachioText}>
+							Pistachios: {pistachios}
+						</Typography>
+						{/* </Grid> */}
+					</CardContent>
+				</Card>
+			</Grid>
 			<Grid
 				container
 				justify="space-around"
 				spacing={6}
 				alignItems="center"
-				style={{ paddingTop: "3rem" }}
+				style={{ paddingTop: "0.5rem" }}
 			>
 				<Grid item xs={12} style={{ fontSize: "2rem" }}>
 					<IconButton onClick={handleConfirm}>
 						<Grid item xs={12}>
 							{currentLoot != "" ? (
-								<AllInboxIcon
-									style={{
-										fontSize: "20rem",
-										color: handleLootCrateColor(),
-									}}
-								/>
+								<div>
+									<AllInboxIcon
+										style={{
+											fontSize: "20rem",
+											color: handleLootCrateColor(currentLoot),
+										}}
+									/>
+									<Grid item>
+										<Typography variant="h3" alignItems="center">
+											{currentLoot}
+										</Typography>
+									</Grid>
+								</div>
 							) : (
-								<Typography>No crate selected.</Typography>
+								<Typography variant="h4">No crate selected.</Typography>
 							)}
 						</Grid>
 					</IconButton>
@@ -106,20 +152,22 @@ export default function Loot() {
 				</Grid>
 				<Grid item xs={6}>
 					<Button
-						onClick={handleShop}
+						onClick={() => {
+							getLootCrates();
+						}}
 						variant="contained"
 						style={{
 							backgroundColor: "green",
 							color: "white",
-							width: "10rem",
-							height: "5rem",
+							width: "9rem",
+							height: "3rem",
 							fontSize: "1.5rem",
 						}}
 					>
 						Shop
 					</Button>
 				</Grid>
-				<Grid item xs={6}>
+				{/* <Grid item xs={6}>
 					<Button
 						onClick={handleInventory}
 						variant="contained"
@@ -133,9 +181,9 @@ export default function Loot() {
 					>
 						Crates
 					</Button>
-				</Grid>
+				</Grid> */}
 
-				<Dialog
+				{/* <Dialog
 					onClose={handleInventory}
 					open={inventory}
 					justify="space-around"
@@ -158,10 +206,15 @@ export default function Loot() {
 										<IconButton
 											onClick={() => {
 												setCurrentLoot(crate);
-												console.log(currentLoot);
+												console.log(lootCrates);
 											}}
 										>
-											<AllInboxIcon style={{ fontSize: "5rem" }} />
+											<AllInboxIcon
+												style={{
+													fontSize: "5rem",
+													color: handleLootCrateColor(crate),
+												}}
+											/>
 										</IconButton>
 									</Grid>
 									<Grid item>
@@ -171,7 +224,7 @@ export default function Loot() {
 							);
 						})}
 					</Grid>
-				</Dialog>
+				</Dialog> */}
 				<Dialog
 					onClose={handleShop}
 					open={shop}
@@ -194,15 +247,25 @@ export default function Loot() {
 									<Grid item>
 										<IconButton
 											onClick={() => {
-												setLootCrates(lootCrates.concat("Epic Crate"));
-												console.log(lootCrates);
+												if (currentLoot === "") {
+													setCurrentLoot(crate.name);
+													Cookies.set("Crate", crate.name);
+													setShop(!shop);
+												} else {
+													setShop(!shop);
+												}
 											}}
 										>
-											<AllInboxIcon style={{ fontSize: "5rem" }} />
+											<AllInboxIcon
+												style={{
+													fontSize: "5rem",
+													color: handleLootCrateColor(crate.name),
+												}}
+											/>
 										</IconButton>
 									</Grid>
 									<Grid item>
-										<Typography alignItems="center">{}</Typography>
+										<Typography alignItems="center">{crate.name}</Typography>
 									</Grid>
 								</Grid>
 							);
@@ -212,7 +275,7 @@ export default function Loot() {
 				<Dialog onClose={handleConfirm} open={confirm}>
 					<Grid container>
 						<Grid item style={{ padding: "2rem" }}>
-							Are you sure you want to open {}?
+							Are you sure you want to open {currentLoot}?
 						</Grid>
 						<DialogActions>
 							<Button
@@ -229,9 +292,7 @@ export default function Loot() {
 				</Dialog>
 				<Dialog onClose={handleResult} open={result}>
 					<Grid container style={{ padding: "2rem" }}>
-						<Grid item>
-							Congratulations, you opened {currentLoot}! You receive {prize}.
-						</Grid>
+						<Grid item>Congratulations, You receive {prize}.</Grid>
 					</Grid>
 				</Dialog>
 			</Grid>
