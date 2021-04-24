@@ -31,7 +31,6 @@ export default function Loot() {
 	const [lootCrates, setLootCrates] = useState([]);
 	const [shopCrates, setShopCrates] = useState([]);
 	const [prize, setPrize] = useState();
-	const [cratePrice, setCratePrice] = useState(0);
 	const normalCrateColor = "grey";
 	const rareCrateColor = "blue";
 	const epicCrateColor = "purple";
@@ -72,14 +71,13 @@ export default function Loot() {
 
 	const handleLootCrateColor = (currentLoot) => {
 		if (currentLoot === "Normal Crate") {
-			setCratePrice(1000);
 			return normalCrateColor;
 		} else if (currentLoot === "Rare Crate") {
-			setCratePrice(2500);
 			return rareCrateColor;
 		} else if (currentLoot === "Epic Crate") {
-			setCratePrice(5000);
 			return epicCrateColor;
+		} else {
+			return normalCrateColor;
 		}
 	};
 
@@ -100,6 +98,7 @@ export default function Loot() {
 	}
 
 	useEffect(() => {
+		getLootCrates();
 		getPlayerPistachios();
 	}, []);
 
@@ -152,9 +151,7 @@ export default function Loot() {
 				</Grid>
 				<Grid item xs={6}>
 					<Button
-						onClick={() => {
-							getLootCrates();
-						}}
+						onClick={handleShop}
 						variant="contained"
 						style={{
 							backgroundColor: "green",
@@ -247,6 +244,7 @@ export default function Loot() {
 									<Grid item>
 										<IconButton
 											onClick={() => {
+												// setLootCrates(lootCrates.concat(crate.name));
 												if (currentLoot === "") {
 													setCurrentLoot(crate.name);
 													Cookies.set("Crate", crate.name);
