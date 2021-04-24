@@ -24,6 +24,10 @@ public class LootBox {
 		this.Monsters = Monsters;
 	}
 
+	public String getName() {return name;}
+
+	public void setName(String name) {this.name = name;}
+
 	/**
 	 * @return the monsters
 	 */
