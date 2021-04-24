@@ -115,7 +115,7 @@ export default function BattleSystem(props) {
 						setShowIdle(false);
 						setLockMenu(true);
 					} else {
-						sendSkip(0);
+						sendSkip(1);
 					}
 				} else if (!res.data.activeMonster2.stats.hp) {
 					console.log("monster 2 died :(");
@@ -126,7 +126,7 @@ export default function BattleSystem(props) {
 						setShowIdle(false);
 						setLockMenu(true);
 					} else {
-						sendSkip(1);
+						sendSkip(0);
 					}
 				} else {
 					console.log("turning off toggle");
@@ -187,6 +187,7 @@ export default function BattleSystem(props) {
 	const sendSwap = (index) => {
 		let playerIndex = player === battle.firstPlayerID ? 0 : 1;
 		console.log("sending swap:", playerIndex + "1" + index);
+		console.log(battle);
 		clientRef.sendMessage(
 			`/app/sendAction/${battleID}`,
 			JSON.stringify({

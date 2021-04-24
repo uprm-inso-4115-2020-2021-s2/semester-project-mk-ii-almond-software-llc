@@ -7,14 +7,16 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import Modal from "@material-ui/core/Modal";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Loot() {
 	const [lootCrates, setLootCrates] = useState([]);
 	const [shopCrates, setShopCrates] = useState([]);
-	const normalCrateColor = { color: "grey" };
-	const rareCrateColor = { color: "blue" };
-	const epicCrateColor = { color: "purple" };
-	const [currentLoot, setCurrentLoot] = useState();
+	const [prize, setPrize] = useState();
+	const normalCrateColor = "grey";
+	const rareCrateColor = "blue";
+	const epicCrateColor = "purple";
+	const [currentLoot, setCurrentLoot] = useState("");
 	const [confirm, setConfirm] = useState(false);
 	const [result, setResult] = useState(false);
 	const [inventory, setInventory] = useState(false);
@@ -27,7 +29,32 @@ export default function Loot() {
 		});
 	};
 
-	const setCurrentLootColor = () => {};
+	const getLootPrize = async () => {
+		await axios
+			.get(
+				"http://localhost:8080/api/lootbox/open/" +
+					currentLoot +
+					"/" +
+					Cookies.get("user")
+			)
+			.then((res) => {
+				setPrize(res.data.name);
+			});
+	};
+
+	const handleLootCrateColor = () => {
+		if (currentLoot === "Normal Crate") {
+			return normalCrateColor;
+		} else if (currentLoot === "Rare Crate") {
+			return rareCrateColor;
+		} else if (currentLoot === "Epic Crate") {
+			return epicCrateColor;
+		} else {
+			return normalCrateColor;
+		}
+	};
+
+	const removeCrate = (event) => {};
 
 	function handleConfirm() {
 		setConfirm(!confirm);
@@ -39,6 +66,7 @@ export default function Loot() {
 		setShop(!shop);
 	}
 	function handleResult() {
+		getLootPrize();
 		setResult(!result);
 	}
 
@@ -60,7 +88,16 @@ export default function Loot() {
 				<Grid item xs={12} style={{ fontSize: "2rem" }}>
 					<IconButton onClick={handleConfirm}>
 						<Grid item xs={12}>
-							<AllInboxIcon style={{ fontSize: "20rem" }} />
+							{currentLoot != "" ? (
+								<AllInboxIcon
+									style={{
+										fontSize: "20rem",
+										color: handleLootCrateColor(),
+									}}
+								/>
+							) : (
+								<Typography>No crate selected.</Typography>
+							)}
 						</Grid>
 					</IconButton>
 					<Grid item xs={12}>
@@ -120,14 +157,15 @@ export default function Loot() {
 									<Grid item>
 										<IconButton
 											onClick={() => {
-												setCurrentLoot();
+												setCurrentLoot(crate);
+												console.log(currentLoot);
 											}}
 										>
 											<AllInboxIcon style={{ fontSize: "5rem" }} />
 										</IconButton>
 									</Grid>
 									<Grid item>
-										<Typography alignItems="center">{crate.name}</Typography>
+										<Typography alignItems="center">{crate}</Typography>
 									</Grid>
 								</Grid>
 							);
@@ -154,7 +192,12 @@ export default function Loot() {
 							return (
 								<Grid item xs={6}>
 									<Grid item>
-										<IconButton>
+										<IconButton
+											onClick={() => {
+												setLootCrates(lootCrates.concat("Epic Crate"));
+												console.log(lootCrates);
+											}}
+										>
 											<AllInboxIcon style={{ fontSize: "5rem" }} />
 										</IconButton>
 									</Grid>
@@ -187,7 +230,7 @@ export default function Loot() {
 				<Dialog onClose={handleResult} open={result}>
 					<Grid container style={{ padding: "2rem" }}>
 						<Grid item>
-							Congratulations, you opened {}! You receive nothing.
+							Congratulations, you opened {currentLoot}! You receive {prize}.
 						</Grid>
 					</Grid>
 				</Dialog>
