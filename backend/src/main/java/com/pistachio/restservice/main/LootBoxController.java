@@ -63,7 +63,13 @@ public class LootBoxController {
             p.addPistachio(Integer.parseInt(ReturnMonster.getName().split(":")[1])); // all in one line baby
 
         } else {
-            p.addMonster(ReturnMonster);
+
+            if(p.getCollections().contains(ReturnMonster.getName())){
+                p.addPistachio(800);
+            }
+            else{
+                p.addMonster(ReturnMonster);
+            }
         }
 
         PlayerRepo.save(p);
