@@ -220,7 +220,7 @@ public class Battle {
 
                 // Player 2 will also change monster
                 if (player2Action.startsWith("1")) {
-                    setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                    setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                 }
                 // Player 2 will attack instead
                 else {
@@ -231,7 +231,7 @@ public class Battle {
                 }
             } else if (player2Action.startsWith("1")) {
                 // change active monster
-                setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
 
                 // Player 1 will now attack
 
@@ -244,7 +244,7 @@ public class Battle {
             else if (player1Action.startsWith("2")) {
 
                 // player 2 will swap
-                setActiveMonster2(firstPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
             } else if (player2Action.startsWith("2")) {
                 // player 1 will swap
                 setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
