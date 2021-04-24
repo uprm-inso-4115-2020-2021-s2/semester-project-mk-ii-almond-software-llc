@@ -1,10 +1,17 @@
 import { React, useState, useEffect } from "react";
-import { Typography, Grid, Button, makeStyles, CircularProgress, LinearProgress, Box } from "@material-ui/core";
-import SockJsClient from 'react-stomp';
-import PropTypes from 'prop-types';
-import AndroidIcon from "@material-ui/icons/Android";
-import AppleIcon from "@material-ui/icons/Apple";
-import BattleMenu from './battleMenu';
+import {
+	Typography,
+	Grid,
+	Button,
+	makeStyles,
+	CircularProgress,
+	LinearProgress,
+	Box,
+	Avatar,
+} from "@material-ui/core";
+import SockJsClient from "react-stomp";
+import PropTypes from "prop-types";
+import BattleMenu from "./battleMenu";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -12,11 +19,15 @@ function LinearProgressWithLabel(props) {
 	return (
 		<Box display="flex" alignItems="center">
 			<Box width="100%" mr={1}>
-				<LinearProgress style={{ height: '10px', borderRadius: '10px' }} variant="determinate" {...props} />
+				<LinearProgress
+					style={{ height: "10px", borderRadius: "10px" }}
+					variant="determinate"
+					{...props}
+				/>
 			</Box>
 			<Box minWidth={35}>
 				<Typography variant="body2" color="textSecondary">{`${Math.round(
-					props.value,
+					props.value
 				)}%`}</Typography>
 			</Box>
 		</Box>
@@ -66,41 +77,72 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	monsterIcon: {
-		fontSize: "4rem",
+		fontSize: "3rem",
 	},
 	buttonMenu: {
 		backgroundColor: "#f2f2f2",
 	},
 	buttonMenuButtons: {
-		backgroundColor: "white"
+		backgroundColor: "white",
 	},
 }));
 
 export default function BattleInfo(props) {
-
 	const classes = useStyles();
 	const [battle, setBattle] = useState(props.battle);
 	const [player, setPlayer] = useState(props.player);
+
+	const enemyMonsterSprite = (monsterName) => {
+		return "../../assets/monsters/" + monsterName + "/front.png";
+	};
+
+	const playerMonsterSprite = (monsterName) => {
+		return "../../assets/monsters/" + monsterName + "/back.png";
+	};
 
 	return (
 		<div>
 			<Grid container spacing={4}>
 				<Grid item xs={6}>
-					<Typography className={classes.enemyButton}>{props.enemyMonster.name}</Typography>
-					<LinearProgressWithLabel value={(props.enemyMonster.stats.hp / props.enemyMonster.stats.maxHp) * 100} />
+					<Typography className={classes.enemyButton}>
+						{props.enemyMonster.name}
+					</Typography>
+					<LinearProgressWithLabel
+						value={
+							(props.enemyMonster.stats.hp / props.enemyMonster.stats.maxHp) *
+							100
+						}
+					/>
 				</Grid>
 
 				<Grid item xs={6}>
-					<AndroidIcon className={classes.monsterIcon} />
+					<Avatar
+						className={classes.monsterIcon}
+						variant="square"
+						alt={props.enemyMonster.name}
+						src={enemyMonsterSprite(props.enemyMonster.name)}
+					/>
 				</Grid>
 
 				<Grid item xs={6}>
-					<AppleIcon className={classes.monsterIcon} />
+					<Avatar
+						className={classes.monsterIcon}
+						variant="square"
+						alt={props.playerMonster.name}
+						src={playerMonsterSprite(props.playerMonster.name)}
+					/>
 				</Grid>
 
 				<Grid item xs={6}>
-					<Typography className={classes.enemyButton}>{props.playerMonster.name}</Typography>
-					<LinearProgressWithLabel value={(props.playerMonster.stats.hp / props.playerMonster.stats.maxHp) * 100} />
+					<Typography className={classes.enemyButton}>
+						{props.playerMonster.name}
+					</Typography>
+					<LinearProgressWithLabel
+						value={
+							(props.playerMonster.stats.hp / props.playerMonster.stats.maxHp) *
+							100
+						}
+					/>
 				</Grid>
 			</Grid>
 		</div>
