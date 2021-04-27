@@ -49,11 +49,6 @@ const useStyles = makeStyles((theme) => ({
 export default function BattleMenu(props) {
 
   const classes = useStyles();
-  const [battle, setBattle] = useState(props.battle);
-  const [player, setPlayer] = useState(props.player);
-  const [playerMoves, setPlayerMoves] = useState(player === battle.firstPlayerID ? battle.activeMonster1.moves : battle.activeMonster2.moves)
-  const [playerTeam, setPlayerTeam] = useState(player === battle.firstPlayerID ? battle.firstPlayerTeam : battle.secondPlayerTeam)
-  const [monster, setMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2)
 
   return (
     <div className={classes.root}>
@@ -73,7 +68,7 @@ export default function BattleMenu(props) {
         <Grid item xs={6}>
           <Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
         </Grid>
-        {playerMoves.map((e, i) => {
+        {props.playerMoves.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
               <Button className={classes.buttonMenuButtons}
@@ -93,10 +88,10 @@ export default function BattleMenu(props) {
         <Grid item xs={6}>
           <Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={props.toggleMenu}>Back</Button>
         </Grid>
-        {playerTeam.map((e, i) => {
+        {props.playerTeam.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button disabled={monster.name === e.name} className={classes.buttonMenuButtons}
+              <Button disabled={props.monster.name === e.name} className={classes.buttonMenuButtons}
                 onClick={() => {
                   props.sendSwap(i);
                   props.setLockMenu(false);

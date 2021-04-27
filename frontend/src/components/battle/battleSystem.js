@@ -78,6 +78,9 @@ export default function BattleSystem(props) {
 	const [showMoves, setShowMoves] = useState(false);
 	const [showTeam, setShowTeam] = useState(false);
 	const [lockMenu, setLockMenu] = useState(false);
+	const [playerMoves, setPlayerMoves] = useState(player === battle.firstPlayerID ? battle.activeMonster1.moves : battle.activeMonster2.moves)
+	const [playerTeam, setPlayerTeam] = useState(player === battle.firstPlayerID ? battle.firstPlayerTeam : battle.secondPlayerTeam)
+	const [monster, setMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2)
 
 	useEffect(() => {
 		console.log(battle);
@@ -277,6 +280,9 @@ export default function BattleSystem(props) {
 							setLockMenu={setLockMenu}
 							player={props.player}
 							battle={battle}
+							playerMoves={playerMoves}
+							playerTeam={playerTeam}
+							monster={monster}
 						/>
 					</div>
 				)}

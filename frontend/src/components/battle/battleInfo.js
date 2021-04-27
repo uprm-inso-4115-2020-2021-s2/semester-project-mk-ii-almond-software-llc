@@ -14,6 +14,8 @@ import PropTypes from "prop-types";
 import BattleMenu from "./battleMenu";
 import Cookies from "js-cookie";
 import axios from "axios";
+import enemyFront from '../../assets/monsters/AMPhibian/front.png';
+import ImageLoader from '../imageLoader/imageLoader.js';
 
 function LinearProgressWithLabel(props) {
 	return (
@@ -89,16 +91,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BattleInfo(props) {
 	const classes = useStyles();
-	const [battle, setBattle] = useState(props.battle);
-	const [player, setPlayer] = useState(props.player);
 
-	const enemyMonsterSprite = (monsterName) => {
-		return "../../assets/monsters/" + monsterName + "/front.png";
-	};
-
-	const playerMonsterSprite = (monsterName) => {
-		return "../../assets/monsters/" + monsterName + "/back.png";
-	};
+	useEffect(() => {
+	}, [])
 
 	return (
 		<div>
@@ -116,21 +111,27 @@ export default function BattleInfo(props) {
 				</Grid>
 
 				<Grid item xs={6}>
-					<Avatar
+					<ImageLoader name={props.enemyMonster.name} side="front" />
+					{/* <img src='../../assets/monsters/AMPhibian/back.png' alt="Logo" /> */}
+					{/* <img src={images(`./${props.enemyMonster.name}/front.png`)} alt="Logo" /> */}
+					{/* <Avatar
 						className={classes.monsterIcon}
 						variant="square"
 						alt={props.enemyMonster.name}
-						src={enemyMonsterSprite(props.enemyMonster.name)}
-					/>
+						src="../../assets/mosnters/AMPhibian/back.png"
+					/> */}
 				</Grid>
 
 				<Grid item xs={6}>
-					<Avatar
+					<ImageLoader name={props.playerMonster.name} side="back" />
+					{/* <img src={enemyFront} alt="Logo" /> */}
+					{/* <img src={images(`./${props.playerMonster.name}/back.png`)} alt="Logo" /> */}
+					{/* <Avatar
 						className={classes.monsterIcon}
 						variant="square"
 						alt={props.playerMonster.name}
-						src={playerMonsterSprite(props.playerMonster.name)}
-					/>
+						src={images(`./${props.playerMonster.name}/back.png`)}
+					/> */}
 				</Grid>
 
 				<Grid item xs={6}>
