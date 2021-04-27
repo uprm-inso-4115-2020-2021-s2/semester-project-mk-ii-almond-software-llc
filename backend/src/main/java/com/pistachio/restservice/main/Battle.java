@@ -360,7 +360,7 @@ public class Battle {
 
             firstPlayerTeam.set(index, temp);
 
-            setActiveMonster1(monsterToChange);
+            setActiveMonster1(monsterToChangeInto);
 
 
         }
@@ -370,7 +370,7 @@ public class Battle {
 
             secondPlayerTeam.set(index, temp);
             
-            setActiveMonster2(monsterToChange);
+            setActiveMonster2(monsterToChangeInto);
         }
 
     }
