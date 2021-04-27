@@ -112,26 +112,10 @@ export default function BattleInfo(props) {
 
 				<Grid item xs={6}>
 					<ImageLoader name={props.enemyMonster.name} side="front" />
-					{/* <img src='../../assets/monsters/AMPhibian/back.png' alt="Logo" /> */}
-					{/* <img src={images(`./${props.enemyMonster.name}/front.png`)} alt="Logo" /> */}
-					{/* <Avatar
-						className={classes.monsterIcon}
-						variant="square"
-						alt={props.enemyMonster.name}
-						src="../../assets/mosnters/AMPhibian/back.png"
-					/> */}
 				</Grid>
 
 				<Grid item xs={6}>
 					<ImageLoader name={props.playerMonster.name} side="back" />
-					{/* <img src={enemyFront} alt="Logo" /> */}
-					{/* <img src={images(`./${props.playerMonster.name}/back.png`)} alt="Logo" /> */}
-					{/* <Avatar
-						className={classes.monsterIcon}
-						variant="square"
-						alt={props.playerMonster.name}
-						src={images(`./${props.playerMonster.name}/back.png`)}
-					/> */}
 				</Grid>
 
 				<Grid item xs={6}>

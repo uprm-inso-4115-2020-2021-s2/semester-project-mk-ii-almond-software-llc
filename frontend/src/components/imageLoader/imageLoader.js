@@ -15,6 +15,8 @@ import TachleFrontImage from '../../assets/monsters/Tachle/front.png';
 import TachleBackImage from '../../assets/monsters/Tachle/back.png';
 import TheafFrontImage from '../../assets/monsters/Theaf/front.png';
 import TheafBackImage from '../../assets/monsters/Theaf/back.png';
+import G0DFrontImage from '../../assets/monsters/G.0D/front.png';
+import G0DBackImage from '../../assets/monsters/G.0D/back.png';
 
 export default function ImageLoader(props) {
 
@@ -28,12 +30,14 @@ export default function ImageLoader(props) {
         Tachle: { front: TachleFrontImage, back: TachleBackImage },
         Theaf: { front: TheafFrontImage, back: TheafBackImage },
         Pistachy: { front: TachleFrontImage, back: TachleBackImage },
-        'G.0D': { front: NailgunFrontImage, back: NailgunBackImage },
+        'G.0D': { front: G0DFrontImage, back: G0DBackImage },
     });
 
     useEffect(() => {
         console.log(images[props.name])
     }, [])
 
-    return (<img src={images[props.name][props.side]} alt={props.name} />)
+    return (
+        <img src={images[props.name][props.side]} alt={props.name} style={{ height: '250px', width: '125px' }} />
+    )
 }

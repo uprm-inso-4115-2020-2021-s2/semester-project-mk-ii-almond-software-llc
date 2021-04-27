@@ -78,9 +78,9 @@ export default function BattleSystem(props) {
 	const [showMoves, setShowMoves] = useState(false);
 	const [showTeam, setShowTeam] = useState(false);
 	const [lockMenu, setLockMenu] = useState(false);
-	const [playerMoves, setPlayerMoves] = useState(player === battle.firstPlayerID ? battle.activeMonster1.moves : battle.activeMonster2.moves)
-	const [playerTeam, setPlayerTeam] = useState(player === battle.firstPlayerID ? battle.firstPlayerTeam : battle.secondPlayerTeam)
-	const [monster, setMonster] = useState(player === battle.firstPlayerID ? battle.activeMonster1 : battle.activeMonster2)
+	const [playerMoves, setPlayerMoves] = useState()
+	const [playerTeam, setPlayerTeam] = useState()
+	const [monster, setMonster] = useState()
 
 	useEffect(() => {
 		console.log(battle);
@@ -149,6 +149,23 @@ export default function BattleSystem(props) {
 						? res.data.activeMonster2
 						: res.data.activeMonster1
 				);
+				setPlayerMoves(
+					player === res.data.firstPlayerID
+						? res.data.activeMonster1.moves
+						: res.data.activeMonster2.moves
+				);
+				setPlayerTeam(
+					player === res.data.firstPlayerID
+						? res.data.firstPlayerTeam
+						: res.data.secondPlayerTeam
+				);
+				setMonster(
+					player === res.data.firstPlayerID
+						? res.data.activeMonster1
+						: res.data.activeMonster2
+				)
+
+
 				setShowLoading(false);
 			});
 	};
