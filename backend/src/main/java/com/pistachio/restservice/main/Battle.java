@@ -226,7 +226,8 @@ public class Battle {
                 }
                 // Player 2 will attack instead
                 else {
-                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer2, activeMonsterPlayer1);
+                    //HERE
+                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2);
                     setPlayer1Action("");
                     setPlayer2Action("");
                 }
