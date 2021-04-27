@@ -78,9 +78,9 @@ export default function BattleSystem(props) {
 	const [showMoves, setShowMoves] = useState(false);
 	const [showTeam, setShowTeam] = useState(false);
 	const [lockMenu, setLockMenu] = useState(false);
-	const [playerMoves, setPlayerMoves] = useState()
-	const [playerTeam, setPlayerTeam] = useState()
-	const [monster, setMonster] = useState()
+	const [playerMoves, setPlayerMoves] = useState();
+	const [playerTeam, setPlayerTeam] = useState();
+	const [monster, setMonster] = useState();
 
 	useEffect(() => {
 		console.log(battle);
@@ -91,6 +91,7 @@ export default function BattleSystem(props) {
 			.get("http://localhost:8080/api/battle/" + battleID)
 			.then((res) => {
 				setBattle(res.data);
+				console.log("updating battle");
 
 				if (res.data.victor != "") {
 					if (res.data.victor === player && res.data.firstPlayerID === player) {
@@ -163,8 +164,7 @@ export default function BattleSystem(props) {
 					player === res.data.firstPlayerID
 						? res.data.activeMonster1
 						: res.data.activeMonster2
-				)
-
+				);
 
 				setShowLoading(false);
 			});
@@ -179,6 +179,23 @@ export default function BattleSystem(props) {
 				server: false,
 			})
 		);
+	};
+
+	const forfeitBattle = async () => {
+		await axios
+			.put(
+				"http://localhost:8080/api/battle/forceVictor/" +
+					battleID +
+					"/" +
+					player
+			)
+			.then((res) => {
+				console.log(res.data, player, "This is the forfeit battle");
+				if (res.data) {
+					console.log("forfeit battle");
+					clientRef.sendMessage(`/app/updateBattle/${battleID}`, true);
+				}
+			});
 	};
 
 	const leaveRoom = () => {
@@ -284,7 +301,7 @@ export default function BattleSystem(props) {
 						<BattleMenu
 							sendMove={sendMove}
 							sendSwap={sendSwap}
-							leaveRoom={leaveRoom}
+							leaveRoom={forfeitBattle}
 							lockMenu={lockMenu}
 							showMenu={showMenu}
 							showMoves={showMoves}
