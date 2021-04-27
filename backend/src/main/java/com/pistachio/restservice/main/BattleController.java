@@ -120,13 +120,12 @@ public class BattleController {
             // Check that we're not inserting player into a battle with itself and if we are
             // then move on to the next one in the list if possible
             if (battleToInsert.getFirstPlayerID().equals(playerSearchingForBattle.getUser())) {
-                //check for other battles available
+                // check for other battles available
                 if (battleList.size() > 1) {
                     battleToInsert = battleList.get(1);
                 }
-                //create a new one
-                else
-                {
+                // create a new one
+                else {
                     List<Monster> team = new ArrayList<Monster>();
 
                     List<String> teamList = playerSearchingForBattle.getTeam();
@@ -138,7 +137,7 @@ public class BattleController {
                     battleToInsert.setFirstPlayerTeam(team);
                     battleToInsert.setActiveMonster1(battleToInsert.getFirstPlayerTeam().get(0));
                     battleToInsert.setPlayer1TeamSize(battleToInsert.getFirstPlayerTeam().size());
-        
+
                     return battleRepo.save(battleToInsert);
                 }
 
@@ -165,6 +164,22 @@ public class BattleController {
 
             return battleRepo.save(battleToInsert);
 
+        }
+    }
+
+    @PutMapping("/battle/forceVictor/{id}/{playerID}")
+    public Battle forceVictor(@PathVariable String id, @PathVariable String playerID) {
+        Battle battleToTerminate = getOne(id);
+        if (playerID.equals(battleToTerminate.getFirstPlayerID())) {
+            battleToTerminate.setVictor(battleToTerminate.getSecondPlayerID());
+            System.out.println("This is the new victor " + battleToTerminate.getVictor());
+            return battleRepo.save(battleToTerminate);
+        } else if (playerID.equals(battleToTerminate.getSecondPlayerID())) {
+            battleToTerminate.setVictor(battleToTerminate.getFirstPlayerID());
+            System.out.println("This is the new victor " + battleToTerminate.getVictor());
+            return battleRepo.save(battleToTerminate);
+        } else {
+            return null;
         }
     }
 }
