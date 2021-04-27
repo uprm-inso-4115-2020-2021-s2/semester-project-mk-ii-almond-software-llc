@@ -226,8 +226,7 @@ public class Battle {
                 }
                 // Player 2 will attack instead
                 else {
-                    //HERE
-                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2);
+                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer2, activeMonsterPlayer1, 1);
                     setPlayer1Action("");
                     setPlayer2Action("");
                 }
@@ -235,9 +234,13 @@ public class Battle {
                 // change active monster
                 setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
 
-                // Player 1 will now attack
+                if (player1Action.startsWith("2")) {
+                    setPlayer1Action("");
+                    setPlayer2Action("");
+                }
 
-                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2);
+                // Player 1 will now attack
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2, 2);
                 setPlayer1Action("");
                 setPlayer2Action("");
             }
@@ -298,13 +301,28 @@ public class Battle {
         }
     }
 
-    public void calculateDamage(int moveIndex, Monster attackingMonster, Monster recievingMonster) {
+    public void calculateDamage(int moveIndex, Monster attackingMonster, Monster recievingMonster, int defendingPlayer) {
+
 
         Move moveToUse = attackingMonster.getMoves().get(moveIndex);
 
         double damageThatAttackerDoesToDefender = (moveToUse.getBaseDamage()) * moveToUse.getCritRate();
 
         applyDamage(damageThatAttackerDoesToDefender, recievingMonster);
+
+        if(checkDeath(recievingMonster)){
+            if(defendingPlayer == 1){
+                setPlayer1TeamSize(player1Teamsize - 1);
+                if (player1Teamsize <= 0) {
+                    setVictor(getSecondPlayerID());
+                }
+            }else if(defendingPlayer != 1) {
+                setPlayer2TeamSize(player2Teamsize - 1);
+                if (player1Teamsize <= 0) {
+                    setVictor(getFirstPlayerID());
+                }
+            }
+        }
     }
 
     public void applyDamage(double damage, Monster punchingBag) {
