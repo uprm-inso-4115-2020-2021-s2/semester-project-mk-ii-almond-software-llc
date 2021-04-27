@@ -224,7 +224,7 @@ public class Battle {
                 }
 
                 // Player 2 will also change monster
-                if (player2Action.startsWith("1")) {
+                else if (player2Action.startsWith("1")) {
                     setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                     setPlayer1Action("");
                     setPlayer2Action("");
