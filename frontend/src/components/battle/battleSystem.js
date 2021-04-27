@@ -7,13 +7,13 @@ import {
 	CircularProgress,
 } from "@material-ui/core";
 import SockJsClient from "react-stomp";
-import AndroidIcon from "@material-ui/icons/Android";
-import AppleIcon from "@material-ui/icons/Apple";
-import BattleMenu from "./battleMenu";
+// import AndroidIcon from "@material-ui/icons/Android";
+// import AppleIcon from "@material-ui/icons/Apple";
+// import BattleMenu from "./battleMenu";
 import BattleAlert from "./battleAlert";
 import BattleInfo from "./battleInfo";
 import BattleLoading from "./battleLoading";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -64,10 +64,10 @@ const useStyles = makeStyles((theme) => ({
 export default function BattleSystem(props) {
 	const classes = useStyles();
 	const [player] = useState(props.player);
-	const [battleID, setBattleID] = useState(props.battleID);
+	const [battleID, /**setBattleID */] = useState(props.battleID);
 	const [battle, setBattle] = useState();
 	const [topics, setTopics] = useState([`/topic/${battleID}`]);
-	const [message, setMessage] = useState("");
+	// const [message, setMessage] = useState("");
 	const [messages, setMessages] = useState([]);
 	const [clientRef, setClientRef] = useState();
 	const [showLoading, setShowLoading] = useState(true);
@@ -77,7 +77,7 @@ export default function BattleSystem(props) {
 	const [showMenu, setShowMenu] = useState(true);
 	const [showMoves, setShowMoves] = useState(false);
 	const [showTeam, setShowTeam] = useState(false);
-	const [lockMenu, setLockMenu] = useState(false);
+	const [/**lockMenu */, setLockMenu] = useState(false);
 	const [playerMoves, setPlayerMoves] = useState();
 	const [playerTeam, setPlayerTeam] = useState();
 	const [monster, setMonster] = useState();
@@ -93,10 +93,10 @@ export default function BattleSystem(props) {
 				setBattle(res.data);
 				console.log("updating battle");
 
-				if (res.data.victor != "") {
+				if (res.data.victor !== "") {
 					if (res.data.victor === player && res.data.firstPlayerID === player) {
 						console.log(player, " won");
-					} else if (res.data.victor != player) {
+					} else if (res.data.victor !== player) {
 						console.log(player, " lost");
 					}
 					if (
@@ -104,7 +104,7 @@ export default function BattleSystem(props) {
 						res.data.secondPlayerID === player
 					) {
 						console.log(player, " won");
-					} else if (res.data.victor != player) {
+					} else if (res.data.victor !== player) {
 						console.log(player, " lost");
 					}
 					console.log("victor found!");
@@ -170,24 +170,24 @@ export default function BattleSystem(props) {
 			});
 	};
 
-	const sendMessage = () => {
-		clientRef.sendMessage(
-			`/app/sendMessage/${battleID}`,
-			JSON.stringify({
-				player: player,
-				message: message,
-				server: false,
-			})
-		);
-	};
+	// const sendMessage = () => {
+	// 	clientRef.sendMessage(
+	// 		`/app/sendMessage/${battleID}`,
+	// 		JSON.stringify({
+	// 			player: player,
+	// 			message: message,
+	// 			server: false,
+	// 		})
+	// 	);
+	// };
 
 	const forfeitBattle = async () => {
 		await axios
 			.put(
 				"http://localhost:8080/api/battle/forceVictor/" +
-					battleID +
-					"/" +
-					player
+				battleID +
+				"/" +
+				player
 			)
 			.then((res) => {
 				console.log(res.data, player, "This is the forfeit battle");
@@ -294,11 +294,72 @@ export default function BattleSystem(props) {
 							battle={battle}
 							messages={messages}
 						/>
-						<BattleInfo
-							enemyMonster={enemyMonster}
-							playerMonster={playerMonster}
-						/>
-						<BattleMenu
+						<div>
+							<BattleInfo
+								enemyMonster={enemyMonster}
+								playerMonster={playerMonster}
+							/>
+						</div>
+						<div>
+							{showMenu ? <Grid container spacing={4} className={classes.buttonMenu}>
+								<Grid item xs={6}>
+									<Button className={classes.buttonMenuButtons} onClick={toggleMoves}>Moves</Button>
+								</Grid>
+								<Grid item xs={6}>
+									<Button className={classes.buttonMenuButtons} onClick={toggleTeam}>Team</Button>
+								</Grid>
+								<Grid item xs={12}>
+									<Button className={classes.buttonMenuButtons} onClick={forfeitBattle}>Forfeit</Button>
+								</Grid>
+							</Grid> : <div />}
+
+							{showMoves ? <Grid container spacing={4} className={classes.buttonMenu}>
+								<Grid item xs={6}>
+									<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+								</Grid>
+								{playerMoves.map((e, i) => {
+									return (
+										<Grid item xs={6} key={i}>
+											<Button className={classes.buttonMenuButtons}
+												onClick={() => {
+													sendMove(i);
+													setLockMenu(false);
+												}}>
+												{e.name}
+											</Button>
+											<Typography>Base Damage: {e.baseDamage}</Typography>
+										</Grid>
+									)
+								})}
+							</Grid> : <div />}
+
+							{showTeam ? <Grid container spacing={4} className={classes.buttonMenu}>
+								<Grid item xs={6}>
+									<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+								</Grid>
+								{playerTeam.map((e, i) => {
+									return (
+										<Grid item xs={6} key={i}>
+											<Button disabled={monster.name === e.name || e.stats.hp === 0} className={classes.buttonMenuButtons}
+												onClick={() => {
+													sendSwap(i);
+													setLockMenu(false);
+												}}>
+												{e.name}
+											</Button>
+											{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0) ? <Typography>DEAD</Typography> : <Typography>ALIVE</Typography>}
+										</Grid>
+									)
+								})}
+							</Grid> : <div />}
+
+							{showIdle ? <Grid container spacing={4} className={classes.buttonMenu}>
+								<Grid item container justify="center" alignItems="center" direction="row">
+									<CircularProgress />
+								</Grid>
+							</Grid> : <div />}
+						</div>
+						{/* <BattleMenu
 							sendMove={sendMove}
 							sendSwap={sendSwap}
 							leaveRoom={forfeitBattle}
@@ -317,7 +378,7 @@ export default function BattleSystem(props) {
 							playerMoves={playerMoves}
 							playerTeam={playerTeam}
 							monster={monster}
-						/>
+						/> */}
 					</div>
 				)}
 
@@ -341,7 +402,8 @@ export default function BattleSystem(props) {
 						);
 					}}
 					onDisconnect={() => {
-						console.log("disconnected");
+						console.log(player, "disconnected");
+						forfeitBattle()
 					}}
 					onMessage={(e) => {
 						if (e === true) {

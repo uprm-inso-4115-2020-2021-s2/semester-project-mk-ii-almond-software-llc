@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Modal,
 	Grid,
@@ -17,7 +17,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
-import CloseIcon from "@material-ui/icons/Close";
+// import CloseIcon from "@material-ui/icons/Close";
 import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import PeopleIcon from "@material-ui/icons/People";
@@ -37,19 +37,19 @@ import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
-import BattleMenu from "../src/components/battle/battleMenu.js";
+// import BattleMenu from "../src/components/battle/battleMenu.js";
 
-function getModalStyle() {
-	const top = 50;
-	const left = 50;
+// function getModalStyle() {
+// 	const top = 50;
+// 	const left = 50;
 
-	return {
-		top: `${top}%`,
-		margin: "auto",
-		// left: `${left}%`,
-		// transform: `translate(-${top}%, -${left}%)`,
-	};
-}
+// 	return {
+// 		top: `${top}%`,
+// 		margin: "auto",
+// 		// left: `${left}%`,
+// 		// transform: `translate(-${top}%, -${left}%)`,
+// 	};
+// }
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -138,7 +138,7 @@ export default function App() {
 	const [appHeight, setAppHeight] = useState(height);
 	const [value, setValue] = useState(0);
 	let history = useHistory();
-	const modalStyle = useState(getModalStyle);
+	// const modalStyle = useState(getModalStyle);
 	const [playerTeam, setPlayerTeam] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [monsterCollection, setMonsterCollection] = useState([]);

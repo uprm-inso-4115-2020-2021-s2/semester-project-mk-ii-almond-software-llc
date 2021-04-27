@@ -1,11 +1,6 @@
-import { React, useState } from "react";
-import { Typography, Grid, Button, makeStyles, CircularProgress } from "@material-ui/core";
-import SockJsClient from 'react-stomp';
-import AndroidIcon from "@material-ui/icons/Android";
-import AppleIcon from "@material-ui/icons/Apple";
-import BattleMenu from './battleMenu';
-import Cookies from "js-cookie";
-import axios from "axios";
+import { React, } from "react";
+import { Typography, Grid } from "@material-ui/core";
+
 
 export default function BattleAlert(props) {
 

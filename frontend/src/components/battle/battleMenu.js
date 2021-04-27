@@ -1,7 +1,7 @@
-import { React, useState } from "react";
-import { Typography, Grid, makeStyles, Button, Paper, CircularProgress } from "@material-ui/core";
-import AndroidIcon from "@material-ui/icons/Android";
-import AppleIcon from "@material-ui/icons/Apple";
+import { React, } from "react";
+import { Typography, Grid, makeStyles, Button, CircularProgress } from "@material-ui/core";
+// import AndroidIcon from "@material-ui/icons/Android";
+// import AppleIcon from "@material-ui/icons/Apple";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,14 +91,14 @@ export default function BattleMenu(props) {
         {props.playerTeam.map((e, i) => {
           return (
             <Grid item xs={6} key={i}>
-              <Button disabled={props.monster.name === e.name} className={classes.buttonMenuButtons}
+              <Button disabled={props.monster.name === e.name || e.stats.hp === 0} className={classes.buttonMenuButtons}
                 onClick={() => {
                   props.sendSwap(i);
                   props.setLockMenu(false);
                 }}>
                 {e.name}
               </Button>
-              <Typography>Current HP: {(e.stats.hp / e.stats.maxHp) * 100}</Typography>
+              {e.stats.hp === 0 ? <Typography>DEAD</Typography> : <Typography>ALIVE</Typography>}
             </Grid>
           )
         })}

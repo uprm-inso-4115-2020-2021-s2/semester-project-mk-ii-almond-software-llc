@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Typography, Grid, Button, IconButton, makeStyles } from "@material-ui/core";
 import BattleSystem from "./battleSystem";
 import PublicIcon from "@material-ui/icons/Public";
@@ -22,11 +22,11 @@ export default function Battle(props) {
   const [battleID, setBattleID] = useState("");
   const [battleReady, setBattleReady] = useState();
 
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen((prev) => !prev);
-  };
+  // const handleClick = () => {
+  //   setOpen((prev) => !prev);
+  // };
 
   //axios queuePlayer
   const queuePlayer = async () => {

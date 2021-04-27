@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 export default function Loot() {
 	const classes = useStyles();
-	const [lootCrates, setLootCrates] = useState([]);
+	// const [lootCrates, setLootCrates] = useState([]);
 	const [shopCrates, setShopCrates] = useState([]);
 	const [prize, setPrize] = useState();
 	const normalCrateColor = "grey";
@@ -37,11 +37,11 @@ export default function Loot() {
 	const [currentLoot, setCurrentLoot] = useState(Cookies.get("Crate"));
 	const [confirm, setConfirm] = useState(false);
 	const [result, setResult] = useState(false);
-	const [inventory, setInventory] = useState(false);
+	// const [inventory, setInventory] = useState(false);
 	const [shop, setShop] = useState(false);
 	const [pistachios, setPistachios] = useState();
 	const [cratePrice, setCratePrice] = useState(0);
-	const [pay, setPay] = useState(false);
+	// const [pay, setPay] = useState(false);
 
 	const getLootCrates = async () => {
 		await axios.get("http://localhost:8080/api/lootboxes").then((res) => {
@@ -111,9 +111,9 @@ export default function Loot() {
 	function handleConfirm() {
 		setConfirm(!confirm);
 	}
-	function handleInventory() {
-		setInventory(!inventory);
-	}
+	// function handleInventory() {
+	// 	setInventory(!inventory);
+	// }
 	function handleShop() {
 		setShop(!shop);
 	}
@@ -161,7 +161,7 @@ export default function Loot() {
 				<Grid item xs={12} style={{ fontSize: "2rem" }}>
 					<IconButton onClick={handleConfirm}>
 						<Grid item xs={12}>
-							{currentLoot != "" ? (
+							{currentLoot !== "" ? (
 								<div>
 									<AllInboxIcon
 										style={{

@@ -1,20 +1,20 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import {
 	Typography,
 	Grid,
-	Button,
+	// Button,
 	makeStyles,
-	CircularProgress,
+	// CircularProgress,
 	LinearProgress,
 	Box,
-	Avatar,
+	// Avatar,
 } from "@material-ui/core";
-import SockJsClient from "react-stomp";
+// import SockJsClient from "react-stomp";
 import PropTypes from "prop-types";
-import BattleMenu from "./battleMenu";
-import Cookies from "js-cookie";
-import axios from "axios";
-import enemyFront from '../../assets/monsters/AMPhibian/front.png';
+// import BattleMenu from "./battleMenu";
+// import Cookies from "js-cookie";
+// import axios from "axios";
+// import enemyFront from '../../assets/monsters/AMPhibian/front.png';
 import ImageLoader from '../imageLoader/imageLoader.js';
 
 function LinearProgressWithLabel(props) {
@@ -91,9 +91,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BattleInfo(props) {
 	const classes = useStyles();
-
-	useEffect(() => {
-	}, [])
 
 	return (
 		<div>

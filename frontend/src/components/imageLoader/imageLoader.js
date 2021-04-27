@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import AMPhibianFrontImage from '../../assets/monsters/AMPhibian/front.png';
 import AMPhibianBackImage from '../../assets/monsters/AMPhibian/back.png';
 import CioFrontImage from '../../assets/monsters/Cio/front.png';
@@ -20,7 +20,7 @@ import G0DBackImage from '../../assets/monsters/G.0D/back.png';
 
 export default function ImageLoader(props) {
 
-    const [images, setImages] = useState({
+    const [images] = useState({
         AMPhibian: { front: AMPhibianFrontImage, back: AMPhibianBackImage },
         Cio: { front: CioFrontImage, back: CioBackImage },
         Hatrick: { front: HatrickFrontImage, back: HatrickBackImage },
@@ -33,11 +33,7 @@ export default function ImageLoader(props) {
         'G.0D': { front: G0DFrontImage, back: G0DBackImage },
     });
 
-    useEffect(() => {
-        console.log(images[props.name])
-    }, [])
-
     return (
-        <img src={images[props.name][props.side]} alt={props.name} style={{ height: '250px', width: '125px' }} />
+        <img src={images[props.name][props.side]} alt={props.name} />
     )
 }

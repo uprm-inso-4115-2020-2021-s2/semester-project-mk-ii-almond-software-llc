@@ -1,11 +1,6 @@
-import { React, useState } from "react";
-import { Typography, Grid, Button, makeStyles, CircularProgress } from "@material-ui/core";
-import SockJsClient from 'react-stomp';
-import AndroidIcon from "@material-ui/icons/Android";
-import AppleIcon from "@material-ui/icons/Apple";
-import BattleMenu from './battleMenu';
-import Cookies from "js-cookie";
-import axios from "axios";
+import { React, } from "react";
+import { Grid, Button, makeStyles, CircularProgress } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
 	back: {
@@ -54,25 +49,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BattleLoading(props) {
 
-    const classes = useStyles();
+	const classes = useStyles();
 
-    return (
-        <div>
-            <Grid container justify="flex-start" alignItems="center">
-                <Button
-                    className={classes.back}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        props.leaveRoom();
-                    }}
-                >
-                    Back
+	return (
+		<div>
+			<Grid container justify="flex-start" alignItems="center">
+				<Button
+					className={classes.back}
+					variant="contained"
+					color="primary"
+					onClick={() => {
+						props.leaveRoom();
+					}}
+				>
+					Back
 						</Button>
-            </Grid>
-            <Grid item >
-                <CircularProgress />
-            </Grid>
-        </div>
-    );
+			</Grid>
+			<Grid item >
+				<CircularProgress />
+			</Grid>
+		</div>
+	);
 }

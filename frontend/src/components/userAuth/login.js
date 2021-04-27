@@ -10,7 +10,7 @@ import {
 	Typography,
 	Container,
 } from "@material-ui/core";
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import { BrowserRouter as useHistory } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -92,13 +92,13 @@ export default function Login() {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [history]);
 
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<img src={Pistachio} className={classes.image} />
+				<img src={Pistachio} className={classes.image} alt="Pistachio logo" />
 				<Typography component="h1" variant="h5">
 					Login
 				</Typography>
