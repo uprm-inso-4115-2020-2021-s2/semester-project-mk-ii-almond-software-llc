@@ -309,8 +309,8 @@ public class Battle {
     public void applyDamage(double damage, Monster punchingBag) {
         int remainingHealth = punchingBag.getStats().getHp() - (int) damage;
         if (remainingHealth >= 0){
-        punchingBag.getStats().setHp(remainingHealth);
-        } else{
+            punchingBag.getStats().setHp(remainingHealth);
+        } else if(remainingHealth < 0){
             punchingBag.getStats().setHp(0);
         }
     }
