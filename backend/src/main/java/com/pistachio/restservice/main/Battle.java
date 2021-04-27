@@ -352,20 +352,23 @@ public class Battle {
 
     public void swapMonster(Monster monsterToChange, Monster monsterToChangeInto, int player){
         Monster temp;
+        int index;
         
         if(player == 1) {
-            temp = firstPlayerTeam.get(firstPlayerTeam.indexOf(monsterToChange));
+            index = firstPlayerTeam.indexOf(monsterToChange);
+            temp = activeMonsterPlayer1;
 
-            firstPlayerTeam.set(firstPlayerTeam.indexOf(monsterToChange), temp);
+            firstPlayerTeam.set(index, temp);
 
             setActiveMonster1(monsterToChange);
 
 
         }
         else if(player == 2){
-            temp = secondPlayerTeam.get(secondPlayerTeam.indexOf(monsterToChange));
+            index = secondPlayerTeam.indexOf(monsterToChange);
+            temp = activeMonsterPlayer2;
 
-            secondPlayerTeam.set(secondPlayerTeam.indexOf(monsterToChange), temp);
+            secondPlayerTeam.set(index, temp);
             
             setActiveMonster2(monsterToChange);
         }
