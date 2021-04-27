@@ -243,11 +243,12 @@ public class Battle {
                     setPlayer1Action("");
                     setPlayer2Action("");
                 }
-
+                else{
                 // Player 1 will now attack
                 calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2, 2);
                 setPlayer1Action("");
                 setPlayer2Action("");
+                }
             }
             // Player skipping
             else if (player1Action.startsWith("2")) {
