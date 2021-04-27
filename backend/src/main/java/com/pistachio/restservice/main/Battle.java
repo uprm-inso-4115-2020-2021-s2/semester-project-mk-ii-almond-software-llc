@@ -303,7 +303,12 @@ public class Battle {
     }
 
     public void applyDamage(double damage, Monster punchingBag) {
-        punchingBag.getStats().setHp(punchingBag.getStats().getHp() - (int) damage);
+        int remainingHealth = punchingBag.getStats().getHp() - (int) damage;
+        if (remainingHealth >= 0){
+        punchingBag.getStats().setHp(remainingHealth);
+        } else{
+            punchingBag.getStats().setHp(0);
+        }
     }
 
     // @Author: Shastney PEneop Cabra Roldn
