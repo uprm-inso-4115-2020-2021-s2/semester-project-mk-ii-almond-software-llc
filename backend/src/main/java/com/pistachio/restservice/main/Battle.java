@@ -216,7 +216,8 @@ public class Battle {
             // Check if player1 is swaping out monster
             if (player1Action.startsWith("1")) {
                 // change active monster
-                setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
+                swapMonster(activeMonsterPlayer1, firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))), 1);
+                //setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
 
                 if (player2Action.startsWith("2")) {
                     setPlayer1Action("");
@@ -225,7 +226,8 @@ public class Battle {
 
                 // Player 2 will also change monster
                 else if (player2Action.startsWith("1")) {
-                    setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                    swapMonster(activeMonsterPlayer2, secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))), 1);
+                    //setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                     setPlayer1Action("");
                     setPlayer2Action("");
                 }
@@ -237,7 +239,8 @@ public class Battle {
                 }
             } else if (player2Action.startsWith("1")) {
                 // change active monster
-                setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                swapMonster(activeMonsterPlayer2, secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))), 1);
+                //setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
 
                 if (player1Action.startsWith("2")) {
                     setPlayer1Action("");
@@ -254,13 +257,15 @@ public class Battle {
             else if (player1Action.startsWith("2")) {
 
                 // player 2 will swap
-                setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                swapMonster(activeMonsterPlayer2, secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))), 1);
+                //setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
                 setPlayer1Action("");
                 setPlayer2Action("");
 
             } else if (player2Action.startsWith("2")) {
                 // player 1 will swap
-                setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
+                swapMonster(activeMonsterPlayer1, firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))), 1);
+                //setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
                 setPlayer1Action("");
                 setPlayer2Action("");
             }
@@ -343,5 +348,27 @@ public class Battle {
     // @Author: Shastney PEneop Cabra Roldn
     public boolean checkDeath(Monster victim) {
         return victim.getStats().getHp() <= 0;
+    }
+
+    public void swapMonster(Monster monsterToChange, Monster monsterToChangeInto, int player){
+        Monster temp;
+        
+        if(player == 1) {
+            temp = firstPlayerTeam.get(firstPlayerTeam.indexOf(monsterToChange));
+
+            firstPlayerTeam.set(firstPlayerTeam.indexOf(monsterToChange), temp);
+
+            setActiveMonster1(monsterToChange);
+
+
+        }
+        else if(player == 2){
+            temp = secondPlayerTeam.get(secondPlayerTeam.indexOf(monsterToChange));
+
+            secondPlayerTeam.set(secondPlayerTeam.indexOf(monsterToChange), temp);
+            
+            setActiveMonster2(monsterToChange);
+        }
+
     }
 }
