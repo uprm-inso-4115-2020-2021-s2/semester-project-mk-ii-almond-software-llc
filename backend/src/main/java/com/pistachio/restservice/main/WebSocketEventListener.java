@@ -39,10 +39,10 @@ public class WebSocketEventListener {
 
       Action action = new Action();
       action.setUsername(username);
-      action.setContent(username + " has disconnected!");
+      action.setContent("DISCONNECT");
       action.setServer(true);
-      // messagingTemplate.convertAndSend(format("/topic/%s", battleID), action);
-      messagingTemplate.convertAndSend(format("/topic/%s", battleID), true);
+      messagingTemplate.convertAndSend(format("/topic/%s", battleID), action);
+      // messagingTemplate.convertAndSend(format("/topic/%s", battleID), true);
     }
   }
   

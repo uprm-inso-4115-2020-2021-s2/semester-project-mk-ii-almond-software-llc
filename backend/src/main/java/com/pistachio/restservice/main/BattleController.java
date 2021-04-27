@@ -170,6 +170,10 @@ public class BattleController {
     @PutMapping("/battle/forceVictor/{id}/{playerID}")
     public Battle forceVictor(@PathVariable String id, @PathVariable String playerID) {
         Battle battleToTerminate = getOne(id);
+        // battleToTerminate.setVictor(playerID);
+        // System.out.println("This is the new victor " + battleToTerminate.getVictor());
+        // return battleRepo.save(battleToTerminate);
+
         if (playerID.equals(battleToTerminate.getFirstPlayerID())) {
             battleToTerminate.setVictor(battleToTerminate.getSecondPlayerID());
             System.out.println("This is the new victor " + battleToTerminate.getVictor());

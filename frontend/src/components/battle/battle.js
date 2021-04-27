@@ -56,6 +56,7 @@ export default function Battle(props) {
             battleID={battleID}
             battleReady={battleReady}
             appHeight={props.appHeight}
+            appWidth={props.appWidth}
           />
         </div>
       ) : (

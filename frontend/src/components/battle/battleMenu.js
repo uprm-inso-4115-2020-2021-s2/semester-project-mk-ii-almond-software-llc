@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonMenu: {
     backgroundColor: "#f2f2f2",
+    width: '100%',
+    borderRadius: '50px'
   },
   buttonMenuButtons: {
     backgroundColor: "white"
@@ -78,7 +80,7 @@ export default function BattleMenu(props) {
                 }}>
                 {e.name}
               </Button>
-              <Typography>Base Damage: {e.baseDamage}</Typography>
+              <Typography>DMG: {e.baseDamage}</Typography>
             </Grid>
           )
         })}

@@ -171,9 +171,9 @@ export default function App() {
 	const updatePlayerTeam = async () => {
 		await axios.put(
 			"http://localhost:8080/api/player/updatePlayerTeam/" +
-				Cookies.get("user") +
-				"/" +
-				playerTeam.join()
+			Cookies.get("user") +
+			"/" +
+			playerTeam.join()
 		);
 	};
 
@@ -181,7 +181,7 @@ export default function App() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/getPlayerMonsterCollection/" +
-					Cookies.get("user")
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setMonsterCollection(res.data);
@@ -318,13 +318,13 @@ export default function App() {
 				>
 					<Toolbar variant="dense" style={{ justifyContent: "center" }}>
 						{/* <IconButton
-              edge="start"
-              className={classes.taskButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <AssignmentIcon fontSize="small" />
-            </IconButton> */}
+							edge="start"
+							className={classes.taskButton}
+							color="inherit"
+							aria-label="menu"
+						>
+							<AssignmentIcon fontSize="small" />
+						</IconButton> */}
 						<Tabs value={value} onChange={handleChange}>
 							<Tab
 								icon={<PeopleIcon fontSize="small" />}
@@ -377,7 +377,8 @@ export default function App() {
 
 				<TabPanel value={value} index={2}>
 					<Battle
-						appHeight={0.85 * appHeight - 0.15 * appHeight}
+						appHeight={0.85 * appHeight - 0.065 * appHeight}
+						appWidth={0.85 * width}
 						matched={matched}
 						setMatched={setMatched}
 					/>
@@ -449,8 +450,8 @@ export default function App() {
 														monsterCollectionChecked.length === 0 ||
 														monsterCollectionChecked.length > maxCapacity ||
 														monsterCollectionChecked.length +
-															playerTeam.length >
-															maxCapacity ||
+														playerTeam.length >
+														maxCapacity ||
 														playerTeam.length === maxCapacity ||
 														disabled
 													}

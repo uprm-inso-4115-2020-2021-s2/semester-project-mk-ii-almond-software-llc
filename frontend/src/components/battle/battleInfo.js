@@ -94,37 +94,50 @@ export default function BattleInfo(props) {
 
 	return (
 		<div>
-			<Grid container spacing={4}>
-				<Grid item xs={6}>
-					<Typography className={classes.enemyButton}>
-						{props.enemyMonster.name}
-					</Typography>
-					<LinearProgressWithLabel
-						value={
-							(props.enemyMonster.stats.hp / props.enemyMonster.stats.maxHp) *
-							100
-						}
-					/>
+			<Grid container spacing={1}>
+
+				<Grid
+					item
+					container
+					direction="row"
+					justify="center"
+					alignItems="center">
+
+					<Grid item xs={6}>
+						<Typography className={classes.enemyButton}>
+							{props.enemyMonster.name}
+						</Typography>
+						<LinearProgressWithLabel value={(props.enemyMonster.stats.hp / props.enemyMonster.stats.maxHp) * 100} />
+					</Grid>
+
+					<Grid item xs={6}>
+						<ImageLoader name={props.enemyMonster.name} side="front" />
+					</Grid>
+
 				</Grid>
 
-				<Grid item xs={6}>
-					<ImageLoader name={props.enemyMonster.name} side="front" />
-				</Grid>
+				<Grid item xs={6} />
 
-				<Grid item xs={6}>
-					<ImageLoader name={props.playerMonster.name} side="back" />
-				</Grid>
+				<Grid item xs={6} />
 
-				<Grid item xs={6}>
-					<Typography className={classes.enemyButton}>
-						{props.playerMonster.name}
-					</Typography>
-					<LinearProgressWithLabel
-						value={
-							(props.playerMonster.stats.hp / props.playerMonster.stats.maxHp) *
-							100
-						}
-					/>
+				<Grid
+					item
+					container
+					direction="row"
+					justify="center"
+					alignItems="center">
+
+					<Grid item xs={6}>
+						<ImageLoader name={props.playerMonster.name} side="back" />
+					</Grid>
+
+					<Grid item xs={6}>
+						<Typography className={classes.enemyButton}>
+							{props.playerMonster.name}
+						</Typography>
+						<LinearProgressWithLabel value={(props.playerMonster.stats.hp / props.playerMonster.stats.maxHp) * 100} />
+					</Grid>
+
 				</Grid>
 			</Grid>
 		</div>

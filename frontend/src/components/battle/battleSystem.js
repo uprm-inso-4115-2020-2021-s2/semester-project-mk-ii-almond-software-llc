@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	buttonMenu: {
 		backgroundColor: "#f2f2f2",
+		borderRadius: '10px'
 	},
 	buttonMenuButtons: {
 		backgroundColor: "white",
@@ -278,150 +279,212 @@ export default function BattleSystem(props) {
 
 	return (
 		<div>
-			<Grid
-				container
-				direction="column"
-				justify="center"
-				alignItems="center"
-				style={{ justifyContent: "space-between", height: props.appHeight }}
-			>
-				{showLoading ? (
-					<BattleLoading leaveRoom={leaveRoom} />
-				) : (
-					<div>
-						<BattleAlert
-							player={props.player}
-							battle={battle}
-							messages={messages}
-						/>
-						<div>
+			{showLoading ? (
+				<BattleLoading leaveRoom={leaveRoom} />
+			) : (
+				<div>
+					<Grid
+						container
+						direction="column"
+						justify="space-around"
+						alignItems="center"
+						style={{ justifyContent: "space-between", height: props.appHeight }}>
+						<Grid item>
+							{/* <BattleAlert
+									player={props.player}
+									battle={battle}
+									messages={messages}
+								/> */}
+							<Typography>User: {player}</Typography>
+						</Grid>
+						<Grid item>
 							<BattleInfo
 								enemyMonster={enemyMonster}
 								playerMonster={playerMonster}
 							/>
-						</div>
-						<div>
-							{showMenu ? <Grid container spacing={4} className={classes.buttonMenu}>
-								<Grid item xs={6}>
-									<Button className={classes.buttonMenuButtons} onClick={toggleMoves}>Moves</Button>
-								</Grid>
-								<Grid item xs={6}>
-									<Button className={classes.buttonMenuButtons} onClick={toggleTeam}>Team</Button>
-								</Grid>
-								<Grid item xs={12}>
-									<Button className={classes.buttonMenuButtons} onClick={forfeitBattle}>Forfeit</Button>
-								</Grid>
-							</Grid> : <div />}
+						</Grid>
+						<Grid item container style={{
+							width: props.appWidth,
+							height: props.appHeight * 0.30,
+							backgroundColor: "#f2f2f2",
+							borderRadius: '10px',
+							padding: '15px',
+						}}>
+							{showMenu ?
+								<Grid item container spacing={4}>
+									<Grid item xs={6}>
+										<Button className={classes.buttonMenuButtons} onClick={toggleMoves}>
+											<Grid container direction="column">
+												<Grid item>
+													Moves
+												</Grid>
+												<Grid item>
+													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Attacks!</Typography>
+												</Grid>
+											</Grid>
+										</Button>
+									</Grid>
+									<Grid item xs={6}>
+										<Button className={classes.buttonMenuButtons} onClick={toggleTeam}>
+											<Grid container direction="column">
+												<Grid item>
+													Team
+												</Grid>
+												<Grid item>
+													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Mini-Army?</Typography>
+												</Grid>
+											</Grid>
+										</Button>
+									</Grid>
+									<Grid item xs={12}>
+										<Button className={classes.buttonMenuButtons} onClick={forfeitBattle}>
+											<Grid container direction="column">
+												<Grid item>
+													Forfeit
+												</Grid>
+												<Grid item>
+													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Next time...</Typography>
+												</Grid>
+											</Grid>
+										</Button>
+									</Grid>
+								</Grid> : <div />}
 
-							{showMoves ? <Grid container spacing={4} className={classes.buttonMenu}>
-								<Grid item xs={6}>
-									<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
-								</Grid>
-								{playerMoves.map((e, i) => {
-									return (
-										<Grid item xs={6} key={i}>
-											<Button className={classes.buttonMenuButtons}
-												onClick={() => {
-													sendMove(i);
-													setLockMenu(false);
-												}}>
-												{e.name}
-											</Button>
-											<Typography>Base Damage: {e.baseDamage}</Typography>
-										</Grid>
-									)
-								})}
-							</Grid> : <div />}
+							{showMoves ?
+								<Grid item container spacing={4}>
+									<Grid item xs={6}>
+										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+									</Grid>
+									{playerMoves.map((e, i) => {
+										return (
+											<Grid item xs={6} key={i} container direction="row" justify="center" alignContent="center">
+												<Button className={classes.buttonMenuButtons}
+													onClick={() => {
+														sendMove(i);
+														setLockMenu(false);
+													}}>
+													<Grid container direction="column">
+														<Grid item>
+															{e.name.length <= 10 ? e.name : e.name.slice(0, 10) + '...'}
+														</Grid>
+														<Grid item>
+															<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DMG: {e.baseDamage}</Typography>
+														</Grid>
+													</Grid>
+												</Button>
+											</Grid>
+										)
+									})}
+								</Grid> : <div />}
 
-							{showTeam ? <Grid container spacing={4} className={classes.buttonMenu}>
-								<Grid item xs={6}>
-									<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
-								</Grid>
-								{playerTeam.map((e, i) => {
-									return (
-										<Grid item xs={6} key={i}>
-											<Button disabled={monster.name === e.name || e.stats.hp === 0} className={classes.buttonMenuButtons}
-												onClick={() => {
-													sendSwap(i);
-													setLockMenu(false);
-												}}>
-												{e.name}
-											</Button>
-											{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0) ? <Typography>DEAD</Typography> : <Typography>ALIVE</Typography>}
-										</Grid>
-									)
-								})}
-							</Grid> : <div />}
+							{showTeam ?
+								<Grid item container spacing={4}>
+									<Grid item xs={6}>
+										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+									</Grid>
+									{playerTeam.map((e, i) => {
+										return (
+											<Grid item xs={6} key={i}>
+												<Button disabled={monster.name === e.name || e.stats.hp === 0} className={classes.buttonMenuButtons}
+													onClick={() => {
+														sendSwap(i);
+														setLockMenu(false);
+													}}>
+													<Grid container direction="column" justify="center" alignContent="center">
+														<Grid item>
+															{e.name}
+														</Grid>
+														<Grid item>
+															{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0)
+																? <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DEAD</Typography>
+																: <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>ALIVE</Typography>}
+														</Grid>
+													</Grid>
+												</Button>
+												{/* {e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0) ? <Typography>DEAD</Typography> : <Typography>ALIVE</Typography>} */}
+											</Grid>
+										)
+									})}
+								</Grid> : <div />}
 
-							{showIdle ? <Grid container spacing={4} className={classes.buttonMenu}>
-								<Grid item container justify="center" alignItems="center" direction="row">
-									<CircularProgress />
-								</Grid>
-							</Grid> : <div />}
-						</div>
-						{/* <BattleMenu
-							sendMove={sendMove}
-							sendSwap={sendSwap}
-							leaveRoom={forfeitBattle}
-							lockMenu={lockMenu}
-							showMenu={showMenu}
-							showMoves={showMoves}
-							showTeam={showTeam}
-							showIdle={showIdle}
-							toggleMenu={toggleMenu}
-							toggleMoves={toggleMoves}
-							toggleTeam={toggleTeam}
-							toggleIdle={toggleIdle}
-							setLockMenu={setLockMenu}
-							player={props.player}
-							battle={battle}
-							playerMoves={playerMoves}
-							playerTeam={playerTeam}
-							monster={monster}
-						/> */}
-					</div>
-				)}
+							{showIdle ?
+								<Grid item container spacing={3}>
+									<Grid item xs={4} />
+									<Grid item xs={12}>
+										<CircularProgress />
+									</Grid>
+									<Grid item xs={4} />
+								</Grid> : <div />}
 
-				{/* this is the websocket :) */}
-				<SockJsClient
-					url="http://localhost:8080/websocket/"
-					topics={topics}
-					onConnect={() => {
-						console.log("connected");
-						clientRef.sendMessage(
-							`/app/updateBattle/${battleID}`,
-							props.battleReady
-						);
-						clientRef.sendMessage(
-							`/app/addUser/${battleID}`,
-							JSON.stringify({
-								username: player,
-								server: true,
-								content: player + " has connected!",
-							})
-						);
-					}}
-					onDisconnect={() => {
-						console.log(player, "disconnected");
-						forfeitBattle()
-					}}
-					onMessage={(e) => {
-						if (e === true) {
-							console.log("boolean object:", e);
-							updateBattle();
-						}
-						if (typeof e == typeof {}) {
-							console.log("message object:", e);
+							{/* <BattleMenu
+								sendMove={sendMove}
+								sendSwap={sendSwap}
+								leaveRoom={forfeitBattle}
+								lockMenu={lockMenu}
+								showMenu={showMenu}
+								showMoves={showMoves}
+								showTeam={showTeam}
+								showIdle={showIdle}
+								toggleMenu={toggleMenu}
+								toggleMoves={toggleMoves}
+								toggleTeam={toggleTeam}
+								toggleIdle={toggleIdle}
+								setLockMenu={setLockMenu}
+								player={props.player}
+								battle={battle}
+								playerMoves={playerMoves}
+								playerTeam={playerTeam}
+								monster={monster}
+							/> */}
+						</Grid>
+					</Grid>
+				</div>
+			)}
+
+			{/* this is the websocket :) */}
+			<SockJsClient
+				url="http://localhost:8080/websocket/"
+				topics={topics}
+				onConnect={() => {
+					console.log("connected");
+					clientRef.sendMessage(
+						`/app/updateBattle/${battleID}`,
+						props.battleReady
+					);
+					clientRef.sendMessage(
+						`/app/addUser/${battleID}`,
+						JSON.stringify({
+							username: player,
+							server: true,
+							content: player + " has connected!",
+						})
+					);
+				}}
+				onDisconnect={() => {
+					console.log(player, "disconnected");
+					forfeitBattle()
+				}}
+				onMessage={(e) => {
+					if (e === true) {
+						console.log("boolean object:", e);
+						updateBattle();
+					}
+					if (typeof e == typeof {}) {
+						console.log("message object:", e);
+						if (e.content === "DISCONNECT") {
+							console.log(e.username === player ? "you left!" : "other player left!")
+							leaveRoom()
+						} else {
 							const temp = [...messages];
 							temp.push(e);
 							setMessages(temp);
 						}
-					}}
-					ref={(client) => {
-						setClientRef(client);
-					}}
-				/>
-			</Grid>
+					}
+				}}
+				ref={(client) => {
+					setClientRef(client);
+				}}
+			/>
 		</div>
 	);
 }
