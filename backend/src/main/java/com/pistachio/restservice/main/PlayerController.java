@@ -22,6 +22,9 @@ public class PlayerController {
     public Player add(@RequestBody Player player) {
         player.addMonster(monsterRepo.findById("Pistachy").get());
         player.addPistachio(1000);
+        List<String> defaultTeam = new ArrayList<String>();
+        defaultTeam.add("Pistachy");
+        player.setTeam(defaultTeam);
         return playerRepo.save(player);
     }
 
