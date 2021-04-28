@@ -90,7 +90,7 @@ export default function BattleSystem(props) {
 
 	const updateBattle = async () => {
 		await axios
-			.get("http://localhost:8080/api/battle/" + battleID)
+			.get("https://almond-pistachio-back-end.herokuapp.com/api/battle/" + battleID)
 			.then((res) => {
 				setBattle(res.data);
 				console.log("updating battle");
@@ -192,7 +192,7 @@ export default function BattleSystem(props) {
 	const forfeitBattle = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/battle/forceVictor/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/battle/forceVictor/" +
 				battleID +
 				"/" +
 				player
@@ -424,7 +424,7 @@ export default function BattleSystem(props) {
 
 			{/* this is the websocket :) */}
 			<SockJsClient
-				url="http://localhost:8080/websocket/"
+				url="https://almond-pistachio-back-end.herokuapp.com/websocket/"
 				topics={topics}
 				onConnect={() => {
 					console.log("connected");

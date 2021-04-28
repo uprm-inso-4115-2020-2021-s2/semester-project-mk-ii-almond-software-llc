@@ -44,7 +44,7 @@ export default function Loot(props) {
 	// const [pay, setPay] = useState(false);
 
 	const getLootCrates = async () => {
-		await axios.get("http://localhost:8080/api/lootboxes").then((res) => {
+		await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/lootboxes").then((res) => {
 			console.log(res.data);
 			setShopCrates(res.data);
 		});
@@ -53,7 +53,7 @@ export default function Loot(props) {
 	const removePistachios = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/addMoney/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/addMoney/" +
 				Cookies.get("user") +
 				"/" +
 				-cratePrice
@@ -65,7 +65,7 @@ export default function Loot(props) {
 
 	const getPlayerPistachios = async () => {
 		await axios
-			.get("http://localhost:8080/api/player/" + Cookies.get("user"))
+			.get("https://almond-pistachio-back-end.herokuapp.com/api/player/" + Cookies.get("user"))
 			.then((res) => {
 				setPistachios(res.data.pistachios);
 			});
@@ -74,7 +74,7 @@ export default function Loot(props) {
 	const getLootPrize = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/lootbox/open/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/lootbox/open/" +
 				currentLoot +
 				"/" +
 				Cookies.get("user")

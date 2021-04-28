@@ -52,7 +52,7 @@ export default function Main() {
 	const getPlayerMonsterCollection = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/getPlayerMonsterCollection/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/getPlayerMonsterCollection/" +
 				Cookies.get("user")
 			)
 			.then((res) => {

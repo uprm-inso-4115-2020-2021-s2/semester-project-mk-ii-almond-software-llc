@@ -29,13 +29,13 @@ export default function Battle(props) {
 
   const queuePlayer = async () => {
     await axios
-      .put("http://localhost:8080/api/battle/queue?player=" + player)
+      .put("https://almond-pistachio-back-end.herokuapp.com/api/battle/queue?player=" + player)
       .then((res) => {
         console.log(res.data);
         console.log(res.data.secondPlayerID === "");
         axios({
           method: "put",
-          url: "http://localhost:8080/api/player/" + player + "/" + res.data.battleID,
+          url: "https://almond-pistachio-back-end.herokuapp.com/api/player/" + player + "/" + res.data.battleID,
         });
         setBattleID(res.data.battleID);
         setBattleReady(res.data.secondPlayerID !== "");
@@ -46,7 +46,7 @@ export default function Battle(props) {
   const deleteBattle = async () => {
     if (battleID !== "") {
       await axios.delete(
-        "http://localhost:8080/api/battle/" + battleID
+        "https://almond-pistachio-back-end.herokuapp.com/api/battle/" + battleID
       ).then(() => {
         console.log("delete success");
         setCallDelete(false)

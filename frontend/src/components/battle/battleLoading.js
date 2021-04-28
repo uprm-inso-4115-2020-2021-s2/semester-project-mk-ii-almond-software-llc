@@ -53,7 +53,7 @@ export default function BattleLoading(props) {
 
 	const deleteBattle = async () => {
         await axios.delete(
-            "http://localhost:8080/api/battle/" + props.battleID
+            "https://almond-pistachio-back-end.herokuapp.com/api/battle/" + props.battleID
         );
     };
 
