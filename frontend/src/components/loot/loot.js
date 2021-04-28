@@ -40,7 +40,7 @@ export default function Loot(props) {
 	// const [inventory, setInventory] = useState(false);
 	const [shop, setShop] = useState(false);
 	const [pistachios, setPistachios] = useState();
-	const [cratePrice, setCratePrice] = useState(0);
+	let [cratePrice, setCratePrice] = useState();
 	// const [pay, setPay] = useState(false);
 
 	const getLootCrates = async () => {
@@ -54,9 +54,9 @@ export default function Loot(props) {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/addMoney/" +
-				Cookies.get("user") +
-				"/" +
-				-cratePrice
+					Cookies.get("user") +
+					"/" +
+					-cratePrice
 			)
 			.then((res) => {
 				setPistachios(res.data.pistachios);
@@ -75,9 +75,9 @@ export default function Loot(props) {
 		await axios
 			.get(
 				"http://localhost:8080/api/lootbox/open/" +
-				currentLoot +
-				"/" +
-				Cookies.get("user")
+					currentLoot +
+					"/" +
+					Cookies.get("user")
 			)
 			.then((res) => {
 				setPrize(res.data.name);
@@ -98,13 +98,13 @@ export default function Loot(props) {
 
 	const handleCratePrices = (currentLoot) => {
 		if (currentLoot === "Normal Crate") {
-			setCratePrice(1000);
+			cratePrice = 1000;
 		} else if (currentLoot === "Rare Crate") {
-			setCratePrice(2500);
+			cratePrice = 2500;
 		} else if (currentLoot === "Epic Crate") {
-			setCratePrice(5000);
+			cratePrice = 5000;
 		} else {
-			setCratePrice(0);
+			cratePrice = 0;
 		}
 	};
 
@@ -133,7 +133,6 @@ export default function Loot(props) {
 	}, [pistachios, prize, shop]);
 
 	useEffect(() => {
-		removePistachios();
 		setCratePrice(0);
 	}, [shop]);
 
@@ -148,7 +147,11 @@ export default function Loot(props) {
 			>
 				{/* --------------------------------------------------------------------------------------------------------------------- */}
 				<Grid item>
-					<Button variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+					<Button
+						variant="contained"
+						color="primary"
+						style={{ backgroundColor: "#4A7562" }}
+					>
 						<Typography variant="h5" component="h5">
 							Pistachios: {pistachios}
 						</Typography>
@@ -199,7 +202,7 @@ export default function Loot(props) {
 							}}
 						>
 							Shop
-					</Button>
+						</Button>
 					</Grid>
 					<Dialog
 						onClose={handleShop}
@@ -223,13 +226,11 @@ export default function Loot(props) {
 										<Grid item>
 											<IconButton
 												onClick={() => {
-													if (
-														currentLoot === "" &&
-														pistachios - cratePrice >= 0
-													) {
+													handleCratePrices(crate.name);
+													if (currentLoot === "" && pistachios >= cratePrice) {
 														setCurrentLoot(crate.name);
 														Cookies.set("Crate", crate.name);
-														handleCratePrices(crate.name);
+														removePistachios();
 														setShop(!shop);
 													} else {
 														setShop(!shop);
@@ -256,7 +257,7 @@ export default function Loot(props) {
 						<Grid container>
 							<Grid item style={{ padding: "2rem" }}>
 								Are you sure you want to open {currentLoot}?
-						</Grid>
+							</Grid>
 							<DialogActions>
 								<Button
 									onClick={() => {
@@ -265,7 +266,7 @@ export default function Loot(props) {
 									}}
 								>
 									Yes
-							</Button>
+								</Button>
 								<Button onClick={handleConfirm}>No</Button>
 							</DialogActions>
 						</Grid>
