@@ -22,15 +22,15 @@ class BattleTest {
 		Battle B2 = new Battle("123", "Juan", new ArrayList<Monster>(), "pepito", new ArrayList<Monster>());
 		Battle B3 = new Battle("456", "Juan", new ArrayList<Monster>(), "pepito", new ArrayList<Monster>());
 		
-	// 	assertTrue(B1.equals(B2));
-	// 	assertFalse(B1.equals(B3));
-	// }
+		assertTrue(B1.equals(B2));
+		assertFalse(B1.equals(B3));
+	}
 
 	@Test
 	void ActionsTest() {
 		//Battle B1 = new Battle("123", "Juan", new ArrayList<Monster>(), "pepito", new ArrayList<Monster>());
-		//B1.addAction("Help");
-		//assertTrue(B1.getActionLog().contains("Help"));
+		// B1.addAction("Help");
+		// assertTrue(B1.getActionLog().contains("Help"));
 	}
 	
 }
