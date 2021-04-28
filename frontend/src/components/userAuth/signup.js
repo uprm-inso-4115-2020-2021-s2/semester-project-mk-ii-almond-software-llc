@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Pistachio from "./pistachio.png";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import { BrowserRouter as useHistory } from "react-router-dom";
 import axios from "axios";
 //import { Hidden } from "@material-ui/core";
 //import Cookies from "js-cookie";
@@ -94,7 +94,7 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <img src={Pistachio} className={classes.image} />
+        <img src={Pistachio} className={classes.image} alt="Pistachio logo" />
         <Typography component="h1" variant="h5">
           Register
         </Typography>
