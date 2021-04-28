@@ -21,6 +21,7 @@ public class PlayerController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Player add(@RequestBody Player player) {
         player.addMonster(monsterRepo.findById("Pistachy").get());
+        player.addPistachio(1000);
         return playerRepo.save(player);
     }
 
