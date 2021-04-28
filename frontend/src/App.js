@@ -380,7 +380,7 @@ export default function App() {
 				</TabPanel>
 
 				<TabPanel value={value} index={1}>
-					<Main />
+					<Main openModal={openModal} />
 				</TabPanel>
 
 				<TabPanel value={value} index={2}>
@@ -480,8 +480,7 @@ export default function App() {
 										className={classes.button}
 										onClick={handleCheckedMonsterCollection}
 										disabled={playerTeamChecked.length === 0}
-										aria-label="move selected left"
-									>
+										aria-label="move selected left">
 										Remove from Team
 												</Button>
 								</Grid>

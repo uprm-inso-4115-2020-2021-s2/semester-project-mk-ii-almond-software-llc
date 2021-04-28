@@ -10,7 +10,7 @@ import {
 	Typography,
 	Container,
 } from "@material-ui/core";
-import { BrowserRouter as useHistory } from "react-router-dom";
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 

@@ -304,41 +304,29 @@ export default function Social() {
 										justify="space-between"
 										alignItems="center"
 										direction="row">
-										<Grid item
-											xs={4}
-											container
-											direction="row"
-											justify="center"
-											alignItems="center">
-											<Grid item xs={6}>
-												<AccountCircleRoundedIcon
-													style={{ fontSize: "3rem", color: "gray" }}
-												/>
-											</Grid>
-											<Grid item xs={6}>
-												<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
-													<Typography>{value}</Typography>
-												</Button>
+										<Grid item>
+											<Grid
+												container
+												direction="row"
+												justify="center"
+												alignItems="center">
+												<Grid item>
+													<AccountCircleRoundedIcon style={{ fontSize: "3rem", color: "gray" }} />
+												</Grid>
+												<Grid item>
+													<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+														<Typography>{value}</Typography>
+													</Button>
+												</Grid>
 											</Grid>
 										</Grid>
-										<Grid
-											item
-											xs={6}
-											container
-											direction="row"
-											justify="flex-end"
-											alignItems="center">
-											<Grid item>
-												<IconButton
-													// edge="end"
-													aria-label="more"
-													onClick={(e) => {
-														openFriendMenu(e, value);
-													}}
-												>
-													<MoreHorizIcon />
-												</IconButton>
-											</Grid>
+										<Grid item>
+											<IconButton
+												aria-label="more" onClick={(e) => {
+													openRequestMenu(e, value);
+												}}>
+												<MoreHorizIcon />
+											</IconButton>
 										</Grid>
 									</Grid>
 								);

@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Main() {
+export default function Main(props) {
 	const classes = useStyles();
 	const [monsterCollection, setMonsterCollection] = useState([]);
 
@@ -80,12 +80,16 @@ export default function Main() {
 								container
 								direction="column"
 								alignItems="center"
-								justify="center"
-							>
-								<div style={{padding: '10px'}}>
+								justify="center">
+								<div style={{ padding: '10px' }}>
 									<ImageLoader name={e} side="icon" />
 								</div>
-								<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+								<Button
+									size="small"
+									variant="contained"
+									color="primary"
+									style={{ backgroundColor: '#4A7562' }}
+									onClick={() => { props.openModal() }}>
 									<Typography className={classes.names}>{e}</Typography>
 								</Button>
 							</Grid>
