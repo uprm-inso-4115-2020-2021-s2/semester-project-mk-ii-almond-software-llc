@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardHeader: {
 		padding: theme.spacing(2, 2),
+		backgroundColor: '#4A7562',
 	},
 	list: {
 		width: 300,
@@ -168,7 +169,7 @@ export default function App() {
 	const getPlayerTeam = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/getPlayerTeam/" + Cookies.get("user")
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/getPlayerTeam/" + Cookies.get("user")
 			)
 			.then((res) => {
 				setPlayerTeam(res.data);
@@ -177,7 +178,7 @@ export default function App() {
 
 	const updatePlayerTeam = async () => {
 		await axios.put(
-			"http://localhost:8080/api/player/updatePlayerTeam/" +
+			"https://almond-pistachio-back-end.herokuapp.com/api/player/updatePlayerTeam/" +
 			Cookies.get("user") +
 			"/" +
 			playerTeam.join()
@@ -187,7 +188,7 @@ export default function App() {
 	const getPlayerMonsterCollection = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/getPlayerMonsterCollection/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/getPlayerMonsterCollection/" +
 				Cookies.get("user")
 			)
 			.then((res) => {
@@ -222,8 +223,8 @@ export default function App() {
 						inputProps={{ "aria-label": "all items selected" }}
 					/>
 				}
-				title={title}
-				subheader={`${numberOfChecked(items)}/${items.length} selected`}
+				title={<Typography style={{ color: 'white' }}>{title}</Typography>}
+				subheader={<Typography style={{ color: 'white' }}>{numberOfChecked(items)}/{items.length} selected</Typography>}
 			/>
 			<Divider />
 			<List className={classes.list} dense component="div" role="list">
@@ -416,7 +417,7 @@ export default function App() {
 											<ImageLoader name={e} side="icon" />
 										</Grid>
 										<Grid item>
-											<Button size="small" variant="contained" color="primary"
+											<Button disabled={matched} size="small" variant="contained" color="primary"
 												style={{ backgroundColor: 'gray', fontSize: "5px" }}
 												onClick={openModal}>
 												<Typography style={{ fontSize: "15px", color: 'white', fontWeight: 'bold' }}>{e}</Typography>

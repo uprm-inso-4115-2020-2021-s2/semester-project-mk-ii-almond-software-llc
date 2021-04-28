@@ -115,7 +115,7 @@ export default function Social() {
 	const getFriendList = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/friendList?user=" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/friendList?user=" +
 				Cookies.get("user")
 			)
 			.then((res) => {
@@ -126,7 +126,7 @@ export default function Social() {
 	const getRequestFriendList = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/requestFriendList?user=" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/requestFriendList?user=" +
 				Cookies.get("user")
 			)
 			.then((res) => {
@@ -135,14 +135,14 @@ export default function Social() {
 	};
 
 	// const getAllUsers = async () => {
-	// 	await axios.get("http://localhost:8080/api/player/username").then((res) => {
+	// 	await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/username").then((res) => {
 	// 		setUsernames(res.data);
 	// 	});
 	// };
 
 	const requestFriend = async () => {
 		await axios.get(
-			"http://localhost:8080/api/player/requestFriend/" +
+			"https://almond-pistachio-back-end.herokuapp.com/api/player/requestFriend/" +
 			playerRequesting +
 			"/" +
 			playerBeingRequested
@@ -152,7 +152,7 @@ export default function Social() {
 	const acceptFriend = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/acceptFriend/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/acceptFriend/" +
 				playerRequesting +
 				"/" +
 				current +
@@ -166,7 +166,7 @@ export default function Social() {
 	const rejectFriend = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/rejectFriend/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/rejectFriend/" +
 				playerRequesting +
 				"/" +
 				current +
@@ -180,7 +180,7 @@ export default function Social() {
 	const removeFriend = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/removeFriend/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/removeFriend/" +
 				current +
 				"/" +
 				playerRequesting

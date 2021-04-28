@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
 public class PlayerController {
     @Autowired
     private PlayerRepository playerRepo;
@@ -20,6 +20,11 @@ public class PlayerController {
     @PostMapping("/player/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Player add(@RequestBody Player player) {
+        player.addMonster(monsterRepo.findById("Pistachy").get());
+        player.addPistachio(1000);
+        List<String> defaultTeam = new ArrayList<String>();
+        defaultTeam.add("Pistachy");
+        player.setTeam(defaultTeam);
         return playerRepo.save(player);
     }
 

@@ -20,7 +20,7 @@ public class RestServiceApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowCredentials(true).allowedOrigins("http://localhost:3000").allowedMethods("*");
+                registry.addMapping("/**").allowCredentials(true).allowedOrigins("https://almond-pistachio-front-end.herokuapp.com").allowedMethods("*");
 			}
 		};
 	}
