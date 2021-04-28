@@ -20,6 +20,7 @@ public class PlayerController {
     @PostMapping("/player/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Player add(@RequestBody Player player) {
+        player.addMonster(monsterRepo.findById("Pistachy").get());
         return playerRepo.save(player);
     }
 
