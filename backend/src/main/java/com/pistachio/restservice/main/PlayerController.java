@@ -5,18 +5,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://almond-pistachio-front-end.herokuapp.com")
 public class PlayerController {
     @Autowired
     private PlayerRepository playerRepo;
+    @Autowired
+    private MonsterRepository monsterRepo;
 
     @PostMapping("/player/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Player add(@RequestBody Player player) {
+        player.addMonster(monsterRepo.findById("Pistachy").get());
+        player.addPistachio(1000);
+        List<String> defaultTeam = new ArrayList<String>();
+        defaultTeam.add("Pistachy");
+        player.setTeam(defaultTeam);
         return playerRepo.save(player);
     }
 
@@ -130,7 +138,8 @@ public class PlayerController {
             playerThatRequested.addFriend(playerThatAccepted);
         }
 
-        // Save both players into db regardless of whether friendship was accepted or not
+        // Save both players into db regardless of whether friendship was accepted or
+        // not
         this.update(playerThatRequested.getUser(), playerThatRequested);
         this.update(playerThatAccepted.getUser(), playerThatAccepted);
     }
@@ -177,6 +186,47 @@ public class PlayerController {
         update(Destination, D);
         update(Origin, O);
 
+    }
+
+    // Get the Player Team
+    @GetMapping(value = "player/getPlayerTeam/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public List<String> getPlayerTeam(@PathVariable String id) {
+        return getOne(id).getTeam();
+    }
+
+    // Get the player's monster collection
+    @GetMapping(value = "player/getPlayerMonsterCollection/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public List<String> getPlayerMonsterCollection(@PathVariable String id) {
+        return getOne(id).getCollections();
+    }
+
+    // Add to the player's monster collection
+    @PostMapping(value = "player/addToMonsterCollection/{id}/{monsterID}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void addToMonsterCollection(@PathVariable String id, @PathVariable String monsterID) {
+        Monster m = monsterRepo.findById(monsterID).get();
+        getOne(id).addMonster(m);
+    }
+
+    // Update the player's team
+    @PutMapping(value = "player/updatePlayerTeam/{id}/{monsters}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public void updatePlayerTeam(@PathVariable String id, @PathVariable String monsters) {
+        Player player = getOne(id);
+        List<String> monsterArray = Arrays.asList(monsters.split(","));
+        player.setTeam(monsterArray);
+        update(id, player);
+
+    }
+
+    @PutMapping(value = "player/addMoney/{id}/{ammount}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public Player givePlayerMoney(@PathVariable String id, @PathVariable int ammount) {
+        Player player = getOne(id);
+        player.addPistachio(ammount);
+        return update(id, player);
     }
 
 }

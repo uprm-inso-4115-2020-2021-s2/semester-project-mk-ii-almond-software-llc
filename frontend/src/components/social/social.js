@@ -1,34 +1,34 @@
-import React, { useState, useEffect, useCallback, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Typography,
 	Grid,
-	Container,
+	// Container,
 	TextField,
-	List,
-	ListItem,
-	Avatar,
-	ListItemSecondaryAction,
-	ListItemText,
-	ListItemAvatar,
-	Checkbox,
+	// List,
+	// ListItem,
+	// Avatar,
+	// ListItemSecondaryAction,
+	// ListItemText,
+	// ListItemAvatar,
+	// Checkbox,
 	Button,
 	IconButton,
 	Menu,
 	MenuItem,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+// import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 
 const useStyles = makeStyles((theme) => ({
 	add: {
 		margin: theme.spacing(3, 0, 2),
-		backgroundColor: "green",
+		backgroundColor: "#4A7562",
 		"&:hover": {
 			backgroundColor: "darkgreen",
 		},
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	buttonsArrangement: {
 		display: "block",
-		display: "table-cell",
+		// display: "table-cell",
 		border: "2px solid black",
 		backgroundColor: "#f2f2f2",
 		marginTop: "2rem",
@@ -103,19 +103,19 @@ export default function Social() {
 	const classes = useStyles();
 	const [friendList, setFriendList] = useState([]);
 	const [requestFriendList, setRequestFriendList] = useState([]);
-	const [usernames, setUsernames] = useState([]);
-	const [playerRequesting, setPlayerRequesting] = useState(Cookies.get("user"));
+	// const [usernames, setUsernames] = useState([]);
+	const [playerRequesting] = useState(Cookies.get("user"));
 	const [playerBeingRequested, setPlayerBeingRequested] = useState(null);
-	const [checked, setChecked] = useState([1]);
+	// const [checked, setChecked] = useState([1]);
 	const [friendAnchor, setFriendAnchor] = useState(null);
 	const [requestAnchor, setRequestAnchor] = useState(null);
 	const [current, setCurrent] = useState(null);
-	const history = useHistory();
+	// const history = useHistory();
 
 	const getFriendList = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/friendList?user=" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/friendList?user=" +
 				Cookies.get("user")
 			)
 			.then((res) => {
@@ -126,7 +126,7 @@ export default function Social() {
 	const getRequestFriendList = async () => {
 		await axios
 			.get(
-				"http://localhost:8080/api/player/requestFriendList?user=" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/requestFriendList?user=" +
 				Cookies.get("user")
 			)
 			.then((res) => {
@@ -134,15 +134,15 @@ export default function Social() {
 			});
 	};
 
-	const getAllUsers = async () => {
-		await axios.get("http://localhost:8080/api/player/username").then((res) => {
-			setUsernames(res.data);
-		});
-	};
+	// const getAllUsers = async () => {
+	// 	await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/username").then((res) => {
+	// 		setUsernames(res.data);
+	// 	});
+	// };
 
 	const requestFriend = async () => {
 		await axios.get(
-			"http://localhost:8080/api/player/requestFriend/" +
+			"https://almond-pistachio-back-end.herokuapp.com/api/player/requestFriend/" +
 			playerRequesting +
 			"/" +
 			playerBeingRequested
@@ -152,7 +152,7 @@ export default function Social() {
 	const acceptFriend = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/acceptFriend/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/acceptFriend/" +
 				playerRequesting +
 				"/" +
 				current +
@@ -166,7 +166,7 @@ export default function Social() {
 	const rejectFriend = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/rejectFriend/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/rejectFriend/" +
 				playerRequesting +
 				"/" +
 				current +
@@ -180,7 +180,7 @@ export default function Social() {
 	const removeFriend = async () => {
 		await axios
 			.put(
-				"http://localhost:8080/api/player/removeFriend/" +
+				"https://almond-pistachio-back-end.herokuapp.com/api/player/removeFriend/" +
 				current +
 				"/" +
 				playerRequesting
@@ -238,20 +238,20 @@ export default function Social() {
 		removeFriend();
 	};
 
-	const addFriend = () => { };
+	// const addFriend = () => { };
 
-	const handleToggle = (value) => () => {
-		const currentIndex = checked.indexOf(value);
-		const newChecked = [...checked];
+	// const handleToggle = (value) => () => {
+	// 	const currentIndex = checked.indexOf(value);
+	// 	const newChecked = [...checked];
 
-		if (currentIndex === -1) {
-			newChecked.push(value);
-		} else {
-			newChecked.splice(currentIndex, 1);
-		}
+	// 	if (currentIndex === -1) {
+	// 		newChecked.push(value);
+	// 	} else {
+	// 		newChecked.splice(currentIndex, 1);
+	// 	}
 
-		setChecked(newChecked);
-	};
+	// 	setChecked(newChecked);
+	// };
 
 	useEffect(() => {
 		getRequestFriendList();
@@ -297,33 +297,36 @@ export default function Social() {
 							direction="row"
 						>
 							{requestFriendList.map((value) => {
-								const labelId = `checkbox-list-secondary-label-${value}`;
+								// const labelId = `checkbox-list-secondary-label-${value}`;
 								return (
 									<Grid
 										container
-										justify="flex-start"
+										justify="space-between"
 										alignItems="center"
-										direction="row"
-									>
-										<Grid item xs={0.5}>
-											<AccountCircleRoundedIcon
-												style={{ fontSize: "4rem", color: "green" }}
-											/>
-											<Grid item xs>
-												<Typography align="left">{value}</Typography>
+										direction="row">
+										<Grid item>
+											<Grid
+												container
+												direction="row"
+												justify="center"
+												alignItems="center">
+												<Grid item>
+													<AccountCircleRoundedIcon style={{ fontSize: "3rem", color: "gray" }} />
+												</Grid>
+												<Grid item>
+													<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+														<Typography>{value}</Typography>
+													</Button>
+												</Grid>
 											</Grid>
-
-											<Grid item>
-												<IconButton
-													edge="end"
-													aria-label="more"
-													onClick={(e) => {
-														openRequestMenu(e, value);
-													}}
-												>
-													<MoreHorizIcon />
-												</IconButton>
-											</Grid>
+										</Grid>
+										<Grid item>
+											<IconButton
+												aria-label="more" onClick={(e) => {
+													openRequestMenu(e, value);
+												}}>
+												<MoreHorizIcon />
+											</IconButton>
 										</Grid>
 									</Grid>
 								);
@@ -343,33 +346,35 @@ export default function Social() {
 							container
 							justify="center"
 							alignItems="center"
-							direction="row"
-						>
+							direction="row">
 							{friendList.map((value) => {
-								const labelId = `checkbox-list-secondary-label-${value}`;
 								return (
 									<Grid
 										container
-										justify="flex-start"
+										justify="space-between"
 										alignItems="center"
-										direction="row"
-									>
-										<Grid item xs={0.5}>
-											<AccountCircleRoundedIcon
-												style={{ fontSize: "3rem", color: "green" }}
-											/>
-										</Grid>
-										<Grid item xs>
-											<Typography align="left">{value}</Typography>
+										direction="row">
+										<Grid item>
+											<Grid
+												container
+												direction="row"
+												justify="center"
+												alignItems="center">
+												<Grid item>
+													<AccountCircleRoundedIcon style={{ fontSize: "3rem", color: "gray" }} />
+												</Grid>
+												<Grid item>
+													<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+														<Typography>{value}</Typography>
+													</Button>
+												</Grid>
+											</Grid>
 										</Grid>
 										<Grid item>
 											<IconButton
-												edge="end"
-												aria-label="more"
-												onClick={(e) => {
+												aria-label="more" onClick={(e) => {
 													openFriendMenu(e, value);
-												}}
-											>
+												}}>
 												<MoreHorizIcon />
 											</IconButton>
 										</Grid>

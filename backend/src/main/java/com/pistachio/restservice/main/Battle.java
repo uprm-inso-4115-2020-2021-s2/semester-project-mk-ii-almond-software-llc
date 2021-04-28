@@ -5,14 +5,16 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 
 /**
- * Class that stores an instance of a battle and a relation between the two players involved.
+ * Class that stores an instance of a battle and a relation between the two
+ * players involved.
+ * 
  * @author kevin purcell, Kevin B.
  */
 
 public class Battle {
-    
-    //-[Fields]----------------------------------------------------------
-    
+
+    // -[Fields]----------------------------------------------------------
+
     /**
      * Unique battle ID
      */
@@ -39,7 +41,7 @@ public class Battle {
      */
     private List<Monster> secondPlayerTeam;
 
-    private String victor;
+    private String victor = "";
     private Monster activeMonsterPlayer1;
 
     private Monster activeMonsterPlayer2;
@@ -47,34 +49,111 @@ public class Battle {
     private int player1Teamsize;
     private int player2Teamsize;
 
+    private String player1Action = "";
+    private String player2Action = "";
 
-    //-[Getters/Setters]--------------------------------------------------
+    // -[Getters/Setters]--------------------------------------------------
 
-    public String getBattleID() {return battleID;}
-    public String getFirstPlayerID() {return firstPlayerID;}
-    public List<Monster> getFirstPlayerTeam() {return firstPlayerTeam;}
-    public String getSecondPlayerID() {return secondPlayerID;}
-    public List<Monster> getSecondPlayerTeam() {return secondPlayerTeam;}
-    public String getVictor() {return victor;}
-    public Monster getActiveMonster1() {return activeMonsterPlayer1;}
-    public Monster getActiveMonster2() {return activeMonsterPlayer2;}
-    public int getPlayer1TeamSize() {return player1Teamsize;}
-    public int getPlayer2TeamSize() {return player2Teamsize;}
+    public String getBattleID() {
+        return battleID;
+    }
 
-    public void setBattleID(String battleID) {this.battleID = battleID;}
-    public void setFirstPlayerID(String firstPlayerID) {this.firstPlayerID = firstPlayerID;}
-    public void setFirstPlayerTeam(List<Monster> firstPlayerTeam) {this.firstPlayerTeam = firstPlayerTeam;}
-    public void setSecondPlayerID(String secondPlayerID) {this.secondPlayerID = secondPlayerID;}
-    public void setSecondPlayerTeam(List<Monster> secondPlayerTeam) {this.secondPlayerTeam = secondPlayerTeam;}
-    public void setVictor(String winnerUsername) {this.victor= winnerUsername;}
-    public void setActiveMonster1(Monster monsterToSwitch) {this.activeMonsterPlayer1 = monsterToSwitch;}
-    public void setActiveMonster2(Monster monsterToSwitch) {this.activeMonsterPlayer2 = monsterToSwitch;}
-    public void setPlayer1TeamSize(int newSize) {this.player1Teamsize = newSize;}
-    public void setPlayer2TeamSize(int newSize) {this.player2Teamsize = newSize;}
+    public String getFirstPlayerID() {
+        return firstPlayerID;
+    }
 
-    //-[Constructors]----------------------------------------------------------
+    public List<Monster> getFirstPlayerTeam() {
+        return firstPlayerTeam;
+    }
 
-    public Battle(String battleID, String firstPlayerID, List<Monster> firstPlayerTeam, String secondPlayerID, List<Monster> secondPlayerTeam){
+    public String getSecondPlayerID() {
+        return secondPlayerID;
+    }
+
+    public List<Monster> getSecondPlayerTeam() {
+        return secondPlayerTeam;
+    }
+
+    public String getVictor() {
+        return victor;
+    }
+
+    public Monster getActiveMonster1() {
+        return activeMonsterPlayer1;
+    }
+
+    public Monster getActiveMonster2() {
+        return activeMonsterPlayer2;
+    }
+
+    public int getPlayer1TeamSize() {
+        return player1Teamsize;
+    }
+
+    public int getPlayer2TeamSize() {
+        return player2Teamsize;
+    }
+
+    public String getPlayer1Action() {
+        return player1Action;
+    }
+
+    public String getPlayer2Action() {
+        return player2Action;
+    }
+
+    public void setBattleID(String battleID) {
+        this.battleID = battleID;
+    }
+
+    public void setFirstPlayerID(String firstPlayerID) {
+        this.firstPlayerID = firstPlayerID;
+    }
+
+    public void setFirstPlayerTeam(List<Monster> firstPlayerTeam) {
+        this.firstPlayerTeam = firstPlayerTeam;
+    }
+
+    public void setSecondPlayerID(String secondPlayerID) {
+        this.secondPlayerID = secondPlayerID;
+    }
+
+    public void setSecondPlayerTeam(List<Monster> secondPlayerTeam) {
+        this.secondPlayerTeam = secondPlayerTeam;
+    }
+
+    public void setVictor(String winnerUsername) {
+        this.victor = winnerUsername;
+    }
+
+    public void setActiveMonster1(Monster monsterToSwitch) {
+        this.activeMonsterPlayer1 = monsterToSwitch;
+    }
+
+    public void setActiveMonster2(Monster monsterToSwitch) {
+        this.activeMonsterPlayer2 = monsterToSwitch;
+    }
+
+    public void setPlayer1TeamSize(int newSize) {
+        this.player1Teamsize = newSize;
+    }
+
+    public void setPlayer2TeamSize(int newSize) {
+        this.player2Teamsize = newSize;
+    }
+
+    public void setPlayer1Action(String newAction) {
+        this.player1Action = newAction;
+    }
+
+    public void setPlayer2Action(String newAction) {
+        this.player2Action = newAction;
+    }
+
+    // -[Constructors]----------------------------------------------------------
+
+    public Battle(String battleID, String firstPlayerID, List<Monster> firstPlayerTeam, String secondPlayerID,
+            List<Monster> secondPlayerTeam) {
         this.battleID = battleID;
         this.firstPlayerID = firstPlayerID;
         this.firstPlayerTeam = firstPlayerTeam;
@@ -87,30 +166,35 @@ public class Battle {
         setPlayer2TeamSize(this.secondPlayerTeam.size());
     }
 
-    public Battle(){
+    public Battle() {
         this.firstPlayerID = "";
         this.firstPlayerTeam = new ArrayList<Monster>();
         this.secondPlayerID = "";
         this.secondPlayerTeam = new ArrayList<Monster>();
     }
 
-    //-[Methods]---------------------------------------------------------------
+    // -[Methods]---------------------------------------------------------------
 
     /**
-     * Compares this battle to an object. Returns true if and only if The object is a battle and they share battle IDs
+     * Compares this battle to an object. Returns true if and only if The object is
+     * a battle and they share battle IDs
      */
     @Override
-	public boolean equals(Object obj) {
-		if (this == obj) {return true;}
-		if (!(obj instanceof Battle)) {return false;}
-		Battle other = (Battle) obj;
-		return battleID.equals(other.battleID);
-	}
-    
-	@Override
-	public String toString() {
-		return "Battle [battleID=" + battleID + "]";
-	}
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Battle)) {
+            return false;
+        }
+        Battle other = (Battle) obj;
+        return battleID.equals(other.battleID);
+    }
+
+    @Override
+    public String toString() {
+        return "Battle [battleID=" + battleID + "]";
+    }
 
     /**
      * @return the _ID
@@ -126,5 +210,168 @@ public class Battle {
         this.battleID = Id;
     }
 
+    public void calculateTurnOutcome() {
+        // check that both players have actions
+        if (!player1Action.isEmpty() && !player2Action.isEmpty()) {
+            // Check if player1 is swaping out monster
+            if (player1Action.startsWith("1")) {
+                // change active monster
+                swapMonster(activeMonsterPlayer1, firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))), 1);
+                //setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
 
+                if (player2Action.startsWith("2")) {
+                    setPlayer1Action("");
+                    setPlayer2Action("");
+                }
+
+                // Player 2 will also change monster
+                else if (player2Action.startsWith("1")) {
+                    swapMonster(activeMonsterPlayer2, secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))), 2);
+                    //setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                    setPlayer1Action("");
+                    setPlayer2Action("");
+                }
+                // Player 2 will attack instead
+                else {
+                    calculateDamage(Character.getNumericValue(player2Action.charAt(1)), activeMonsterPlayer2, activeMonsterPlayer1, 1);
+                    setPlayer1Action("");
+                    setPlayer2Action("");
+                }
+            } else if (player2Action.startsWith("1")) {
+                // change active monster
+                swapMonster(activeMonsterPlayer2, secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))), 2);
+                //setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+
+                if (player1Action.startsWith("2")) {
+                    setPlayer1Action("");
+                    setPlayer2Action("");
+                }
+                else{
+                // Player 1 will now attack
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), activeMonsterPlayer1, activeMonsterPlayer2, 2);
+                setPlayer1Action("");
+                setPlayer2Action("");
+                }
+            }
+            // Player skipping
+            else if (player1Action.startsWith("2")) {
+
+                // player 2 will swap
+                swapMonster(activeMonsterPlayer2, secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))), 2);
+                //setActiveMonster2(secondPlayerTeam.get(Character.getNumericValue(player2Action.charAt(1))));
+                setPlayer1Action("");
+                setPlayer2Action("");
+
+            } else if (player2Action.startsWith("2")) {
+                // player 1 will swap
+                swapMonster(activeMonsterPlayer1, firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))), 1);
+                //setActiveMonster1(firstPlayerTeam.get(Character.getNumericValue(player1Action.charAt(1))));
+                setPlayer1Action("");
+                setPlayer2Action("");
+            }
+
+            // both of them are attacking
+            else {
+                calculateDamage(Character.getNumericValue(player1Action.charAt(1)), Character.getNumericValue(player2Action.charAt(1)));
+                setPlayer1Action("");
+                setPlayer2Action("");
+            }
+        }
+    }
+
+    public void calculateDamage(int moveIndexPlayer1, int moveIndexPlayer2) {
+
+        Move player1move = activeMonsterPlayer1.getMoves().get(moveIndexPlayer1);
+        Move player2move = activeMonsterPlayer2.getMoves().get(moveIndexPlayer2);
+
+        double damageThatMonster1DoesToMonster2 = (player1move.getBaseDamage()) * player1move.getCritRate();
+        double damageThatMonster2DoesToMonster1 = (player2move.getBaseDamage()) * player2move.getCritRate();
+
+        // Figure out order to do the damage
+
+        if (activeMonsterPlayer1.getStats().getSpd() < activeMonsterPlayer2.getStats().getSpd()) {
+            applyDamage(damageThatMonster2DoesToMonster1, activeMonsterPlayer1);
+            if (!checkDeath(activeMonsterPlayer1)) {
+                applyDamage(damageThatMonster1DoesToMonster2, activeMonsterPlayer2);
+            } else if (checkDeath(activeMonsterPlayer1)) {
+                setPlayer1TeamSize(player1Teamsize - 1);
+                if (player1Teamsize <= 0) {
+                    setVictor(getSecondPlayerID());
+                }
+            }
+        } else {
+            applyDamage(damageThatMonster1DoesToMonster2, activeMonsterPlayer2);
+            if (!checkDeath(activeMonsterPlayer2)) {
+                applyDamage(damageThatMonster2DoesToMonster1, activeMonsterPlayer1);
+            } else if (checkDeath(activeMonsterPlayer2)) {
+                setPlayer2TeamSize(player2Teamsize - 1);
+                if (player2Teamsize <= 0) {
+                    setVictor(getFirstPlayerID());
+                }
+            }
+        }
+    }
+
+    public void calculateDamage(int moveIndex, Monster attackingMonster, Monster recievingMonster, int defendingPlayer) {
+
+
+        Move moveToUse = attackingMonster.getMoves().get(moveIndex);
+
+        double damageThatAttackerDoesToDefender = (moveToUse.getBaseDamage()) * moveToUse.getCritRate();
+
+        applyDamage(damageThatAttackerDoesToDefender, recievingMonster);
+
+        if(checkDeath(recievingMonster)){
+            if(defendingPlayer == 1){
+                setPlayer1TeamSize(player1Teamsize - 1);
+                if (player1Teamsize <= 0) {
+                    setVictor(getSecondPlayerID());
+                }
+            }else if(defendingPlayer != 1) {
+                setPlayer2TeamSize(player2Teamsize - 1);
+                if (player1Teamsize <= 0) {
+                    setVictor(getFirstPlayerID());
+                }
+            }
+        }
+    }
+
+    public void applyDamage(double damage, Monster punchingBag) {
+        int remainingHealth = punchingBag.getStats().getHp() - (int) damage;
+        if (remainingHealth >= 0){
+            punchingBag.getStats().setHp(remainingHealth);
+        } else if(remainingHealth < 0){
+            punchingBag.getStats().setHp(0);
+        }
+    }
+
+    // @Author: Shastney PEneop Cabra Roldn
+    public boolean checkDeath(Monster victim) {
+        return victim.getStats().getHp() <= 0;
+    }
+
+    public void swapMonster(Monster monsterToChange, Monster monsterToChangeInto, int player){
+        Monster temp;
+        int index;
+        
+        if(player == 1) {
+            index = firstPlayerTeam.indexOf(monsterToChange);
+            temp = activeMonsterPlayer1;
+
+            firstPlayerTeam.set(index, temp);
+
+            setActiveMonster1(monsterToChangeInto);
+
+
+        }
+        else if(player == 2){
+            index = secondPlayerTeam.indexOf(monsterToChange);
+            temp = activeMonsterPlayer2;
+
+            secondPlayerTeam.set(index, temp);
+            
+            setActiveMonster2(monsterToChangeInto);
+        }
+
+    }
 }

@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-import { Typography, Grid, TextField, Button } from "@material-ui/core";
+import React, { useState } from "react";
+import { Grid, TextField, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";

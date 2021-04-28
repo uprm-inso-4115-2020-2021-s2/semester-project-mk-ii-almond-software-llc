@@ -232,7 +232,9 @@ public class Player {
 	 * Clears the pass of this user in memory. <b>MUST BE USED BEFORE SENDING PLAYER
 	 * THROUGH NETWORK</b>
 	 */
-	public void clearPass() {pass = "";}
+	public void clearPass() {
+		pass = "";
+	}
 
 	/**
 	 * Adds given player P to the pending friends list of this player. Player P
@@ -252,32 +254,40 @@ public class Player {
 
 	/**
 	 * Adds a player object to the list of players in the user's friends list
+	 * 
 	 * @param p
 	 */
 
-	public void addFriend(Player p) {this.confirmedFriends.add(p.getUser());}
+	public void addFriend(Player p) {
+		this.confirmedFriends.add(p.getUser());
+	}
 
 	/**
 	 * Accepts friendship request from the given player P (Who <b>must</b> be in the
 	 * pending friends list). Adds this player to Player P's confirmed friends list
 	 * 
 	 * @param p
-	 * @return RespondToFriendshipRequest(p,false) 
-	*/
-	public boolean acceptFriendship(Player p) {return respondToFriendshipRequest(p, false);}
-	
+	 * @return RespondToFriendshipRequest(p,false)
+	 */
+	public boolean acceptFriendship(Player p) {
+		return respondToFriendshipRequest(p, false);
+	}
+
 	/**
 	 * Rejects friendship request from the given player P (Who <b>must</b> be in the
 	 * pending friends list).
+	 * 
 	 * @param p
 	 * @return RespondToFriendshipRequest(p,true)
 	 */
-	public boolean rejectFriendship(Player p) {return respondToFriendshipRequest(p, true);}
-	
-	
+	public boolean rejectFriendship(Player p) {
+		return respondToFriendshipRequest(p, true);
+	}
+
 	/**
-	 * Responds to a friendship request from the given player P (Who <b>must</b> be in the
-	 * pending friends list). Adds this player to Player P's confirmed friends list
+	 * Responds to a friendship request from the given player P (Who <b>must</b> be
+	 * in the pending friends list). Adds this player to Player P's confirmed
+	 * friends list
 	 * 
 	 * @return True if the specified command was able to be done.
 	 * 
@@ -285,21 +295,23 @@ public class Player {
 	 * @param reject Whether or not to reject the friendship request
 	 */
 	public boolean respondToFriendshipRequest(Player p, boolean reject) {
-		if (!friendRequests.contains(p.getUser())) {return false;}
-		else if (friendRequests.contains(p.getUser()) && !reject) {
+		if (!friendRequests.contains(p.getUser())) {
+			return false;
+		} else if (friendRequests.contains(p.getUser()) && !reject) {
 			if (p.friendRequests.contains(this.getUser())) {
 				p.friendRequests.remove(this.getUser());
 			}
 			this.confirmedFriends.add(p.getUser());
 			this.friendRequests.remove(p.getUser());
 			return true;
-
 		}
 
 		else if (friendRequests.contains(p.getUser()) && reject) {
 			this.friendRequests.remove(p.getUser());
 			return false;
-		} else {return false;}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -332,7 +344,7 @@ public class Player {
 	 * @param m
 	 */
 	public void addMonster(Monster m) {
-		// TODO: actually code this.
+		this.collections.add(m.getName());
 	}
 
 	/**

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Pistachio from "./pistachio.png";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -60,11 +60,13 @@ export default function SignUp() {
   let [userExists, setUserExists] = useState(false);
   let [password, setPassword] = useState();
   let [passwordConfirmation, setPasswordConfirmation] = useState();
+  let [passwordEmpty, setPasswordEmpty] = useState()
 
   const verifyRegister = async () => {
     await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/getUser?user=" + user).then((res) => {
       setUserExists(res.data !== "")
-      if (res.data === "") {
+      setPasswordEmpty(password === "")
+      if (res.data === "" && !passwordEmpty) {
         axios({
           method: "post",
           url: "https://almond-pistachio-back-end.herokuapp.com/api/player/add",
@@ -94,7 +96,7 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <img src={Pistachio} className={classes.image} />
+        <img src={Pistachio} className={classes.image} alt="Pistachio logo" />
         <Typography component="h1" variant="h5">
           Register
         </Typography>

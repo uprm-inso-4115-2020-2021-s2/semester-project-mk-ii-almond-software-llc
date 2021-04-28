@@ -63,7 +63,7 @@ export default function Login() {
 
 	const verifyLogin = async () => {
 		await axios
-			.get("http://localhost:8080/api/player/getUser?user=" + user)
+			.get("https://almond-pistachio-back-end.herokuapp.com/api/player/getUser?user=" + user)
 			.then((res) => {
 				setValidLogin(res.data !== "");
 				if (res.data !== "") {
@@ -92,13 +92,13 @@ export default function Login() {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [history]);
 
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
-				<img src={Pistachio} className={classes.image} />
+				<img src={Pistachio} className={classes.image} alt="Pistachio logo" />
 				<Typography component="h1" variant="h5">
 					Login
 				</Typography>

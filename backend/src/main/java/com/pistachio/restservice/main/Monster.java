@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.data.annotation.Id;
 
 /**
- * Class that stores an instance of a monster along with their respect moveset and stats.
+ * Class that stores an instance of a monster along with their respect moveset
+ * and stats.
+ * 
  * @author jose Bermudez Kevin B.
  */
 
@@ -18,15 +20,13 @@ public class Monster {
 
     private ArrayList<Move> moves;
 
-    public Monster() 
-    {
+    public Monster() {
         this.name = "";
         this.stats = new Stats();
-        this.moves = new ArrayList<Move>(3) ;
+        this.moves = new ArrayList<Move>(3);
     }
 
-    public Monster(String Name, Stats Stats, ArrayList<Move> Moves) 
-    {
+    public Monster(String Name, Stats Stats, ArrayList<Move> Moves) {
         this.name = Name;
         this.stats = Stats;
         this.moves = Moves;
@@ -74,38 +74,36 @@ public class Monster {
         this.moves = moves;
     }
 
-	@Override
-	public String toString() {
-		return "Monster [name=" + name + "]";
-	}
+    @Override
+    public String toString() {
+        return "Monster [name=" + name + "]";
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Monster)) {
-			return false;
-		}
-		Monster other = (Monster) obj;
-		if (name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!name.equals(other.name)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Monster)) {
+            return false;
+        }
+        Monster other = (Monster) obj;
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
 
-    
-    
 }
