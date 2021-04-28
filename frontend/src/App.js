@@ -14,7 +14,7 @@ import {
 	Checkbox,
 	Divider,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 // import CloseIcon from "@material-ui/icons/Close";
@@ -35,7 +35,8 @@ import Loot from "./components/loot/loot";
 import useWindowDimensions from "./components/windowDimensions/useWindowDimensions";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
-import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
+import ImageLoader from './components/imageLoader/imageLoader.js';
+// import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import axios from "axios";
 // import BattleMenu from "../src/components/battle/battleMenu.js";
 
@@ -118,6 +119,12 @@ const useStyles = makeStyles((theme) => ({
 	//   marginLeft:"76rem"
 	// },
 }));
+
+const PistachioTabs = withStyles({
+	indicator: {
+		backgroundColor: 'white',
+	}
+})((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
 function not(a, b) {
 	return a.filter((value) => b.indexOf(value) === -1);
@@ -314,7 +321,7 @@ export default function App() {
 				<AppBar
 					position="static"
 					elevation={3}
-					style={{ backgroundColor: "green" }}
+					style={{ backgroundColor: "#4A7562" }}
 				>
 					<Toolbar variant="dense" style={{ justifyContent: "center" }}>
 						{/* <IconButton
@@ -325,7 +332,7 @@ export default function App() {
 						>
 							<AssignmentIcon fontSize="small" />
 						</IconButton> */}
-						<Tabs value={value} onChange={handleChange}>
+						<PistachioTabs value={value} onChange={handleChange} inkBarStyle={{ backgroundColor: 'gray' }}>
 							<Tab
 								icon={<PeopleIcon fontSize="small" />}
 								label="Social"
@@ -350,7 +357,7 @@ export default function App() {
 								disabled={matched}
 								{...a11yProps(3)}
 							/>
-						</Tabs>
+						</PistachioTabs>
 						<IconButton
 							edge="end"
 							className={classes.logoutButton}
@@ -385,7 +392,7 @@ export default function App() {
 				</TabPanel>
 
 				<TabPanel value={value} index={3}>
-					<Loot />
+					<Loot appHeight={0.85 * appHeight - 0.065 * appHeight} />
 				</TabPanel>
 			</div>
 
@@ -393,95 +400,96 @@ export default function App() {
 				<AppBar position="fixed" color="primary" className={classes.appBar}>
 					<Grid
 						container
-						alignItems="center"
-						justify="center"
 						direction="row"
-						style={{ height: 0.15 * appHeight, background: "green" }}
-					>
-						<Grid container item xs={12} spacing={3}>
-							{playerTeam.map((e, i) => {
-								return (
-									<Grid item xs={4} key={i}>
-										<AccountCircleRoundedIcon style={{ fontSize: "2.5rem" }} />
-										<Typography className={classes.names}>{e}</Typography>
-									</Grid>
-								);
-							})}
-							<Grid container alignItem="center" justify="center">
-								<Button
-									variant="contained"
-									className={classes.changeTeamButton}
-									size="small"
-									onClick={openModal}
-								>
-									Change team
-								</Button>
-							</Grid>
-							<Modal
-								open={open}
-								onClose={closeModal}
-								className={classes.modal}
-								contentLabel="Example Modal"
-							>
-								<Card className={classes.card}>
+						justify="space-around"
+						alignItems="center"
+						style={{ height: 0.15 * appHeight, background: '#4A7562' }}>
+						{playerTeam.map((e, i) => {
+							return (
+								<Grid item key={i}>
 									<Grid
 										container
-										spacing={2}
+										direction="column"
 										justify="center"
-										alignItems="center"
-										className={classes.root}
-									>
+										alignItems="center">
 										<Grid item>
-											{customList("Monster Collection", monsterCollection)}
+											<ImageLoader name={e} side="icon" />
 										</Grid>
 										<Grid item>
-											<Grid
-												container
-												direction="column"
-												alignItems="center"
-												justify="center"
-											>
-												<Button
-													variant="outlined"
-													size="small"
-													className={classes.button}
-													onClick={handleCheckedPlayerTeam}
-													disabled={
-														monsterCollectionChecked.length === 0 ||
-														monsterCollectionChecked.length > maxCapacity ||
-														monsterCollectionChecked.length +
-														playerTeam.length >
-														maxCapacity ||
-														playerTeam.length === maxCapacity ||
-														disabled
-													}
-													aria-label="move selected right"
-												>
-													Update Team
-												</Button>
-												<Button
-													variant="outlined"
-													size="small"
-													className={classes.button}
-													onClick={handleCheckedMonsterCollection}
-													disabled={playerTeamChecked.length === 0}
-													aria-label="move selected left"
-												>
-													Remove from Team
-												</Button>
-											</Grid>
+											<Button size="small" variant="contained" color="primary"
+												style={{ backgroundColor: 'gray', fontSize: "5px" }}
+												onClick={openModal}>
+												<Typography style={{ fontSize: "15px", color: 'white', fontWeight: 'bold' }}>{e}</Typography>
+											</Button>
 										</Grid>
-										<Grid item>{customList("Player Team", playerTeam)}</Grid>
 									</Grid>
-								</Card>
-							</Modal>
-						</Grid>
+								</Grid>
+							);
+						})}
 					</Grid>
 				</AppBar>
 			</div>
+
+			<div>
+				<Modal
+					open={open}
+					onClose={closeModal}
+					className={classes.modal}
+					contentLabel="Example Modal"
+				>
+					<Card className={classes.card}>
+						<Grid
+							container
+							spacing={2}
+							justify="center"
+							alignItems="center"
+							className={classes.root}
+						>
+							<Grid item>
+								{customList("Monster Collection", monsterCollection)}
+							</Grid>
+							<Grid item>
+								<Grid
+									container
+									direction="column"
+									alignItems="center"
+									justify="center"
+								>
+									<Button
+										variant="outlined"
+										size="small"
+										className={classes.button}
+										onClick={handleCheckedPlayerTeam}
+										disabled={
+											monsterCollectionChecked.length === 0 ||
+											monsterCollectionChecked.length > maxCapacity ||
+											monsterCollectionChecked.length +
+											playerTeam.length >
+											maxCapacity ||
+											playerTeam.length === maxCapacity ||
+											disabled
+										}
+										aria-label="move selected right"
+									>
+										Update Team
+												</Button>
+									<Button
+										variant="outlined"
+										size="small"
+										className={classes.button}
+										onClick={handleCheckedMonsterCollection}
+										disabled={playerTeamChecked.length === 0}
+										aria-label="move selected left"
+									>
+										Remove from Team
+												</Button>
+								</Grid>
+							</Grid>
+							<Grid item>{customList("Player Team", playerTeam)}</Grid>
+						</Grid>
+					</Card>
+				</Modal>
+			</div>
 		</div>
 	);
-}
-
-{
 }

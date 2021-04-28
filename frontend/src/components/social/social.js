@@ -28,7 +28,7 @@ import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 const useStyles = makeStyles((theme) => ({
 	add: {
 		margin: theme.spacing(3, 0, 2),
-		backgroundColor: "green",
+		backgroundColor: "#4A7562",
 		"&:hover": {
 			backgroundColor: "darkgreen",
 		},
@@ -301,24 +301,39 @@ export default function Social() {
 								return (
 									<Grid
 										container
-										justify="flex-start"
+										justify="space-between"
 										alignItems="center"
-										direction="row"
-									>
-										<Grid item xs={0.5}>
-											<AccountCircleRoundedIcon
-												style={{ fontSize: "4rem", color: "green" }}
-											/>
-											<Grid item xs>
-												<Typography align="left">{value}</Typography>
+										direction="row">
+										<Grid item
+											xs={4}
+											container
+											direction="row"
+											justify="center"
+											alignItems="center">
+											<Grid item xs={6}>
+												<AccountCircleRoundedIcon
+													style={{ fontSize: "3rem", color: "gray" }}
+												/>
 											</Grid>
-
+											<Grid item xs={6}>
+												<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+													<Typography>{value}</Typography>
+												</Button>
+											</Grid>
+										</Grid>
+										<Grid
+											item
+											xs={6}
+											container
+											direction="row"
+											justify="flex-end"
+											alignItems="center">
 											<Grid item>
 												<IconButton
-													edge="end"
+													// edge="end"
 													aria-label="more"
 													onClick={(e) => {
-														openRequestMenu(e, value);
+														openFriendMenu(e, value);
 													}}
 												>
 													<MoreHorizIcon />
@@ -343,33 +358,35 @@ export default function Social() {
 							container
 							justify="center"
 							alignItems="center"
-							direction="row"
-						>
+							direction="row">
 							{friendList.map((value) => {
-								// const labelId = `checkbox-list-secondary-label-${value}`;
 								return (
 									<Grid
 										container
-										justify="flex-start"
+										justify="space-between"
 										alignItems="center"
-										direction="row"
-									>
-										<Grid item xs={0.5}>
-											<AccountCircleRoundedIcon
-												style={{ fontSize: "3rem", color: "green" }}
-											/>
-										</Grid>
-										<Grid item xs>
-											<Typography align="left">{value}</Typography>
+										direction="row">
+										<Grid item>
+											<Grid
+												container
+												direction="row"
+												justify="center"
+												alignItems="center">
+												<Grid item>
+													<AccountCircleRoundedIcon style={{ fontSize: "3rem", color: "gray" }} />
+												</Grid>
+												<Grid item>
+													<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+														<Typography>{value}</Typography>
+													</Button>
+												</Grid>
+											</Grid>
 										</Grid>
 										<Grid item>
 											<IconButton
-												edge="end"
-												aria-label="more"
-												onClick={(e) => {
+												aria-label="more" onClick={(e) => {
 													openFriendMenu(e, value);
-												}}
-											>
+												}}>
 												<MoreHorizIcon />
 											</IconButton>
 										</Grid>

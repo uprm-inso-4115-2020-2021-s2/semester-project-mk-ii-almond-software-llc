@@ -8,7 +8,7 @@ import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   matchmaking: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: "gray",
+    backgroundColor: "#4A7562",
     "&:hover": {
       backgroundColor: "darkgray",
     },
@@ -69,7 +69,7 @@ export default function Battle(props) {
             style={{ justifyContent: "center", height: props.appHeight }}
           >
             <Grid item>
-              <div style={{ backgroundColor: "green", borderRadius: 100 }}>
+              <div style={{ backgroundColor: "gray", borderRadius: 100 }}>
                 <IconButton
                   aria-label="search"
                   color="primary"

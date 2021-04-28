@@ -1,11 +1,11 @@
 import { React, } from "react";
-import { Grid, Button, makeStyles, CircularProgress } from "@material-ui/core";
-
+import { Grid, Button, makeStyles, CircularProgress, Typography } from "@material-ui/core";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
 	back: {
 		margin: theme.spacing(3, 0, 2),
-		backgroundColor: "green",
+		backgroundColor: "#4A7562",
 		"&:hover": {
 			backgroundColor: "darkgreen",
 		},
@@ -51,23 +51,41 @@ export default function BattleLoading(props) {
 
 	const classes = useStyles();
 
+	const deleteBattle = async () => {
+        await axios.delete(
+            "http://localhost:8080/api/battle/" + props.battleID
+        );
+    };
+
 	return (
 		<div>
-			<Grid container justify="flex-start" alignItems="center">
-				<Button
-					className={classes.back}
-					variant="contained"
-					color="primary"
-					onClick={() => {
-						props.leaveRoom();
-					}}
-				>
-					Back
-						</Button>
+			<Grid
+				container
+				justify="center"
+				alignItems="center"
+				direction="column"
+				style={{ justifyContent: "center", height: props.appHeight }}>
+				<Grid item>
+					<Typography variant="h5" component="h5" style={{ padding: '20px' }}>SEARCHING</Typography>
+				</Grid>
+				<Grid item >
+					<CircularProgress />
+				</Grid>
+				<Grid item>
+					<Button
+						className={classes.back}
+						variant="contained"
+						color="primary"
+						onClick={() => {
+							deleteBattle();
+							props.leaveRoom();
+						}}
+					>
+						<Typography>Cancel</Typography>
+					</Button>
+				</Grid>
 			</Grid>
-			<Grid item >
-				<CircularProgress />
-			</Grid>
+
 		</div>
 	);
 }

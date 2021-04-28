@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
 	Grid,
 	Typography,
-	// Button,
+	Button,
 	// List,
 	// Card,
 	// CardHeader,
@@ -14,6 +14,7 @@ import {
 	// Divider,
 } from "@material-ui/core";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
+import ImageLoader from '../imageLoader/imageLoader.js';
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -27,19 +28,19 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "space-around",
 		overflow: "hidden",
 		// backgroundColor: theme.palette.background.paper,
-		padding: theme.spacing(2),
+		// padding: theme.spacing(2),
 	},
 	names: {
 		// borderStyle: "solid",
 		maxWidth: "auto",
 		[theme.breakpoints.between("300", "700")]: {
-			fontSize: "14px",
+			fontSize: "12px",
 		},
 		[theme.breakpoints.between("710", "750")]: {
-			fontSize: "18px",
+			fontSize: "16px",
 		},
 		[theme.breakpoints.between("768", "lg")]: {
-			fontSize: "22px",
+			fontSize: "20px",
 		},
 	},
 }));
@@ -52,7 +53,7 @@ export default function Main() {
 		await axios
 			.get(
 				"http://localhost:8080/api/player/getPlayerMonsterCollection/" +
-					Cookies.get("user")
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setMonsterCollection(res.data);
@@ -81,10 +82,12 @@ export default function Main() {
 								alignItems="center"
 								justify="center"
 							>
-								<AccountCircleRoundedIcon
-									style={{ fontSize: "5rem", color: "green" }}
-								/>
-								<Typography className={classes.names}>{e}</Typography>
+								<div style={{padding: '10px'}}>
+									<ImageLoader name={e} side="icon" />
+								</div>
+								<Button size="small" variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+									<Typography className={classes.names}>{e}</Typography>
+								</Button>
 							</Grid>
 						</Grid>
 					);

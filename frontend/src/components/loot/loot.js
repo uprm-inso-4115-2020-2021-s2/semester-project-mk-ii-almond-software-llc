@@ -26,12 +26,12 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function Loot() {
+export default function Loot(props) {
 	const classes = useStyles();
 	// const [lootCrates, setLootCrates] = useState([]);
 	const [shopCrates, setShopCrates] = useState([]);
 	const [prize, setPrize] = useState();
-	const normalCrateColor = "grey";
+	const normalCrateColor = "gray";
 	const rareCrateColor = "blue";
 	const epicCrateColor = "purple";
 	const [currentLoot, setCurrentLoot] = useState(Cookies.get("Crate"));
@@ -54,9 +54,9 @@ export default function Loot() {
 		await axios
 			.put(
 				"http://localhost:8080/api/player/addMoney/" +
-					Cookies.get("user") +
-					"/" +
-					-cratePrice
+				Cookies.get("user") +
+				"/" +
+				-cratePrice
 			)
 			.then((res) => {
 				setPistachios(res.data.pistachios);
@@ -75,9 +75,9 @@ export default function Loot() {
 		await axios
 			.get(
 				"http://localhost:8080/api/lootbox/open/" +
-					currentLoot +
-					"/" +
-					Cookies.get("user")
+				currentLoot +
+				"/" +
+				Cookies.get("user")
 			)
 			.then((res) => {
 				setPrize(res.data.name);
@@ -139,199 +139,145 @@ export default function Loot() {
 
 	return (
 		<div>
-			{/* --------------------------------------------------------------------------------------------------------------------- */}
-			<Grid container justify="center" alignItems="center">
-				<Card className={classes.root}>
-					<CardContent>
-						{/* <Grid item alignItems="center"> */}
-						<Typography className={classes.pistachioText}>
-							Pistachios: {pistachios}
-						</Typography>
-						{/* </Grid> */}
-					</CardContent>
-				</Card>
-			</Grid>
 			<Grid
 				container
-				justify="space-around"
-				spacing={6}
 				alignItems="center"
-				style={{ paddingTop: "0.5rem" }}
+				justify="center"
+				direction="column"
+				style={{ justifyContent: "center", height: props.appHeight }}
 			>
-				<Grid item xs={12} style={{ fontSize: "2rem" }}>
-					<IconButton onClick={handleConfirm}>
-						<Grid item xs={12}>
-							{currentLoot !== "" ? (
-								<div>
-									<AllInboxIcon
-										style={{
-											fontSize: "20rem",
-											color: handleLootCrateColor(currentLoot),
-										}}
-									/>
-									<Grid item>
-										<Typography variant="h3" alignItems="center">
-											{currentLoot}
-										</Typography>
-									</Grid>
-								</div>
-							) : (
-								<Typography variant="h4">No crate selected.</Typography>
-							)}
-						</Grid>
-					</IconButton>
-					<Grid item xs={12}>
-						{}
-					</Grid>
-				</Grid>
-				<Grid item xs={6}>
-					<Button
-						onClick={handleShop}
-						variant="contained"
-						style={{
-							backgroundColor: "green",
-							color: "white",
-							width: "9rem",
-							height: "3rem",
-							fontSize: "1.5rem",
-						}}
-					>
-						Shop
+				{/* --------------------------------------------------------------------------------------------------------------------- */}
+				<Grid item>
+					<Button variant="contained" color="primary" style={{ backgroundColor: '#4A7562' }}>
+						<Typography variant="h5" component="h5">
+							Pistachios: {pistachios}
+						</Typography>
 					</Button>
 				</Grid>
-				<Dialog
-					onClose={handleShop}
-					open={shop}
+				<Grid
+					item
+					container
 					justify="space-around"
+					spacing={6}
 					alignItems="center"
-					style={{ textAlign: "center", overflowY: "hidden" }}
+					style={{ paddingTop: "0.5rem" }}
 				>
-					<Grid
-						container
-						style={{
-							height: "18rem",
-							overflowY: "scroll",
-							scrollbarWidth: "none",
-							msOverflowStyle: "none",
-						}}
-					>
-						{shopCrates.map((crate) => {
-							return (
-								<Grid item xs={6}>
-									<Grid item>
-										<IconButton
-											onClick={() => {
-												if (
-													currentLoot === "" &&
-													pistachios - cratePrice >= 0
-												) {
-													setCurrentLoot(crate.name);
-													Cookies.set("Crate", crate.name);
-													handleCratePrices(crate.name);
-													setShop(!shop);
-												} else {
-													setShop(!shop);
-												}
+					<Grid item xs={12} style={{ fontSize: "2rem" }}>
+						<IconButton onClick={handleConfirm}>
+							<Grid item xs={12}>
+								{currentLoot !== "" ? (
+									<div>
+										<AllInboxIcon
+											style={{
+												fontSize: "15rem",
+												color: handleLootCrateColor(currentLoot),
 											}}
-										>
-											<AllInboxIcon
-												style={{
-													fontSize: "5rem",
-													color: handleLootCrateColor(crate.name),
+										/>
+										<Grid item>
+											<Typography variant="h3" alignItems="center">
+												{currentLoot}
+											</Typography>
+										</Grid>
+									</div>
+								) : (
+									<Typography variant="h4">No crate selected.</Typography>
+								)}
+							</Grid>
+						</IconButton>
+						<Grid item xs={12} />
+					</Grid>
+					<Grid item xs={6}>
+						<Button
+							onClick={handleShop}
+							variant="contained"
+							style={{
+								backgroundColor: "#4A7562",
+								color: "white",
+								width: "9rem",
+								height: "3rem",
+								fontSize: "1.5rem",
+							}}
+						>
+							Shop
+					</Button>
+					</Grid>
+					<Dialog
+						onClose={handleShop}
+						open={shop}
+						justify="space-around"
+						alignItems="center"
+						style={{ textAlign: "center", overflowY: "hidden" }}
+					>
+						<Grid
+							container
+							style={{
+								height: "18rem",
+								overflowY: "scroll",
+								scrollbarWidth: "none",
+								msOverflowStyle: "none",
+							}}
+						>
+							{shopCrates.map((crate) => {
+								return (
+									<Grid item xs={6}>
+										<Grid item>
+											<IconButton
+												onClick={() => {
+													if (
+														currentLoot === "" &&
+														pistachios - cratePrice >= 0
+													) {
+														setCurrentLoot(crate.name);
+														Cookies.set("Crate", crate.name);
+														handleCratePrices(crate.name);
+														setShop(!shop);
+													} else {
+														setShop(!shop);
+													}
 												}}
-											/>
-										</IconButton>
+											>
+												<AllInboxIcon
+													style={{
+														fontSize: "5rem",
+														color: handleLootCrateColor(crate.name),
+													}}
+												/>
+											</IconButton>
+										</Grid>
+										<Grid item>
+											<Typography alignItems="center">{crate.name}</Typography>
+										</Grid>
 									</Grid>
-									<Grid item>
-										<Typography alignItems="center">{crate.name}</Typography>
-									</Grid>
-								</Grid>
-							);
-						})}
-					</Grid>
-				</Dialog>
-				<Dialog onClose={handleConfirm} open={confirm}>
-					<Grid container>
-						<Grid item style={{ padding: "2rem" }}>
-							Are you sure you want to open {currentLoot}?
+								);
+							})}
 						</Grid>
-						<DialogActions>
-							<Button
-								onClick={() => {
-									handleConfirm();
-									handleResult();
-								}}
-							>
-								Yes
+					</Dialog>
+					<Dialog onClose={handleConfirm} open={confirm}>
+						<Grid container>
+							<Grid item style={{ padding: "2rem" }}>
+								Are you sure you want to open {currentLoot}?
+						</Grid>
+							<DialogActions>
+								<Button
+									onClick={() => {
+										handleConfirm();
+										handleResult();
+									}}
+								>
+									Yes
 							</Button>
-							<Button onClick={handleConfirm}>No</Button>
-						</DialogActions>
-					</Grid>
-				</Dialog>
-				<Dialog onClose={handleResult} open={result}>
-					<Grid container style={{ padding: "2rem" }}>
-						<Grid item>Congratulations, You receive {prize}.</Grid>
-					</Grid>
-				</Dialog>
+								<Button onClick={handleConfirm}>No</Button>
+							</DialogActions>
+						</Grid>
+					</Dialog>
+					<Dialog onClose={handleResult} open={result}>
+						<Grid container style={{ padding: "2rem" }}>
+							<Grid item>Congratulations, You receive {prize}.</Grid>
+						</Grid>
+					</Dialog>
+				</Grid>
+				{/* --------------------------------------------------------------------------------------------------------------------- */}
 			</Grid>
-
-			{/* --------------------------------------------------------------------------------------------------------------------- */}
-
-			{/* <Grid container justify="space-around" spacing={6} alignItems="center">
-                <Grid item xs={12} style={{ fontSize: "2rem" }}>
-                    <IconButton onClick={handleConfirm}>
-                        <Grid item xs={12}>
-                            <AllInboxIcon style={{ fontSize: "20rem", color: currentLoot.color }} />
-                        </Grid>
-                    </IconButton>
-                    <Grid item xs={12}>
-                        {currentLoot.name}
-                    </Grid>
-                </Grid>
-                <Grid container item xs={12} style={{ height: "18rem", overflowY: "scroll", marginLeft: "1rem" }}>
-                    {lootCrates.map((crate) => {
-                        return (
-                            <Grid item xs={4} >
-                                <IconButton onClick={() => { setCurrentLoot({ color: crate.color, name: crate.name }) }}>
-
-                                    <AllInboxIcon style={{ fontSize: "5rem", color: crate.color }} />
-                                </IconButton>
-                                <Grid item>
-                                    {crate.name}
-                                </Grid>
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-                <Dialog onClose={handleConfirm} open={confirm}>
-                        <Grid container>
-                            <Grid item style={{ padding: "2rem" }}>
-                                Are you sure you want to open {currentLoot.name}?
-                            </Grid>
-                            <DialogActions>
-                                <Button onClick={() => {
-                                    handleConfirm()
-                                    handleResult()
-                                }} >
-                                    Yes
-                                    </Button>
-                                <Button onClick={handleConfirm}>
-                                    No
-                                    </Button>
-                            </DialogActions>
-
-                        </Grid>
-                    </Dialog>
-                    <Dialog onClose={handleResult} open={result}>
-                        <Grid container style={{ padding: "2rem" }}>
-                            <Grid item>
-                                Congratulations, you opened {currentLoot.name}! You receive nothing.
-                            </Grid>
-                        </Grid>
-                    </Dialog>
-            </Grid> */}
-
-			{/* --------------------------------------------------------------------------------------------------------------------- */}
 		</div>
 	);
 }

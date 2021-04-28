@@ -2,19 +2,11 @@ import { React } from "react";
 import {
 	Typography,
 	Grid,
-	// Button,
 	makeStyles,
-	// CircularProgress,
 	LinearProgress,
 	Box,
-	// Avatar,
 } from "@material-ui/core";
-// import SockJsClient from "react-stomp";
 import PropTypes from "prop-types";
-// import BattleMenu from "./battleMenu";
-// import Cookies from "js-cookie";
-// import axios from "axios";
-// import enemyFront from '../../assets/monsters/AMPhibian/front.png';
 import ImageLoader from '../imageLoader/imageLoader.js';
 
 function LinearProgressWithLabel(props) {
@@ -22,7 +14,8 @@ function LinearProgressWithLabel(props) {
 		<Box display="flex" alignItems="center">
 			<Box width="100%" mr={1}>
 				<LinearProgress
-					style={{ height: "10px", borderRadius: "10px" }}
+					color="green"
+					style={{ height: "10px", borderRadius: "10px", backgroundColor: 'green' }}
 					variant="determinate"
 					{...props}
 				/>

@@ -60,11 +60,13 @@ export default function SignUp() {
   let [userExists, setUserExists] = useState(false);
   let [password, setPassword] = useState();
   let [passwordConfirmation, setPasswordConfirmation] = useState();
+  let [passwordEmpty, setPasswordEmpty] = useState()
 
   const verifyRegister = async () => {
     await axios.get("https://almond-pistachio-back-end.herokuapp.com/api/player/getUser?user=" + user).then((res) => {
       setUserExists(res.data !== "")
-      if (res.data === "") {
+      setPasswordEmpty(password === "")
+      if (res.data === "" && !passwordEmpty) {
         axios({
           method: "post",
           url: "https://almond-pistachio-back-end.herokuapp.com/api/player/add",

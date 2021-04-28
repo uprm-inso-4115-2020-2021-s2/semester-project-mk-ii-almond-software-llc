@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: '10px'
 	},
 	buttonMenuButtons: {
-		backgroundColor: "white",
+		backgroundColor: "#4A7562",
 	},
 }));
 
@@ -280,7 +280,7 @@ export default function BattleSystem(props) {
 	return (
 		<div>
 			{showLoading ? (
-				<BattleLoading leaveRoom={leaveRoom} />
+				<BattleLoading leaveRoom={leaveRoom} appHeight={props.appHeight} />
 			) : (
 				<div>
 					<Grid
@@ -295,7 +295,9 @@ export default function BattleSystem(props) {
 									battle={battle}
 									messages={messages}
 								/> */}
-							<Typography>User: {player}</Typography>
+							<Button variant="contained" color="primary" className={classes.buttonMenuButtons}>
+								<Typography>Opponent: {player === battle.firstPlayerID ? battle.secondPlayerID : battle.firstPlayerID}</Typography>
+							</Button>
 						</Grid>
 						<Grid item>
 							<BattleInfo
@@ -303,75 +305,59 @@ export default function BattleSystem(props) {
 								playerMonster={playerMonster}
 							/>
 						</Grid>
-						<Grid item container style={{
-							width: props.appWidth,
-							height: props.appHeight * 0.30,
-							backgroundColor: "#f2f2f2",
-							borderRadius: '10px',
-							padding: '15px',
-						}}>
+						<Grid
+							item
+							container
+							alignItems="center"
+							style={{
+								width: props.appWidth,
+								height: props.appHeight * 0.30,
+								backgroundColor: "#f2f2f2",
+								borderRadius: '10px',
+								padding: '15px',
+							}}>
 							{showMenu ?
 								<Grid item container spacing={4}>
 									<Grid item xs={6}>
 										<Button className={classes.buttonMenuButtons} onClick={toggleMoves}>
-											<Grid container direction="column">
-												<Grid item>
-													Moves
-												</Grid>
-												<Grid item>
-													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Attacks!</Typography>
-												</Grid>
-											</Grid>
+											<Typography style={{ color: 'white' }}>Moves</Typography>
 										</Button>
+										<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Attacks!</Typography>
 									</Grid>
 									<Grid item xs={6}>
 										<Button className={classes.buttonMenuButtons} onClick={toggleTeam}>
-											<Grid container direction="column">
-												<Grid item>
-													Team
-												</Grid>
-												<Grid item>
-													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Mini-Army?</Typography>
-												</Grid>
-											</Grid>
+											<Typography style={{ color: 'white' }}>Team</Typography>
 										</Button>
+										<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Mini-army?</Typography>
 									</Grid>
 									<Grid item xs={12}>
 										<Button className={classes.buttonMenuButtons} onClick={forfeitBattle}>
-											<Grid container direction="column">
-												<Grid item>
-													Forfeit
-												</Grid>
-												<Grid item>
-													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Next time...</Typography>
-												</Grid>
-											</Grid>
+											<Typography style={{ color: 'white' }}>Forfeit</Typography>
 										</Button>
+										<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Next time...</Typography>
 									</Grid>
 								</Grid> : <div />}
 
 							{showMoves ?
 								<Grid item container spacing={4}>
 									<Grid item xs={6}>
-										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>
+											<Typography style={{ color: 'white' }}>Back</Typography>
+										</Button>
 									</Grid>
 									{playerMoves.map((e, i) => {
 										return (
-											<Grid item xs={6} key={i} container direction="row" justify="center" alignContent="center">
+											<Grid item xs={6} key={i} >
 												<Button className={classes.buttonMenuButtons}
 													onClick={() => {
 														sendMove(i);
 														setLockMenu(false);
 													}}>
-													<Grid container direction="column">
-														<Grid item>
-															{e.name.length <= 10 ? e.name : e.name.slice(0, 10) + '...'}
-														</Grid>
-														<Grid item>
-															<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DMG: {e.baseDamage}</Typography>
-														</Grid>
-													</Grid>
+													<Typography style={{ color: 'white' }}>
+														{e.name.length <= 10 ? e.name : e.name.slice(0, 10) + '...'}
+													</Typography>
 												</Button>
+												<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DMG: {e.baseDamage}</Typography>
 											</Grid>
 										)
 									})}
@@ -380,7 +366,9 @@ export default function BattleSystem(props) {
 							{showTeam ?
 								<Grid item container spacing={4}>
 									<Grid item xs={6}>
-										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>Back</Button>
+										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>
+											<Typography style={{ color: 'white' }}>Back</Typography>
+										</Button>
 									</Grid>
 									{playerTeam.map((e, i) => {
 										return (
@@ -390,18 +378,11 @@ export default function BattleSystem(props) {
 														sendSwap(i);
 														setLockMenu(false);
 													}}>
-													<Grid container direction="column" justify="center" alignContent="center">
-														<Grid item>
-															{e.name}
-														</Grid>
-														<Grid item>
-															{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0)
-																? <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DEAD</Typography>
-																: <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>ALIVE</Typography>}
-														</Grid>
-													</Grid>
+													<Typography style={{ color: 'white' }}>{e.name}</Typography>
 												</Button>
-												{/* {e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0) ? <Typography>DEAD</Typography> : <Typography>ALIVE</Typography>} */}
+												{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0)
+													? <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DEAD</Typography>
+													: <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>ALIVE</Typography>}
 											</Grid>
 										)
 									})}
