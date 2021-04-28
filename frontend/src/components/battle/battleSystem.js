@@ -82,6 +82,7 @@ export default function BattleSystem(props) {
 	const [playerMoves, setPlayerMoves] = useState();
 	const [playerTeam, setPlayerTeam] = useState();
 	const [monster, setMonster] = useState();
+	const [victorFound, setVictorFound] = useState(false);
 
 	useEffect(() => {
 		console.log(battle);
@@ -109,7 +110,13 @@ export default function BattleSystem(props) {
 						console.log(player, " lost");
 					}
 					console.log("victor found!");
-					leaveRoom();
+					setVictorFound(true);
+					setShowMenu(false);
+					setShowMoves(false);
+					setShowTeam(false);
+					setShowIdle(false);
+					setLockMenu(false);
+					setTimeout(leaveRoom, 5000);
 					// terminate
 				} else if (!res.data.activeMonster1.stats.hp) {
 					console.log("monster 1 died :(");
@@ -199,7 +206,8 @@ export default function BattleSystem(props) {
 			});
 	};
 
-	const leaveRoom = () => {
+	const leaveRoom = async () => {
+		props.setCallDelete(!props.callDelete);
 		props.setMatched(!props.matched);
 		const tempTopics = [];
 		setTopics(tempTopics);
@@ -280,7 +288,7 @@ export default function BattleSystem(props) {
 	return (
 		<div>
 			{showLoading ? (
-				<BattleLoading leaveRoom={leaveRoom} appHeight={props.appHeight} />
+				<BattleLoading leaveRoom={leaveRoom} appHeight={props.appHeight} battleID={battleID} />
 			) : (
 				<div>
 					<Grid
@@ -290,11 +298,6 @@ export default function BattleSystem(props) {
 						alignItems="center"
 						style={{ justifyContent: "space-between", height: props.appHeight }}>
 						<Grid item>
-							{/* <BattleAlert
-									player={props.player}
-									battle={battle}
-									messages={messages}
-								/> */}
 							<Button variant="contained" color="primary" className={classes.buttonMenuButtons}>
 								<Typography>Opponent: {player === battle.firstPlayerID ? battle.secondPlayerID : battle.firstPlayerID}</Typography>
 							</Button>
@@ -302,122 +305,119 @@ export default function BattleSystem(props) {
 						<Grid item>
 							<BattleInfo
 								enemyMonster={enemyMonster}
-								playerMonster={playerMonster}
-							/>
+								playerMonster={playerMonster} />
 						</Grid>
-						<Grid
-							item
-							container
-							alignItems="center"
-							style={{
-								width: props.appWidth,
-								height: props.appHeight * 0.30,
-								backgroundColor: "#f2f2f2",
-								borderRadius: '10px',
-								padding: '15px',
-							}}>
-							{showMenu ?
-								<Grid item container spacing={4}>
-									<Grid item xs={6}>
-										<Button className={classes.buttonMenuButtons} onClick={toggleMoves}>
-											<Typography style={{ color: 'white' }}>Moves</Typography>
-										</Button>
-										<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Attacks!</Typography>
-									</Grid>
-									<Grid item xs={6}>
-										<Button className={classes.buttonMenuButtons} onClick={toggleTeam}>
-											<Typography style={{ color: 'white' }}>Team</Typography>
-										</Button>
-										<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Mini-army?</Typography>
-									</Grid>
-									<Grid item xs={12}>
-										<Button className={classes.buttonMenuButtons} onClick={forfeitBattle}>
-											<Typography style={{ color: 'white' }}>Forfeit</Typography>
-										</Button>
-										<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Next time...</Typography>
-									</Grid>
-								</Grid> : <div />}
+						{victorFound ?
+							<Grid
+								item
+								container
+								alignItems="center"
+								style={{ width: props.appWidth, height: props.appHeight * 0.30, padding: '15px', }}>
+								<Grid item xs={12}>
+									<Button
+										variant="contained"
+										color="primary"
+										className={classes.buttonMenuButtons}
+										onClick={() => {
+											leaveRoom()
+										}}>
+										<Typography>Battle over, {battle.victor} won!</Typography>
+									</Button>
+								</Grid>
+							</Grid>
+							:
+							<Grid
+								item
+								container
+								alignItems="center"
+								style={{
+									width: props.appWidth,
+									height: props.appHeight * 0.30,
+									backgroundColor: "#f2f2f2",
+									borderRadius: '10px',
+									padding: '15px',
+								}}>
+								{showMenu ?
+									<Grid item container spacing={4}>
+										<Grid item xs={6}>
+											<Button className={classes.buttonMenuButtons} onClick={toggleMoves}>
+												<Typography style={{ color: 'white' }}>Moves</Typography>
+											</Button>
+											<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Attacks!</Typography>
+										</Grid>
+										<Grid item xs={6}>
+											<Button className={classes.buttonMenuButtons} onClick={toggleTeam}>
+												<Typography style={{ color: 'white' }}>Team</Typography>
+											</Button>
+											<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Mini-army?</Typography>
+										</Grid>
+										<Grid item xs={12}>
+											<Button className={classes.buttonMenuButtons} onClick={forfeitBattle}>
+												<Typography style={{ color: 'white' }}>Forfeit</Typography>
+											</Button>
+											<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>Next time...</Typography>
+										</Grid>
+									</Grid> : <div />}
 
-							{showMoves ?
-								<Grid item container spacing={4}>
-									<Grid item xs={6}>
-										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>
-											<Typography style={{ color: 'white' }}>Back</Typography>
-										</Button>
-									</Grid>
-									{playerMoves.map((e, i) => {
-										return (
-											<Grid item xs={6} key={i} >
-												<Button className={classes.buttonMenuButtons}
-													onClick={() => {
-														sendMove(i);
-														setLockMenu(false);
-													}}>
-													<Typography style={{ color: 'white' }}>
-														{e.name.length <= 10 ? e.name : e.name.slice(0, 10) + '...'}
-													</Typography>
-												</Button>
-												<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DMG: {e.baseDamage}</Typography>
-											</Grid>
-										)
-									})}
-								</Grid> : <div />}
+								{showMoves ?
+									<Grid item container spacing={4}>
+										<Grid item xs={6}>
+											<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>
+												<Typography style={{ color: 'white' }}>Back</Typography>
+											</Button>
+										</Grid>
+										{playerMoves.map((e, i) => {
+											return (
+												<Grid item xs={6} key={i} >
+													<Button className={classes.buttonMenuButtons}
+														onClick={() => {
+															sendMove(i);
+															setLockMenu(false);
+														}}>
+														<Typography style={{ color: 'white' }}>
+															{e.name.length <= 10 ? e.name : e.name.slice(0, 6) + '...'}
+														</Typography>
+													</Button>
+													<Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DMG: {e.baseDamage}</Typography>
+												</Grid>
+											)
+										})}
+									</Grid> : <div />}
 
-							{showTeam ?
-								<Grid item container spacing={4}>
-									<Grid item xs={6}>
-										<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>
-											<Typography style={{ color: 'white' }}>Back</Typography>
-										</Button>
-									</Grid>
-									{playerTeam.map((e, i) => {
-										return (
-											<Grid item xs={6} key={i}>
-												<Button disabled={monster.name === e.name || e.stats.hp === 0} className={classes.buttonMenuButtons}
-													onClick={() => {
-														sendSwap(i);
-														setLockMenu(false);
-													}}>
-													<Typography style={{ color: 'white' }}>{e.name}</Typography>
-												</Button>
-												{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0)
-													? <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DEAD</Typography>
-													: <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>ALIVE</Typography>}
-											</Grid>
-										)
-									})}
-								</Grid> : <div />}
+								{showTeam ?
+									<Grid item container spacing={4}>
+										<Grid item xs={6}>
+											<Button disabled={props.lockMenu} className={classes.buttonMenuButtons} onClick={toggleMenu}>
+												<Typography style={{ color: 'white' }}>Back</Typography>
+											</Button>
+										</Grid>
+										{playerTeam.map((e, i) => {
+											return (
+												<Grid item xs={6} key={i}>
+													<Button disabled={monster.name === e.name || e.stats.hp === 0} className={classes.buttonMenuButtons}
+														onClick={() => {
+															sendSwap(i);
+															setLockMenu(false);
+														}}>
+														<Typography style={{ color: 'white' }}>{e.name}</Typography>
+													</Button>
+													{e.stats.hp === 0 || (monster.name === e.name && monster.stats.hp === 0)
+														? <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>DEAD</Typography>
+														: <Typography style={{ fontSize: '10px', fontWeight: 'lighter', fontStyle: 'italic' }}>ALIVE</Typography>}
+												</Grid>
+											)
+										})}
+									</Grid> : <div />}
 
-							{showIdle ?
-								<Grid item container spacing={3}>
-									<Grid item xs={4} />
-									<Grid item xs={12}>
-										<CircularProgress />
-									</Grid>
-									<Grid item xs={4} />
-								</Grid> : <div />}
-
-							{/* <BattleMenu
-								sendMove={sendMove}
-								sendSwap={sendSwap}
-								leaveRoom={forfeitBattle}
-								lockMenu={lockMenu}
-								showMenu={showMenu}
-								showMoves={showMoves}
-								showTeam={showTeam}
-								showIdle={showIdle}
-								toggleMenu={toggleMenu}
-								toggleMoves={toggleMoves}
-								toggleTeam={toggleTeam}
-								toggleIdle={toggleIdle}
-								setLockMenu={setLockMenu}
-								player={props.player}
-								battle={battle}
-								playerMoves={playerMoves}
-								playerTeam={playerTeam}
-								monster={monster}
-							/> */}
-						</Grid>
+								{showIdle ?
+									<Grid item container spacing={4}>
+										<Grid item xs={4} />
+										<Grid item xs={12}>
+											<CircularProgress />
+										</Grid>
+										<Grid item xs={4} />
+									</Grid> : <div />}
+							</Grid>}
 					</Grid>
 				</div>
 			)}

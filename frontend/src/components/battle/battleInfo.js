@@ -14,8 +14,7 @@ function LinearProgressWithLabel(props) {
 		<Box display="flex" alignItems="center">
 			<Box width="100%" mr={1}>
 				<LinearProgress
-					color="green"
-					style={{ height: "10px", borderRadius: "10px", backgroundColor: 'green' }}
+					style={{ height: "10px", borderRadius: "10px" }}
 					variant="determinate"
 					{...props}
 				/>

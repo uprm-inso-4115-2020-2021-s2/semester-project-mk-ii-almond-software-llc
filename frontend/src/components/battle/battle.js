@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Grid, Button, IconButton, makeStyles } from "@material-ui/core";
 import BattleSystem from "./battleSystem";
 import PublicIcon from "@material-ui/icons/Public";
@@ -21,14 +21,12 @@ export default function Battle(props) {
   const player = Cookies.get("user");
   const [battleID, setBattleID] = useState("");
   const [battleReady, setBattleReady] = useState();
+  const [callDelete, setCallDelete] = useState(false);
 
-  // const [open, setOpen] = React.useState(false);
+  useEffect(() => {
+    deleteBattle();
+  }, [callDelete])
 
-  // const handleClick = () => {
-  //   setOpen((prev) => !prev);
-  // };
-
-  //axios queuePlayer
   const queuePlayer = async () => {
     await axios
       .put("http://localhost:8080/api/battle/queue?player=" + player)
@@ -45,6 +43,17 @@ export default function Battle(props) {
       });
   };
 
+  const deleteBattle = async () => {
+    if (battleID !== "") {
+      await axios.delete(
+        "http://localhost:8080/api/battle/" + battleID
+      ).then(() => {
+        console.log("delete success");
+        setCallDelete(false)
+      });
+    };
+  };
+
   return (
     <div>
       {props.matched ? (
@@ -57,6 +66,8 @@ export default function Battle(props) {
             battleReady={battleReady}
             appHeight={props.appHeight}
             appWidth={props.appWidth}
+            callDelete={callDelete}
+            setCallDelete={setCallDelete}
           />
         </div>
       ) : (
